@@ -16,10 +16,7 @@ interface AnimationState {
   toothOpacity: number;
   toothTranslucency: number;
   internalVisible: boolean;
-  // Color phase (0 = white, 1 = purple, 2 = cyan, 3 = pink)
-  colorPhase: number;
-  colorTransition: number;
-  // Feature cards - now with smooth opacity per feature
+  // Feature cards - smooth opacity per feature
   feature1Opacity: number;
   feature2Opacity: number;
   feature3Opacity: number;
