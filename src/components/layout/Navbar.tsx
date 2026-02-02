@@ -46,7 +46,7 @@ export default function Navbar() {
         backdropFilter: 'blur(10px)',
       }}
     >
-      <div className="w-full max-w-[1200px] mx-auto h-16 sm:h-18 md:h-20 flex flex-row items-center justify-between pl-12 pr-4 sm:pl-16 sm:pr-6">
+      <div className="w-full max-w-[1200px] mx-auto h-16 sm:h-18 md:h-20 flex flex-row items-center justify-between" style={{ paddingLeft: '60px', paddingRight: '24px' }}>
         {/* Logo */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
