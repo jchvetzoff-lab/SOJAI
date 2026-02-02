@@ -1,30 +1,35 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import ToothScene from './ToothScene';
 import { useAnimationStore } from '@/hooks/useAnimationStore';
 
 function SceneOpacity() {
-  const sceneOpacity = useAnimationStore((s) => s.sceneOpacity);
   const scrollProgress = useAnimationStore((s) => s.scrollProgress);
-  const heroOpacity = useAnimationStore((s) => s.heroOpacity);
+  const [mounted, setMounted] = useState(false);
 
-  // Tooth is visible when:
-  // 1. At the top of page (heroOpacity > 0) OR
-  // 2. In the animation zone (scrollProgress < 0.95)
-  // This ensures tooth never disappears unexpectedly
-  const shouldBeVisible = heroOpacity > 0.1 || scrollProgress < 0.95;
-  const actualOpacity = shouldBeVisible ? Math.max(sceneOpacity, 0.01) : 0;
+  // Ensure component is mounted before showing (fixes SSR issues)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Simple logic: fully visible until 90% scroll, then fade out
+  let opacity = 1;
+  if (scrollProgress > 0.90) {
+    // Fade from 1 to 0 between 90% and 100%
+    opacity = Math.max(0, 1 - (scrollProgress - 0.90) / 0.10);
+  }
+
+  if (!mounted) return null;
 
   return (
     <div
       className="canvas-container"
       style={{
-        opacity: actualOpacity,
-        transition: 'opacity 0.2s ease',
-        pointerEvents: actualOpacity > 0.1 ? 'auto' : 'none',
-        visibility: shouldBeVisible ? 'visible' : 'hidden',
+        opacity: opacity,
+        transition: 'opacity 0.3s ease',
+        pointerEvents: opacity > 0.1 ? 'auto' : 'none',
       }}
     >
       <Canvas
