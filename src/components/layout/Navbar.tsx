@@ -50,7 +50,7 @@ export default function Navbar() {
         {/* Logo */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-2 sm:gap-3 cursor-pointer"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer ml-4 sm:ml-8"
         >
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#4A39C0] flex items-center justify-center">
             <span className="text-white font-bold text-base sm:text-lg font-[family-name:var(--font-playfair)]">S</span>
