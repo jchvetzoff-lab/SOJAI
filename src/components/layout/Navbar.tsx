@@ -46,12 +46,11 @@ export default function Navbar() {
         backdropFilter: 'blur(10px)',
       }}
     >
-      <div className="w-full max-w-[1200px] mx-auto h-16 sm:h-18 md:h-20 flex flex-row items-center justify-between px-4 sm:px-6">
+      <div className="w-full max-w-[1200px] mx-auto h-16 sm:h-18 md:h-20 flex flex-row items-center justify-between pl-12 pr-4 sm:pl-16 sm:pr-6">
         {/* Logo */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex items-center gap-2 sm:gap-3 cursor-pointer"
-          style={{ marginLeft: '40px' }}
         >
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#4A39C0] flex items-center justify-center">
             <span className="text-white font-bold text-base sm:text-lg font-[family-name:var(--font-playfair)]">S</span>
