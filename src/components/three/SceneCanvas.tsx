@@ -8,19 +8,23 @@ import { useAnimationStore } from '@/hooks/useAnimationStore';
 function SceneOpacity() {
   const sceneOpacity = useAnimationStore((s) => s.sceneOpacity);
   const scrollProgress = useAnimationStore((s) => s.scrollProgress);
+  const heroOpacity = useAnimationStore((s) => s.heroOpacity);
 
-  // Keep canvas always rendered but control visibility with opacity
-  // This prevents issues when scrolling back up
-  const isInAnimationZone = scrollProgress < 1;
-  const actualOpacity = isInAnimationZone ? sceneOpacity : 0;
+  // Tooth is visible when:
+  // 1. At the top of page (heroOpacity > 0) OR
+  // 2. In the animation zone (scrollProgress < 0.95)
+  // This ensures tooth never disappears unexpectedly
+  const shouldBeVisible = heroOpacity > 0.1 || scrollProgress < 0.95;
+  const actualOpacity = shouldBeVisible ? Math.max(sceneOpacity, 0.01) : 0;
 
   return (
     <div
       className="canvas-container"
       style={{
         opacity: actualOpacity,
-        transition: 'opacity 0.15s ease',
+        transition: 'opacity 0.2s ease',
         pointerEvents: actualOpacity > 0.1 ? 'auto' : 'none',
+        visibility: shouldBeVisible ? 'visible' : 'hidden',
       }}
     >
       <Canvas
