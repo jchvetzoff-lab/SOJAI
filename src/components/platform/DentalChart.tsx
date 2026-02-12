@@ -162,11 +162,11 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
 
       {/* Legend */}
       {!compact && (
-        <div className="flex flex-wrap gap-3 mt-3 justify-center">
+        <div className="flex flex-wrap gap-4 mt-4 justify-center">
           {Object.entries(TOOTH_STATUS).map(([key, { label, color }]) => (
             <div key={key} className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
-              <span className="text-[10px] text-gray-500">{label}</span>
+              <span className="text-xs text-gray-500">{label}</span>
             </div>
           ))}
         </div>

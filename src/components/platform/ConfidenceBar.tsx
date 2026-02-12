@@ -9,7 +9,7 @@ interface ConfidenceBarProps {
 
 export default function ConfidenceBar({ value, label, showValue = true, size = 'md' }: ConfidenceBarProps) {
   const barColor = value >= 90 ? '#10B981' : value >= 75 ? '#F59E0B' : '#FF3254';
-  const height = size === 'sm' ? 'h-1.5' : 'h-2';
+  const height = size === 'sm' ? 'h-2' : 'h-2.5';
 
   return (
     <div className="w-full">

@@ -71,7 +71,7 @@ export default function Sidebar() {
       style={{ backgroundColor: '#1A1A2E' }}
     >
       {/* Logo */}
-      <div className="h-16 flex items-center px-4 border-b border-white/10">
+      <div className="h-20 flex items-center px-4 border-b border-white/10">
         <Link href="/" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-[#4A39C0] flex items-center justify-center shrink-0">
             <span className="text-white font-bold text-sm font-[family-name:var(--font-playfair)]">S</span>
@@ -86,14 +86,14 @@ export default function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 py-4 px-2 overflow-y-auto">
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {PLATFORM_NAV.map((item) => {
             const active = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all ${
                   active
                     ? 'bg-[#4A39C0] text-white'
                     : 'text-white/50 hover:text-white hover:bg-white/5'

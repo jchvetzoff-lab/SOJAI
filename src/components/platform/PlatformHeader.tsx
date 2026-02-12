@@ -12,9 +12,9 @@ export default function PlatformHeader() {
   const pageTitle = currentPage?.label || 'Dashboard';
 
   return (
-    <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-6 shrink-0">
+    <header className="h-[72px] bg-white border-b border-gray-100 flex items-center justify-between px-8 shrink-0">
       {/* Left: breadcrumb */}
-      <div className="flex items-center gap-2 text-sm">
+      <div className="flex items-center gap-2 text-base">
         <Link href="/platform" className="text-gray-400 hover:text-[#4A39C0] transition-colors">
           Platform
         </Link>
@@ -36,7 +36,7 @@ export default function PlatformHeader() {
           <input
             type="text"
             placeholder="Search..."
-            className="bg-transparent border-none outline-none text-sm text-gray-600 w-full placeholder:text-gray-400"
+            className="bg-transparent border-none outline-none text-base text-gray-600 w-full placeholder:text-gray-400"
           />
         </div>
 
@@ -50,7 +50,7 @@ export default function PlatformHeader() {
 
         {/* User avatar */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#4A39C0] flex items-center justify-center text-white text-xs font-bold">
+          <div className="w-9 h-9 rounded-full bg-[#4A39C0] flex items-center justify-center text-white text-xs font-bold">
             DL
           </div>
           <span className="hidden lg:block text-sm font-medium text-[#1A1A2E]">Dr. Laurent</span>

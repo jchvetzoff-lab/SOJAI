@@ -110,25 +110,25 @@ export default function ViewerPage() {
           {/* Brightness/Contrast sliders */}
           <div className="hidden xl:flex items-center gap-3 bg-white rounded-xl border border-gray-100 p-2 shadow-sm">
             <label className="flex items-center gap-2 text-xs text-gray-500">
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" /></svg>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" /></svg>
               <input
                 type="range"
                 min="20"
                 max="200"
                 value={viewerSettings.brightness}
                 onChange={(e) => setViewerSettings({ brightness: Number(e.target.value) })}
-                className="w-20 accent-[#4A39C0]"
+                className="w-24 accent-[#4A39C0]"
               />
             </label>
             <label className="flex items-center gap-2 text-xs text-gray-500">
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /></svg>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /></svg>
               <input
                 type="range"
                 min="20"
                 max="300"
                 value={viewerSettings.contrast}
                 onChange={(e) => setViewerSettings({ contrast: Number(e.target.value) })}
-                className="w-20 accent-[#4A39C0]"
+                className="w-24 accent-[#4A39C0]"
               />
             </label>
           </div>
@@ -160,9 +160,9 @@ export default function ViewerPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 h-[calc(100%-60px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-[calc(100%-60px)]">
         {/* Main viewer area */}
-        <div className="lg:col-span-3 flex flex-col gap-4">
+        <div className="lg:col-span-3 flex flex-col gap-5">
           {hasImage ? (
             <>
               {/* Canvas viewer */}
@@ -259,17 +259,17 @@ export default function ViewerPage() {
         </div>
 
         {/* Side panel */}
-        <div className="lg:col-span-2 flex flex-col gap-4 overflow-y-auto">
+        <div className="lg:col-span-2 flex flex-col gap-5 overflow-y-auto">
           {/* Upload zone (when image exists, show compact upload) */}
           {!isDemo && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Upload Image</h3>
               <ImageUploadZone />
             </div>
           )}
 
           {/* Patient info */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-[#4A39C0] flex items-center justify-center text-white text-sm font-bold">
                 {patient.name.charAt(0)}
@@ -312,17 +312,17 @@ export default function ViewerPage() {
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="bg-gray-50 rounded-lg p-2">
                 <div className="text-lg font-bold text-[#1A1A2E]">{isDemo ? '12' : (analysisResult ? 1 : 0)}</div>
-                <div className="text-[10px] text-gray-400">Scans</div>
+                <div className="text-xs text-gray-400">Scans</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
                 <div className="text-lg font-bold text-[#FF3254]">{pathologies.length}</div>
-                <div className="text-[10px] text-gray-400">Findings</div>
+                <div className="text-xs text-gray-400">Findings</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
                 <div className="text-lg font-bold text-emerald-500">
                   {pathologies.length > 0 ? Math.round(pathologies.reduce((s, p) => s + p.confidence, 0) / pathologies.length) : 0}%
                 </div>
-                <div className="text-[10px] text-gray-400">AI Conf.</div>
+                <div className="text-xs text-gray-400">AI Conf.</div>
               </div>
             </div>
           </div>

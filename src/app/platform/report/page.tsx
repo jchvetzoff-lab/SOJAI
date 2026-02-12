@@ -226,9 +226,9 @@ export default function ReportPage() {
                 <span className="text-sm text-gray-600">Clinic Branding</span>
                 <button
                   onClick={() => setBranding(!branding)}
-                  className={`w-10 h-5 rounded-full transition-colors ${branding ? 'bg-[#4A39C0]' : 'bg-gray-300'}`}
+                  className={`w-11 h-6 rounded-full transition-colors ${branding ? 'bg-[#4A39C0]' : 'bg-gray-300'}`}
                 >
-                  <span className={`block w-4 h-4 bg-white rounded-full shadow transition-transform mx-0.5 ${branding ? 'translate-x-5' : 'translate-x-0'}`} />
+                  <span className={`block w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${branding ? 'translate-x-5' : 'translate-x-0'}`} />
                 </button>
               </label>
               <div>
@@ -378,7 +378,7 @@ export default function ReportPage() {
             {/* Recommendations */}
             {enabledSections.some((s) => s.id === 'recommendations') && (
               <ReportSection title="Recommendations">
-                <ol className="list-decimal list-inside space-y-1 text-xs text-gray-600">
+                <ol className="list-decimal list-inside space-y-2 text-xs text-gray-600">
                   {recommendations.map((rec, i) => (
                     <li key={i}>{rec}</li>
                   ))}

@@ -82,7 +82,7 @@ export default function DetectionPage() {
       {criticalFindings.length > 0 && (
         <div className="bg-red-50 border border-red-100 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-2">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
             </svg>
             <span className="text-sm font-semibold text-red-700">Critical Findings Require Attention</span>
@@ -92,7 +92,7 @@ export default function DetectionPage() {
               <button
                 key={f.id}
                 onClick={() => setSelectedTooth(f.affectedTeeth[0])}
-                className="bg-white border border-red-200 rounded-full px-3 py-1 text-xs font-medium text-red-700 hover:bg-red-100 transition-colors"
+                className="bg-white border border-red-200 rounded-full px-4 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 transition-colors"
               >
                 {f.name} — Tooth {f.affectedTeeth.map((t) => `#${t}`).join(', ')}
               </button>
@@ -147,7 +147,7 @@ export default function DetectionPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.03 }}
-                className={`bg-white rounded-2xl border p-5 shadow-sm transition-all cursor-pointer ${
+                className={`bg-white rounded-2xl border p-6 shadow-sm transition-all cursor-pointer ${
                   selectedTooth && p.affectedTeeth.includes(selectedTooth)
                     ? 'border-[#4A39C0] ring-1 ring-[#4A39C0]/20'
                     : 'border-gray-100 hover:border-gray-200'
@@ -160,7 +160,7 @@ export default function DetectionPage() {
                       <span className="font-semibold text-[#1A1A2E]">{p.name}</span>
                       <PathologyBadge category={p.category} />
                       <span
-                        className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                        className="text-xs font-semibold px-2 py-0.5 rounded-full"
                         style={{
                           backgroundColor: SEVERITY_LEVELS[p.severity].bg,
                           color: SEVERITY_LEVELS[p.severity].color,
@@ -180,7 +180,7 @@ export default function DetectionPage() {
                     Affected: {p.affectedTeeth.map((t) => (
                       <span
                         key={t}
-                        className="inline-flex items-center justify-center w-7 h-6 bg-gray-100 rounded text-[#1A1A2E] font-medium mx-0.5"
+                        className="inline-flex items-center justify-center w-8 h-7 bg-gray-100 rounded text-xs text-[#1A1A2E] font-medium mx-0.5"
                       >
                         {t}
                       </span>

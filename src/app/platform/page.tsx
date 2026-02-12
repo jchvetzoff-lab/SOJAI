@@ -20,10 +20,42 @@ const mockActivityItems = [
 ];
 
 const quickActions = [
-  { label: 'Open Viewer', href: '/platform/viewer', icon: '🖥️' },
-  { label: 'New Report', href: '/platform/report', icon: '📄' },
-  { label: 'AI Detection', href: '/platform/detection', icon: '🔍' },
-  { label: 'Analytics', href: '/platform/analytics', icon: '📊' },
+  {
+    label: 'Open Viewer',
+    href: '/platform/viewer',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+    ),
+  },
+  {
+    label: 'New Report',
+    href: '/platform/report',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    ),
+  },
+  {
+    label: 'AI Detection',
+    href: '/platform/detection',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Analytics',
+    href: '/platform/analytics',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+      </svg>
+    ),
+  },
 ];
 
 export default function DashboardPage() {
@@ -60,8 +92,30 @@ export default function DashboardPage() {
         <p className="text-sm text-gray-500 mt-1">Overview of your practice activity</p>
       </div>
 
+      {/* Upload CTA */}
+      <Link href="/platform/viewer">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-[#4A39C0] to-[#6D5DD3] rounded-2xl p-6 flex items-center gap-5 shadow-md hover:shadow-lg transition-all hover:scale-[1.005] cursor-pointer"
+        >
+          <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold text-white">Upload &amp; Analyze a Scan</h2>
+            <p className="text-white/70 text-sm mt-0.5">Drop a dental X-ray or CBCT to get instant AI-powered diagnostics</p>
+          </div>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 opacity-60">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </motion.div>
+      </Link>
+
       {/* Stat cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard
           title="Total Scans"
           value={isDemo ? '2,847' : String(totalScans)}
@@ -102,7 +156,7 @@ export default function DashboardPage() {
               placeholder="Search patients..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="text-sm bg-gray-50 rounded-lg px-3 py-1.5 border-none outline-none w-48 placeholder:text-gray-400"
+              className="text-sm bg-gray-50 rounded-lg px-4 py-2 border-none outline-none w-48 placeholder:text-gray-400"
             />
           </div>
           <div className="p-2 max-h-[440px] overflow-y-auto">
@@ -120,15 +174,17 @@ export default function DashboardPage() {
           {/* Quick actions */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
             <h2 className="text-lg font-semibold text-[#1A1A2E] mb-3">Quick Actions</h2>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {quickActions.map((action) => (
                 <Link
                   key={action.href}
                   href={action.href}
-                  className="flex flex-col items-center gap-2 p-3 rounded-xl bg-gray-50 hover:bg-[#E4E1FF] transition-colors text-center"
+                  className="flex flex-col items-center gap-2.5 p-4 rounded-xl bg-gray-50 hover:bg-[#E4E1FF] transition-colors text-center group"
                 >
-                  <span className="text-xl">{action.icon}</span>
-                  <span className="text-xs font-medium text-[#1A1A2E]">{action.label}</span>
+                  <div className="w-10 h-10 rounded-lg bg-[#E4E1FF] group-hover:bg-[#4A39C0] flex items-center justify-center text-[#4A39C0] group-hover:text-white transition-colors">
+                    {action.icon}
+                  </div>
+                  <span className="text-sm font-medium text-[#1A1A2E]">{action.label}</span>
                 </Link>
               ))}
             </div>
@@ -146,15 +202,15 @@ export default function DashboardPage() {
                   transition={{ delay: item.id * 0.05 }}
                   className="flex items-start gap-3"
                 >
-                  <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                  <div className={`w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 ${
                     item.type === 'alert' ? 'bg-[#FF3254]' :
                     item.type === 'analysis' ? 'bg-[#4A39C0]' :
                     item.type === 'report' ? 'bg-emerald-500' :
                     'bg-gray-300'
                   }`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-[#1A1A2E] leading-snug">{item.text}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{item.time}</p>
+                    <p className="text-base text-[#1A1A2E] leading-snug">{item.text}</p>
+                    <p className="text-sm text-gray-400 mt-0.5">{item.time}</p>
                   </div>
                 </motion.div>
               ))}
