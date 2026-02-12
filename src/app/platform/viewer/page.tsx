@@ -103,8 +103,45 @@ export default function ViewerPage() {
 
   return (
     <div className="max-w-[1600px] mx-auto h-[calc(100vh-7rem)]">
+      {/* Page title */}
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h1 className="text-2xl font-bold text-[#1A1A2E]">2D Viewer</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            View, annotate and analyze dental scans with AI
+            {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+            {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(analysis loaded)</span>}
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleToggleDemo}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              isDemo ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'
+            }`}
+          >
+            {isDemo ? 'Demo Mode' : 'Live Mode'}
+          </button>
+          <div className="flex items-center bg-white rounded-xl border border-gray-100 p-1 shadow-sm">
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === tab.key
+                    ? 'bg-[#4A39C0] text-white'
+                    : 'text-gray-500 hover:text-[#1A1A2E]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Toolbar */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
           <ViewerToolbar tools={toolbarItems} />
           {/* Brightness/Contrast sliders */}
@@ -133,34 +170,9 @@ export default function ViewerPage() {
             </label>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleToggleDemo}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              isDemo ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            {isDemo ? 'Demo Mode' : 'Live Mode'}
-          </button>
-          <div className="flex items-center bg-white rounded-xl border border-gray-100 p-1 shadow-sm">
-            {tabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === tab.key
-                    ? 'bg-[#4A39C0] text-white'
-                    : 'text-gray-500 hover:text-[#1A1A2E]'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-[calc(100%-60px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-[calc(100%-120px)]">
         {/* Main viewer area */}
         <div className="lg:col-span-3 flex flex-col gap-5">
           {hasImage ? (
