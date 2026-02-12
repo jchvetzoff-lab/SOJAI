@@ -38,23 +38,23 @@ export default function OrthodonticPage() {
   }));
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10">
+    <div className="max-w-7xl mx-auto space-y-4">
       <div>
-        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Orthodontic Analysis</h1>
-        <p className="text-lg text-[#64748B] mt-3">
+        <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">Orthodontic Analysis</h1>
+        <p className="text-[14px] text-[#5C5C5F] mt-3">
           Cephalometric measurements and TMJ evaluation
-          {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+          {isDemo && <span className="ml-1 text-[#E5A836]">(demo data)</span>}
           {!isDemo && analysisResult?.measurements?.cephalometric?.length && (
-            <span className="ml-1 text-emerald-500">(from AI analysis — click values to edit)</span>
+            <span className="ml-1 text-[#30A46C]">(from AI analysis — click values to edit)</span>
           )}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Cephalometric view */}
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300 overflow-hidden">
-          <div className="p-6 border-b border-white/[0.04]">
-            <h3 className="font-semibold text-[#E2E8F0]">Cephalometric Analysis</h3>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] transition-all duration-300 overflow-hidden">
+          <div className="p-4 border-b border-white/[0.04]">
+            <h3 className="font-semibold text-[#EDEDEF]">Cephalometric Analysis</h3>
           </div>
           <div className="bg-[#0a0a1a] h-[400px] flex items-center justify-center relative">
             <svg viewBox="0 0 300 400" className="h-[360px]">
@@ -71,32 +71,32 @@ export default function OrthodonticPage() {
                 { x: 100, y: 140, label: 'Po' },
               ].map((pt, i) => (
                 <g key={i}>
-                  <circle cx={pt.x} cy={pt.y} r="3" fill="#3B82F6" />
+                  <circle cx={pt.x} cy={pt.y} r="3" fill="#5B5BD6" />
                   <text x={pt.x + 8} y={pt.y + 4} fill="#8B5CF6" fontSize="10" fontFamily="Inter">{pt.label}</text>
                 </g>
               ))}
-              <line x1="145" y1="80" x2="155" y2="190" stroke="#3B82F6" strokeWidth="0.8" strokeDasharray="4,4" />
+              <line x1="145" y1="80" x2="155" y2="190" stroke="#5B5BD6" strokeWidth="0.8" strokeDasharray="4,4" />
               <line x1="145" y1="80" x2="160" y2="260" stroke="#FF3254" strokeWidth="0.8" strokeDasharray="4,4" />
-              <line x1="150" y1="40" x2="145" y2="80" stroke="#F59E0B" strokeWidth="0.8" strokeDasharray="4,4" />
-              <line x1="175" y1="100" x2="165" y2="310" stroke="#10B981" strokeWidth="0.8" strokeDasharray="2,2" />
-              <text x="180" y="200" fill="#10B981" fontSize="9" fontFamily="Inter">E-line</text>
+              <line x1="150" y1="40" x2="145" y2="80" stroke="#E5A836" strokeWidth="0.8" strokeDasharray="4,4" />
+              <line x1="175" y1="100" x2="165" y2="310" stroke="#30A46C" strokeWidth="0.8" strokeDasharray="2,2" />
+              <text x="180" y="200" fill="#30A46C" fontSize="9" fontFamily="Inter">E-line</text>
             </svg>
           </div>
         </div>
 
         {/* Measurements table */}
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300">
-          <div className="p-6 border-b border-white/[0.04]">
-            <h3 className="font-semibold text-[#E2E8F0]">Measurements</h3>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] transition-all duration-300">
+          <div className="p-4 border-b border-white/[0.04]">
+            <h3 className="font-semibold text-[#EDEDEF]">Measurements</h3>
           </div>
-          <div className="p-6">
-            <table className="w-full text-sm">
+          <div className="p-4">
+            <table className="w-full text-[13px]">
               <thead>
                 <tr className="border-b border-white/[0.06]">
-                  <th className="text-left py-2 text-xs font-medium text-[#475569] uppercase">Parameter</th>
-                  <th className="text-right py-2 text-xs font-medium text-[#475569] uppercase">Value</th>
-                  <th className="text-right py-2 text-xs font-medium text-[#475569] uppercase">Normal</th>
-                  <th className="text-right py-2 text-xs font-medium text-[#475569] uppercase">Status</th>
+                  <th className="text-left py-2 text-[11px] font-medium text-[#5C5C5F] uppercase">Parameter</th>
+                  <th className="text-right py-2 text-[11px] font-medium text-[#5C5C5F] uppercase">Value</th>
+                  <th className="text-right py-2 text-[11px] font-medium text-[#5C5C5F] uppercase">Normal</th>
+                  <th className="text-right py-2 text-[11px] font-medium text-[#5C5C5F] uppercase">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -108,20 +108,20 @@ export default function OrthodonticPage() {
                     transition={{ delay: i * 0.03 }}
                     className="border-b border-white/[0.04]"
                   >
-                    <td className="py-2.5 text-[#E2E8F0]">{m.name}</td>
+                    <td className="py-2.5 text-[#EDEDEF]">{m.name}</td>
                     <td className="py-2.5 text-right">
                       <input
                         type="number"
                         step="0.1"
                         value={m.value}
                         onChange={(e) => setEditedValues({ ...editedValues, [m.name]: Number(e.target.value) })}
-                        className="w-16 text-right font-medium text-[#E2E8F0] bg-transparent outline-none border-b border-transparent focus:border-[#3B82F6]"
+                        className="w-16 text-right font-medium text-[#EDEDEF] bg-transparent outline-none border-b border-transparent focus:border-[#5B5BD6]"
                       />
                     </td>
-                    <td className="py-2.5 text-right text-[#64748B]">{m.normalRange}</td>
+                    <td className="py-2.5 text-right text-[#5C5C5F]">{m.normalRange}</td>
                     <td className="py-2.5 text-right">
-                      <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
-                        m.status === 'normal' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
+                      <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                        m.status === 'normal' ? 'bg-[#30A46C]/10 text-[#30A46C]' : 'bg-[#E5A836]/10 text-[#E5A836]'
                       }`}>
                         {m.status}
                       </span>
@@ -135,32 +135,32 @@ export default function OrthodonticPage() {
       </div>
 
       {/* TMJ Analysis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {(['left', 'right'] as const).map((side) => (
-          <div key={side} className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
-            <h3 className="font-semibold text-[#E2E8F0] mb-4 capitalize">TMJ — {side} Side</h3>
-            <div className="flex gap-6">
-              <div className="w-24 h-24 bg-[#0a0a1a] rounded-xl flex items-center justify-center shrink-0">
+          <div key={side} className="bg-[#141416] rounded-lg border border-white/[0.06] p-5 transition-all duration-300">
+            <h3 className="font-semibold text-[#EDEDEF] mb-4 capitalize">TMJ — {side} Side</h3>
+            <div className="flex gap-3">
+              <div className="w-24 h-24 bg-[#0a0a1a] rounded-md flex items-center justify-center shrink-0">
                 <svg viewBox="0 0 60 60" className="w-16 h-16">
                   <circle cx="30" cy="25" r="12" fill="none" stroke="#3a3a5a" strokeWidth="1.5" />
-                  <ellipse cx="30" cy="25" rx="8" ry="6" fill="#3B82F6" opacity="0.3" />
+                  <ellipse cx="30" cy="25" rx="8" ry="6" fill="#5B5BD6" opacity="0.3" />
                   <path d="M15 40 Q30 50 45 40" fill="none" stroke="#3a3a5a" strokeWidth="1.5" />
                 </svg>
               </div>
-              <div className="space-y-2 text-sm flex-1">
+              <div className="space-y-2 text-[13px] flex-1">
                 <div className="flex justify-between">
-                  <span className="text-[#64748B]">Condyle Position</span>
-                  <span className={`font-medium ${tmjData[side].condylePosition === 'Centered' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                  <span className="text-[#5C5C5F]">Condyle Position</span>
+                  <span className={`font-medium ${tmjData[side].condylePosition === 'Centered' ? 'text-[#30A46C]' : 'text-[#E5A836]'}`}>
                     {tmjData[side].condylePosition}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#64748B]">Joint Space</span>
-                  <span className="font-medium text-[#E2E8F0]">{tmjData[side].jointSpace}</span>
+                  <span className="text-[#5C5C5F]">Joint Space</span>
+                  <span className="font-medium text-[#EDEDEF]">{tmjData[side].jointSpace}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#64748B]">Mobility</span>
-                  <span className={`font-medium ${tmjData[side].mobility === 'Normal' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                  <span className="text-[#5C5C5F]">Mobility</span>
+                  <span className={`font-medium ${tmjData[side].mobility === 'Normal' ? 'text-[#30A46C]' : 'text-[#E5A836]'}`}>
                     {tmjData[side].mobility}
                   </span>
                 </div>
@@ -171,9 +171,9 @@ export default function OrthodonticPage() {
       </div>
 
       {/* Symmetry analysis */}
-      <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
-        <h3 className="font-semibold text-[#E2E8F0] mb-4">Symmetry Analysis</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-5 transition-all duration-300">
+        <h3 className="font-semibold text-[#EDEDEF] mb-4">Symmetry Analysis</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: 'Facial Midline', value: '1.2mm left', status: 'mild' },
             { label: 'Mandibular Deviation', value: '0.8mm right', status: 'normal' },
@@ -181,10 +181,10 @@ export default function OrthodonticPage() {
             { label: 'Gonial Angle L/R', value: '125°/128°', status: 'normal' },
           ].map((item) => (
             <div key={item.label} className="text-center">
-              <div className="text-xs text-[#64748B] mb-1">{item.label}</div>
-              <div className="text-lg font-bold text-[#E2E8F0]">{item.value}</div>
+              <div className="text-[11px] text-[#5C5C5F] mb-1">{item.label}</div>
+              <div className="text-[14px] font-bold text-[#EDEDEF]">{item.value}</div>
               <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium mt-1 ${
-                item.status === 'normal' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
+                item.status === 'normal' ? 'bg-[#30A46C]/10 text-[#30A46C]' : 'bg-[#E5A836]/10 text-[#E5A836]'
               }`}>
                 {item.status === 'normal' ? 'Symmetric' : 'Mild asymmetry'}
               </span>

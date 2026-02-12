@@ -50,9 +50,9 @@ export default function AnalyticsPage() {
   if (!isDemo && analysisHistory.length === 0) {
     return (
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Analytics</h1>
-          <p className="text-lg text-[#64748B] mt-3">No data available</p>
+        <div className="mb-4">
+          <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">Analytics</h1>
+          <p className="text-[14px] text-[#5C5C5F] mt-3">No data available</p>
         </div>
         <EmptyState
           title="No analytics data yet"
@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
       label: 'Accuracy',
       sortable: true,
       render: (row: PractitionerPerformance) => (
-        <span className={`font-medium ${row.accuracy >= 98 ? 'text-emerald-500' : row.accuracy >= 97 ? 'text-[#3B82F6]' : 'text-amber-500'}`}>
+        <span className={`font-medium ${row.accuracy >= 98 ? 'text-[#30A46C]' : row.accuracy >= 97 ? 'text-[#5B5BD6]' : 'text-[#E5A836]'}`}>
           {row.accuracy}%
         </span>
       ),
@@ -79,22 +79,22 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10">
+    <div className="max-w-7xl mx-auto space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Analytics</h1>
-          <p className="text-lg text-[#64748B] mt-3">
+          <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">Analytics</h1>
+          <p className="text-[14px] text-[#5C5C5F] mt-3">
             Practice performance and insights
-            {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+            {isDemo && <span className="ml-1 text-[#E5A836]">(demo data)</span>}
           </p>
         </div>
-        <div className="flex items-center bg-[#111C32] rounded-xl border border-white/[0.06] p-1">
+        <div className="flex items-center bg-[#141416] rounded-lg border border-white/[0.06] p-1">
           {(['7d', '30d', '90d', '1y'] as Period[]).map((p) => (
             <button
               key={p}
               onClick={() => setPeriod(p)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                period === p ? 'bg-[#3B82F6] text-white' : 'text-[#64748B] hover:text-[#E2E8F0]'
+              className={`px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${
+                period === p ? 'bg-[#5B5BD6] text-white' : 'text-[#5C5C5F] hover:text-[#EDEDEF]'
               }`}
             >
               {p}
@@ -104,7 +104,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Metric cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <MetricCard
           title="Total Scans"
           value={isDemo ? '2,847' : String(totalScans)}
@@ -118,7 +118,7 @@ export default function AnalyticsPage() {
           subtitle="Per scan"
           trend={isDemo ? { value: '8%', positive: true } : undefined}
           icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>}
-          color="#10B981"
+          color="#30A46C"
         />
         <MetricCard
           title="Pathologies Found"
@@ -126,7 +126,7 @@ export default function AnalyticsPage() {
           subtitle={isDemo ? 'Sensitivity' : 'This period'}
           trend={isDemo ? { value: '0.3%', positive: true } : undefined}
           icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>}
-          color="#F59E0B"
+          color="#E5A836"
         />
         <MetricCard
           title="Reports Sent"
@@ -138,28 +138,28 @@ export default function AnalyticsPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Monthly scans bar chart */}
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
-          <h3 className="text-lg font-bold text-[#E2E8F0] mb-6">Scans by Type</h3>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-5 transition-all duration-300">
+          <h3 className="text-[14px] font-bold text-[#EDEDEF] mb-4">Scans by Type</h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={monthlyScans}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} />
-              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} />
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#111C32', boxShadow: 'none' }} />
-              <Legend wrapperStyle={{ fontSize: 12, color: '#94A3B8' }} />
+              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#5C5C5F' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#5C5C5F' }} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#141416', boxShadow: 'none' }} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#8B8B8E' }} />
               <Bar dataKey="panoramic" fill="#4A39C0" radius={[4, 4, 0, 0]} />
               <Bar dataKey="cbct" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
               <Bar dataKey="periapical" fill="#FF3254" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="bitewing" fill="#F59E0B" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="bitewing" fill="#E5A836" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Pathology distribution pie chart */}
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
-          <h3 className="text-lg font-bold text-[#E2E8F0] mb-6">Pathology Distribution</h3>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-5 transition-all duration-300">
+          <h3 className="text-[14px] font-bold text-[#EDEDEF] mb-4">Pathology Distribution</h3>
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
               <Pie
@@ -175,24 +175,24 @@ export default function AnalyticsPage() {
                   <Cell key={i} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#111C32', boxShadow: 'none' }} />
-              <Legend wrapperStyle={{ fontSize: 12, color: '#94A3B8' }} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#141416', boxShadow: 'none' }} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#8B8B8E' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Weekly trend */}
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
-          <h3 className="text-lg font-bold text-[#E2E8F0] mb-6">Weekly Activity</h3>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-5 transition-all duration-300">
+          <h3 className="text-[14px] font-bold text-[#EDEDEF] mb-4">Weekly Activity</h3>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={weeklyTrend}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-              <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#64748B' }} />
-              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} />
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#111C32', boxShadow: 'none' }} />
-              <Legend wrapperStyle={{ fontSize: 12, color: '#94A3B8' }} />
+              <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#5C5C5F' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#5C5C5F' }} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#141416', boxShadow: 'none' }} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#8B8B8E' }} />
               <Line type="monotone" dataKey="scans" stroke="#4A39C0" strokeWidth={2} dot={{ r: 4 }} />
               <Line type="monotone" dataKey="findings" stroke="#FF3254" strokeWidth={2} dot={{ r: 4 }} />
             </LineChart>
@@ -200,9 +200,9 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Practitioner performance */}
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300">
-          <div className="p-6 border-b border-white/[0.04]">
-            <h3 className="text-lg font-bold text-[#E2E8F0]">Practitioner Performance</h3>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] transition-all duration-300">
+          <div className="p-4 border-b border-white/[0.04]">
+            <h3 className="text-[14px] font-bold text-[#EDEDEF]">Practitioner Performance</h3>
           </div>
           <div className="p-4">
             <DataTable
@@ -237,7 +237,7 @@ function generatePathologyDist(history: { pathologyCount: number; imageType: str
   if (total === 0) return [{ name: 'None', value: 1, color: '#9CA3AF' }];
   return [
     { name: 'Detected', value: total, color: '#FF3254' },
-    { name: 'Clean scans', value: Math.max(1, history.filter((h) => h.pathologyCount === 0).length), color: '#10B981' },
+    { name: 'Clean scans', value: Math.max(1, history.filter((h) => h.pathologyCount === 0).length), color: '#30A46C' },
   ];
 }
 

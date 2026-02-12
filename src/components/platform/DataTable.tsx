@@ -19,50 +19,39 @@ interface DataTableProps {
   onRowClick?: (row: any) => void;
 }
 
-export default function DataTable({
-  columns,
-  data,
-  keyField,
-  onRowClick,
-}: DataTableProps) {
+export default function DataTable({ columns, data, keyField, onRowClick }: DataTableProps) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
 
   const handleSort = (key: string) => {
-    if (sortKey === key) {
-      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-    } else {
-      setSortKey(key);
-      setSortDir('asc');
-    }
+    if (sortKey === key) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    else { setSortKey(key); setSortDir('asc'); }
   };
 
   const sorted = sortKey
     ? [...data].sort((a, b) => {
-        const aVal = a[sortKey];
-        const bVal = b[sortKey];
-        const cmp = String(aVal).localeCompare(String(bVal), undefined, { numeric: true });
+        const cmp = String(a[sortKey]).localeCompare(String(b[sortKey]), undefined, { numeric: true });
         return sortDir === 'asc' ? cmp : -cmp;
       })
     : data;
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="w-full text-[13px]">
         <thead>
           <tr className="border-b border-white/[0.06]">
             {columns.map((col) => (
               <th
                 key={col.key}
                 onClick={col.sortable ? () => handleSort(col.key) : undefined}
-                className={`text-left py-3 px-4 text-xs font-medium text-[#64748B] uppercase tracking-wider ${
-                  col.sortable ? 'cursor-pointer hover:text-[#94A3B8] select-none' : ''
+                className={`text-left py-2.5 px-3 text-[11px] font-medium text-[#5C5C5F] uppercase tracking-wider ${
+                  col.sortable ? 'cursor-pointer hover:text-[#8B8B8E] select-none' : ''
                 }`}
               >
                 <span className="flex items-center gap-1">
                   {col.label}
                   {col.sortable && sortKey === col.key && (
-                    <span className="text-[#3B82F6]">{sortDir === 'asc' ? '\u2191' : '\u2193'}</span>
+                    <span className="text-[#5B5BD6]">{sortDir === 'asc' ? '\u2191' : '\u2193'}</span>
                   )}
                 </span>
               </th>
@@ -74,10 +63,10 @@ export default function DataTable({
             <tr
               key={String(row[keyField])}
               onClick={() => onRowClick?.(row)}
-              className={`border-b border-white/[0.04] ${onRowClick ? 'cursor-pointer hover:bg-white/[0.03]' : ''}`}
+              className={`border-b border-white/[0.04] ${onRowClick ? 'cursor-pointer hover:bg-white/[0.02]' : ''}`}
             >
               {columns.map((col) => (
-                <td key={col.key} className="py-3 px-4 text-[#CBD5E1]">
+                <td key={col.key} className="py-2.5 px-3 text-[#EDEDEF]">
                   {col.render ? col.render(row) : String(row[col.key] ?? '')}
                 </td>
               ))}

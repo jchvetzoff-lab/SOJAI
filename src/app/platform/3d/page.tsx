@@ -25,13 +25,13 @@ export default function Viewer3DPage() {
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col">
       {/* Page title */}
-      <div className="mb-6">
-        <h1 className="text-3xl tracking-tight font-bold text-[#E2E8F0]">3D Viewer</h1>
-        <p className="text-sm text-[#64748B] mt-1">Interactive 3D jaw model — rotate, zoom and toggle layers</p>
+      <div className="mb-4">
+        <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">3D Viewer</h1>
+        <p className="text-[13px] text-[#5C5C5F] mt-1">Interactive 3D jaw model — rotate, zoom and toggle layers</p>
       </div>
 
       {/* 3D Canvas */}
-      <div className="flex-1 relative rounded-2xl overflow-hidden bg-[#0a0a1a]">
+      <div className="flex-1 relative rounded-lg overflow-hidden bg-[#0a0a1a]">
         <Canvas camera={{ position: [0, 3, 5], fov: 45 }}>
           <ambientLight intensity={0.4} />
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
@@ -53,8 +53,8 @@ export default function Viewer3DPage() {
         </Canvas>
 
         {/* Dark floating layer panel — Diagnocat style */}
-        <div className="absolute top-4 left-4 bg-[#0F1A2E]/95 backdrop-blur-sm rounded-2xl p-5 space-y-3 min-w-[200px] border border-white/[0.06]">
-          <h3 className="text-sm font-semibold text-white/90">Layers</h3>
+        <div className="absolute top-4 left-4 bg-[#0A0A0B]/95 backdrop-blur-sm rounded-lg p-4 space-y-3 min-w-[200px] border border-white/[0.06]">
+          <h3 className="text-[13px] font-semibold text-white/90">Layers</h3>
           {toggles.map((t) => (
             <label key={t.label} className="flex items-center gap-3 cursor-pointer group">
               {/* Eye icon */}
@@ -85,7 +85,7 @@ export default function Viewer3DPage() {
 
               {/* Label */}
               <span
-                className="text-sm font-medium transition-opacity"
+                className="text-[13px] font-medium transition-opacity"
                 style={{ color: t.active ? '#E5E7EB' : '#6B7280' }}
               >
                 {t.label}
@@ -108,13 +108,13 @@ export default function Viewer3DPage() {
         </div>
 
         {/* Info badge */}
-        <div className="absolute top-4 right-4 bg-[#0F1A2E]/80 backdrop-blur-sm rounded-xl px-4 py-2 text-xs text-[#64748B] border border-white/[0.06]">
+        <div className="absolute top-4 right-4 bg-[#0A0A0B]/80 backdrop-blur-sm rounded-md px-4 py-2 text-[11px] text-[#5C5C5F] border border-white/[0.06]">
           Drag to rotate &middot; Scroll to zoom &middot; Right-click to pan
         </div>
 
         {/* Export */}
         <div className="absolute bottom-4 right-4">
-          <button className="bg-[#3B82F6] text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#2563EB] transition-colors">
+          <button className="bg-[#5B5BD6] text-white px-4 py-2 rounded-md text-[13px] font-medium hover:bg-[#6E6ADE] transition-colors">
             Export STL
           </button>
         </div>

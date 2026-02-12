@@ -9,21 +9,21 @@ export default function SuperimpositionPage() {
   const [opacity, setOpacity] = useState(50);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10">
+    <div className="max-w-7xl mx-auto space-y-4">
       <div>
-        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Superimposition</h1>
-        <p className="text-lg text-[#64748B] mt-3">Compare scans from different dates</p>
+        <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">Superimposition</h1>
+        <p className="text-[14px] text-[#5C5C5F] mt-3">Compare scans from different dates</p>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-6">
-        <div className="bg-[#111C32] rounded-xl border border-white/[0.06] p-1 flex">
+      <div className="flex items-center gap-3">
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-1 flex">
           {(['slider', '3d', 'sidebyside'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setActiveMode(mode)}
-              className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                activeMode === mode ? 'bg-[#3B82F6] text-white' : 'text-[#64748B] hover:text-[#E2E8F0]'
+              className={`px-4 py-1.5 rounded-md text-[13px] font-medium transition-colors ${
+                activeMode === mode ? 'bg-[#5B5BD6] text-white' : 'text-[#5C5C5F] hover:text-[#EDEDEF]'
               }`}
             >
               {mode === 'slider' ? 'Before / After' : mode === '3d' ? '3D Fusion' : 'Side by Side'}
@@ -31,17 +31,17 @@ export default function SuperimpositionPage() {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 bg-[#111C32] rounded-xl border border-white/[0.06] px-4 py-2">
-          <span className="text-xs text-[#64748B]">Date 1:</span>
-          <span className="text-sm font-medium text-[#E2E8F0]">Jan 15, 2026</span>
-          <span className="text-[#475569] mx-1">vs</span>
-          <span className="text-xs text-[#64748B]">Date 2:</span>
-          <span className="text-sm font-medium text-[#E2E8F0]">Feb 09, 2026</span>
+        <div className="flex items-center gap-2 bg-[#141416] rounded-lg border border-white/[0.06] px-4 py-2">
+          <span className="text-[11px] text-[#5C5C5F]">Date 1:</span>
+          <span className="text-[13px] font-medium text-[#EDEDEF]">Jan 15, 2026</span>
+          <span className="text-[#5C5C5F] mx-1">vs</span>
+          <span className="text-[11px] text-[#5C5C5F]">Date 2:</span>
+          <span className="text-[13px] font-medium text-[#EDEDEF]">Feb 09, 2026</span>
         </div>
       </div>
 
       {/* Main viewer */}
-      <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300 overflow-hidden">
+      <div className="bg-[#141416] rounded-lg border border-white/[0.06] transition-all duration-300 overflow-hidden">
         {activeMode === 'slider' && (
           <div className="relative h-[500px] bg-[#0a0a1a]">
             {/* Before image (left side) */}
@@ -58,7 +58,7 @@ export default function SuperimpositionPage() {
                       <rect key={i} x={25 + i * 18} y={30} width={12} height={30} rx={3} fill="#1a3a5a" stroke="#2a4a6a" strokeWidth={0.5} />
                     ))}
                   </svg>
-                  <div className="absolute top-4 left-4 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
+                  <div className="absolute top-4 left-4 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-[11px] font-medium">
                     Jan 15, 2026
                   </div>
                 </div>
@@ -75,7 +75,7 @@ export default function SuperimpositionPage() {
                     <rect key={i} x={25 + i * 18} y={30} width={12} height={30} rx={3} fill="#3a1a5a" stroke="#4a2a6a" strokeWidth={0.5} />
                   ))}
                 </svg>
-                <div className="absolute top-4 right-4 bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs font-medium">
+                <div className="absolute top-4 right-4 bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-[11px] font-medium">
                   Feb 09, 2026
                 </div>
               </div>
@@ -86,8 +86,8 @@ export default function SuperimpositionPage() {
               className="absolute top-0 bottom-0 w-0.5 bg-white z-10 cursor-ew-resize"
               style={{ left: `${sliderPos}%` }}
             >
-              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2">
+              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B5BD6" strokeWidth="2">
                   <path d="M8 6l-6 6 6 6" /><path d="M16 6l6 6-6 6" />
                 </svg>
               </div>
@@ -112,7 +112,7 @@ export default function SuperimpositionPage() {
                 <ellipse cx="150" cy="50" rx="140" ry="45" fill="none" stroke="#2a4a6a" strokeWidth="1.5" />
                 <ellipse cx="150" cy="100" rx="120" ry="40" fill="none" stroke="#2a4a6a" strokeWidth="1.5" />
               </svg>
-              <div className="absolute bottom-4 left-4 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
+              <div className="absolute bottom-4 left-4 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-[11px] font-medium">
                 Jan 15, 2026
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function SuperimpositionPage() {
                 <ellipse cx="150" cy="50" rx="140" ry="45" fill="none" stroke="#4a2a6a" strokeWidth="1.5" />
                 <ellipse cx="150" cy="100" rx="120" ry="40" fill="none" stroke="#4a2a6a" strokeWidth="1.5" />
               </svg>
-              <div className="absolute bottom-4 right-4 bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs font-medium">
+              <div className="absolute bottom-4 right-4 bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-[11px] font-medium">
                 Feb 09, 2026
               </div>
             </div>
@@ -130,39 +130,39 @@ export default function SuperimpositionPage() {
 
         {activeMode === '3d' && (
           <div className="h-[500px] bg-[#0a0a1a] flex items-center justify-center relative">
-            <p className="text-white/40 text-sm">3D Fusion View — Interactive CBCT overlay</p>
-            <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-3">
-              <span className="text-xs text-white/60 shrink-0">Opacity</span>
+            <p className="text-white/40 text-[13px]">3D Fusion View — Interactive CBCT overlay</p>
+            <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-md p-3">
+              <span className="text-[11px] text-white/60 shrink-0">Opacity</span>
               <input
                 type="range"
                 min={0}
                 max={100}
                 value={opacity}
                 onChange={(e) => setOpacity(Number(e.target.value))}
-                className="flex-1 accent-[#3B82F6]"
+                className="flex-1 accent-[#5B5BD6]"
               />
-              <span className="text-xs text-white/60 w-8 text-right">{opacity}%</span>
+              <span className="text-[11px] text-white/60 w-8 text-right">{opacity}%</span>
             </div>
           </div>
         )}
       </div>
 
       {/* Analysis summary */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
-          <div className="text-xs text-[#64748B] mb-1">Alignment Score</div>
-          <div className="text-2xl font-bold text-emerald-500">97.3%</div>
-          <div className="text-xs text-[#64748B] mt-1">Automatic registration</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4 transition-all duration-300">
+          <div className="text-[11px] text-[#5C5C5F] mb-1">Alignment Score</div>
+          <div className="text-2xl font-bold text-[#30A46C]">97.3%</div>
+          <div className="text-[11px] text-[#5C5C5F] mt-1">Automatic registration</div>
         </div>
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
-          <div className="text-xs text-[#64748B] mb-1">Changes Detected</div>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4 transition-all duration-300">
+          <div className="text-[11px] text-[#5C5C5F] mb-1">Changes Detected</div>
           <div className="text-2xl font-bold text-[#FF3254]">3</div>
-          <div className="text-xs text-[#64748B] mt-1">Regions with significant change</div>
+          <div className="text-[11px] text-[#5C5C5F] mt-1">Regions with significant change</div>
         </div>
-        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
-          <div className="text-xs text-[#64748B] mb-1">Time Between Scans</div>
-          <div className="text-2xl font-bold text-[#3B82F6]">25 days</div>
-          <div className="text-xs text-[#64748B] mt-1">Jan 15 — Feb 09, 2026</div>
+        <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4 transition-all duration-300">
+          <div className="text-[11px] text-[#5C5C5F] mb-1">Time Between Scans</div>
+          <div className="text-2xl font-bold text-[#5B5BD6]">25 days</div>
+          <div className="text-[11px] text-[#5C5C5F] mt-1">Jan 15 — Feb 09, 2026</div>
         </div>
       </div>
     </div>

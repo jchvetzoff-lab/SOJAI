@@ -60,9 +60,9 @@ export default function ReportPage() {
   if (!isDemo && !analysisResult) {
     return (
       <div className="max-w-7xl mx-auto">
-        <div className="mb-10">
-          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Report Generator</h1>
-          <p className="text-lg text-[#64748B] mt-3">No analysis available</p>
+        <div className="mb-4">
+          <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">Report Generator</h1>
+          <p className="text-[14px] text-[#5C5C5F] mt-3">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis to report"
@@ -245,35 +245,35 @@ export default function ReportPage() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="mb-10">
-        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Report Generator</h1>
-        <p className="text-lg text-[#64748B] mt-3">
+      <div className="mb-4">
+        <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">Report Generator</h1>
+        <p className="text-[14px] text-[#5C5C5F] mt-3">
           Create professional diagnostic reports
-          {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+          {isDemo && <span className="ml-1 text-[#E5A836]">(demo data)</span>}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Controls */}
-        <div className="space-y-6">
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Settings</h3>
+        <div className="space-y-3">
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4 transition-all duration-300">
+            <h3 className="text-[13px] font-semibold text-[#EDEDEF] mb-3">Settings</h3>
             <div className="space-y-3">
               <label className="flex items-center justify-between">
-                <span className="text-sm text-[#94A3B8]">Clinic Branding</span>
+                <span className="text-[13px] text-[#8B8B8E]">Clinic Branding</span>
                 <button
                   onClick={() => setBranding(!branding)}
-                  className={`w-11 h-6 rounded-full transition-colors ${branding ? 'bg-[#3B82F6]' : 'bg-[#334155]'}`}
+                  className={`w-11 h-6 rounded-full transition-colors ${branding ? 'bg-[#5B5BD6]' : 'bg-[#333338]'}`}
                 >
                   <span className={`block w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${branding ? 'translate-x-5' : 'translate-x-0'}`} />
                 </button>
               </label>
               <div>
-                <label className="text-sm text-[#94A3B8] block mb-1">Language</label>
+                <label className="text-[13px] text-[#8B8B8E] block mb-1">Language</label>
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="w-full bg-[#0B1222] rounded-lg px-3 py-2 text-sm text-[#E2E8F0] border border-white/[0.08] outline-none focus:border-[#3B82F6]/40"
+                  className="w-full bg-[#0A0A0B] rounded-md px-3 py-2 text-[13px] text-[#EDEDEF] border border-white/[0.08] outline-none focus:border-[#5B5BD6]/40"
                 >
                   <option value="en">English</option>
                   <option value="fr">Fran{'\u00E7'}ais</option>
@@ -284,15 +284,15 @@ export default function ReportPage() {
             </div>
           </div>
 
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Report Sections</h3>
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4 transition-all duration-300">
+            <h3 className="text-[13px] font-semibold text-[#EDEDEF] mb-3">Report Sections</h3>
             <div className="space-y-2">
               {sections.map((s) => (
                 <label key={s.id} className="flex items-center justify-between py-1 cursor-pointer">
-                  <span className={`text-sm ${s.enabled ? 'text-[#E2E8F0]' : 'text-[#64748B]'}`}>{s.title}</span>
+                  <span className={`text-[13px] ${s.enabled ? 'text-[#EDEDEF]' : 'text-[#5C5C5F]'}`}>{s.title}</span>
                   <button
                     onClick={() => toggleSection(s.id)}
-                    className={`w-8 h-4 rounded-full transition-colors ${s.enabled ? 'bg-[#3B82F6]' : 'bg-white/[0.04]'}`}
+                    className={`w-8 h-4 rounded-full transition-colors ${s.enabled ? 'bg-[#5B5BD6]' : 'bg-white/[0.04]'}`}
                   >
                     <span className={`block w-3 h-3 bg-white rounded-full shadow transition-transform mx-0.5 ${s.enabled ? 'translate-x-4' : 'translate-x-0'}`} />
                   </button>
@@ -304,13 +304,13 @@ export default function ReportPage() {
           <div className="space-y-3">
             <button
               onClick={handleDownloadPdf}
-              className="w-full py-3.5 bg-[#3B82F6] text-white rounded-2xl text-base font-medium hover:bg-[#2563EB] transition-colors"
+              className="w-full py-3.5 bg-[#5B5BD6] text-white rounded-lg text-[13px] font-medium hover:bg-[#6E6ADE] transition-colors"
             >
               Download PDF
             </button>
             <button
               onClick={() => window.print()}
-              className="w-full py-3.5 bg-[#111C32] text-[#3B82F6] border border-white/[0.1] rounded-2xl text-base font-medium hover:bg-[#3B82F6]/10 transition-colors"
+              className="w-full py-3.5 bg-[#141416] text-[#5B5BD6] border border-white/[0.1] rounded-lg text-[13px] font-medium hover:bg-[#5B5BD6]/10 transition-colors"
             >
               Print Preview
             </button>
@@ -322,7 +322,7 @@ export default function ReportPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl border border-black/[0.08] p-10 min-h-[800px]"
+            className="bg-white rounded-lg border border-black/[0.08] p-10 min-h-[800px]"
             style={{ aspectRatio: '210 / 297', maxWidth: '595px', margin: '0 auto' }}
           >
             {/* Report header */}

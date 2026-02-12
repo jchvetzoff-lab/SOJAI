@@ -11,15 +11,11 @@ export default function LoadingOverlay({ visible }: LoadingOverlayProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (!visible) {
-      setProgress(0);
-      return;
-    }
+    if (!visible) { setProgress(0); return; }
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 90) return prev;
-        const remaining = 90 - prev;
-        return prev + remaining * 0.03;
+        return prev + (90 - prev) * 0.03;
       });
     }, 300);
     return () => clearInterval(interval);
@@ -32,39 +28,31 @@ export default function LoadingOverlay({ visible }: LoadingOverlayProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 z-50 bg-[#0a0a1a]/80 backdrop-blur-sm flex items-center justify-center"
+          className="absolute inset-0 z-50 bg-[#0A0A0B]/80 backdrop-blur-sm flex items-center justify-center"
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-[#111C32] rounded-2xl border border-white/[0.08] p-8 max-w-sm w-full mx-4 text-center"
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="bg-[#141416] rounded-lg border border-white/[0.08] p-6 max-w-xs w-full mx-4 text-center"
           >
-            {/* Spinner */}
-            <div className="w-16 h-16 mx-auto mb-4 relative">
+            <div className="w-12 h-12 mx-auto mb-3 relative">
               <svg className="animate-spin w-full h-full" viewBox="0 0 50 50">
-                <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="4" />
-                <circle
-                  cx="25" cy="25" r="20" fill="none" stroke="#3B82F6" strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeDasharray="80 126"
-                />
+                <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
+                <circle cx="25" cy="25" r="20" fill="none" stroke="#5B5BD6" strokeWidth="3" strokeLinecap="round" strokeDasharray="80 126" />
               </svg>
             </div>
-
-            <h3 className="text-lg font-semibold text-[#E2E8F0] mb-1">Analyzing your dental scan...</h3>
-            <p className="text-sm text-[#64748B] mb-4">Claude AI is examining the radiograph</p>
-
-            {/* Progress bar */}
-            <div className="w-full bg-white/[0.06] rounded-full h-2 overflow-hidden">
+            <h3 className="text-[14px] font-semibold text-[#EDEDEF] mb-1">Analyzing scan...</h3>
+            <p className="text-[12px] text-[#5C5C5F] mb-3">Claude AI is examining the radiograph</p>
+            <div className="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-[#3B82F6] to-[#6366F1] rounded-full"
+                className="h-full bg-[#5B5BD6] rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3 }}
               />
             </div>
-            <p className="text-xs text-[#475569] mt-2">{Math.round(progress)}% complete</p>
+            <p className="text-[11px] text-[#5C5C5F] mt-2">{Math.round(progress)}%</p>
           </motion.div>
         </motion.div>
       )}

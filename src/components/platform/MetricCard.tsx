@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 interface MetricCardProps {
   title: string;
   value: string | number;
@@ -11,34 +9,29 @@ interface MetricCardProps {
   color?: string;
 }
 
-export default function MetricCard({ title, value, subtitle, trend, icon, color = '#3B82F6' }: MetricCardProps) {
+export default function MetricCard({ title, value, subtitle, trend, icon, color = '#5B5BD6' }: MetricCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className="bg-[#111C32] rounded-2xl p-6 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
-    >
-      <div className="flex items-center gap-3 mb-4">
+    <div className="bg-[#141416] rounded-lg p-4 border border-white/[0.06] hover:border-white/[0.1] transition-all duration-200">
+      <div className="flex items-center gap-2.5 mb-3">
         <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center"
-          style={{ backgroundColor: `${color}20`, color }}
+          className="w-8 h-8 rounded-md flex items-center justify-center"
+          style={{ backgroundColor: `${color}18`, color }}
         >
           {icon}
         </div>
-        <span className="text-sm text-[#64748B] font-medium">{title}</span>
+        <span className="text-[12px] text-[#5C5C5F] font-medium">{title}</span>
       </div>
-      <div className="text-3xl font-bold text-[#E2E8F0] tracking-tight">{value}</div>
-      <div className="flex items-center justify-between mt-2">
-        {subtitle && <span className="text-xs text-[#475569]">{subtitle}</span>}
+      <div className="text-2xl font-semibold text-[#EDEDEF] tracking-tight">{value}</div>
+      <div className="flex items-center justify-between mt-1.5">
+        {subtitle && <span className="text-[11px] text-[#5C5C5F]">{subtitle}</span>}
         {trend && (
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-            trend.positive ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
+          <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded ${
+            trend.positive ? 'bg-[#30A46C]/10 text-[#30A46C]' : 'bg-[#E5484D]/10 text-[#E5484D]'
           }`}>
             {trend.positive ? '\u2191' : '\u2193'} {trend.value}
           </span>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }

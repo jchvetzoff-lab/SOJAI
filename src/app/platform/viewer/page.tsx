@@ -133,31 +133,31 @@ export default function ViewerPage() {
       {/* Page title */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-3xl tracking-tight font-bold text-[#E2E8F0]">2D Viewer</h1>
-          <p className="text-sm text-[#64748B] mt-1">
+          <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">2D Viewer</h1>
+          <p className="text-[13px] text-[#5C5C5F] mt-1">
             View, annotate and analyze dental scans with AI
-            {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
-            {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(analysis loaded)</span>}
+            {isDemo && <span className="ml-1 text-[#E5A836]">(demo data)</span>}
+            {!isDemo && analysisResult && <span className="ml-1 text-[#30A46C]">(analysis loaded)</span>}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={handleToggleDemo}
-            className={`px-3 py-1.5 rounded-2xl text-sm font-medium transition-colors ${
-              isDemo ? 'bg-amber-500/15 text-amber-400' : 'bg-white/[0.06] text-[#94A3B8]'
+            className={`px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${
+              isDemo ? 'bg-[#E5A836]/15 text-[#E5A836]' : 'bg-white/[0.06] text-[#8B8B8E]'
             }`}
           >
             {isDemo ? 'Demo Mode' : 'Live Mode'}
           </button>
-          <div className="flex items-center bg-[#111C32] rounded-2xl border border-white/[0.06] p-1">
+          <div className="flex items-center bg-[#141416] rounded-lg border border-white/[0.06] p-1">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-1.5 rounded-md text-[13px] font-medium transition-colors ${
                   activeTab === tab.key
-                    ? 'bg-[#3B82F6] text-white'
-                    : 'text-[#64748B] hover:text-[#E2E8F0]'
+                    ? 'bg-[#5B5BD6] text-white'
+                    : 'text-[#5C5C5F] hover:text-[#EDEDEF]'
                 }`}
               >
                 {tab.label}
@@ -177,7 +177,7 @@ export default function ViewerPage() {
         {selectedCategories.length > 0 && (
           <button
             onClick={() => setSelectedCategories([])}
-            className="text-sm text-[#64748B] hover:text-[#94A3B8] transition-colors"
+            className="text-[13px] text-[#5C5C5F] hover:text-[#8B8B8E] transition-colors"
           >
             Clear
           </button>
@@ -189,8 +189,8 @@ export default function ViewerPage() {
         <div className="flex items-center gap-3">
           <ViewerToolbar tools={toolbarItems} />
           {/* Brightness/Contrast sliders */}
-          <div className="hidden xl:flex items-center gap-3 bg-[#111C32] rounded-xl border border-white/[0.06] p-2">
-            <label className="flex items-center gap-2 text-xs text-[#64748B]">
+          <div className="hidden xl:flex items-center gap-3 bg-[#141416] rounded-md border border-white/[0.06] p-2">
+            <label className="flex items-center gap-2 text-[11px] text-[#5C5C5F]">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" /></svg>
               <input
                 type="range"
@@ -198,10 +198,10 @@ export default function ViewerPage() {
                 max="200"
                 value={viewerSettings.brightness}
                 onChange={(e) => setViewerSettings({ brightness: Number(e.target.value) })}
-                className="w-24 accent-[#3B82F6]"
+                className="w-24 accent-[#5B5BD6]"
               />
             </label>
-            <label className="flex items-center gap-2 text-xs text-[#64748B]">
+            <label className="flex items-center gap-2 text-[11px] text-[#5C5C5F]">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /></svg>
               <input
                 type="range"
@@ -209,14 +209,14 @@ export default function ViewerPage() {
                 max="300"
                 value={viewerSettings.contrast}
                 onChange={(e) => setViewerSettings({ contrast: Number(e.target.value) })}
-                className="w-24 accent-[#3B82F6]"
+                className="w-24 accent-[#5B5BD6]"
               />
             </label>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-[calc(100%-180px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 h-[calc(100%-180px)]">
         {/* Main viewer area */}
         <div className="lg:col-span-3 flex flex-col gap-4">
           {hasImage ? (
@@ -229,18 +229,18 @@ export default function ViewerPage() {
                 />
                 <LoadingOverlay visible={analysisLoading} />
                 {analysisResult && (
-                  <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
+                  <div className="absolute top-4 left-4 bg-[#30A46C]/20 text-[#30A46C] px-3 py-1.5 rounded-md text-[11px] font-medium backdrop-blur-sm">
                     Analysed in {(analysisResult.analysisTimeMs / 1000).toFixed(1)}s
                   </div>
                 )}
-                <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
+                <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-md text-[11px] font-medium backdrop-blur-sm">
                   {activeTab === 'original' ? 'Original View' : 'AI Analysis Active'}
                 </div>
               </div>
             </>
           ) : isDemo ? (
             /* Demo view: mock panoramic */
-            <div className="relative flex-1 bg-[#0a0a1a] rounded-2xl overflow-hidden border border-gray-800 min-h-[400px]">
+            <div className="relative flex-1 bg-[#0a0a1a] rounded-lg overflow-hidden border border-gray-800 min-h-[400px]">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-[90%] h-[80%]">
                   <svg viewBox="0 0 400 200" className="w-full h-full opacity-30">
@@ -280,22 +280,22 @@ export default function ViewerPage() {
                         onClick={() => setSelectedTooth(marker.tooth)}
                       >
                         <div className="absolute inset-[-8px] rounded-full animate-ping opacity-30" style={{ backgroundColor: cat.solidBg }} />
-                        <div className="w-4 h-4 rounded-full border-2 border-white shadow-lg relative z-10" style={{ backgroundColor: cat.solidBg }} />
+                        <div className="w-4 h-4 rounded-full border-2 border-white relative z-10" style={{ backgroundColor: cat.solidBg }} />
                       </motion.div>
                     );
                   })}
                 </div>
               </div>
-              <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
+              <div className="absolute top-4 left-4 bg-[#30A46C]/20 text-[#30A46C] px-3 py-1.5 rounded-md text-[11px] font-medium backdrop-blur-sm">
                 Demo data
               </div>
-              <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
+              <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-md text-[11px] font-medium backdrop-blur-sm">
                 {activeTab === 'original' ? 'Original View' : 'AI Analysis Active'}
               </div>
             </div>
           ) : (
             /* No image, no demo: upload zone */
-            <div className="flex-1 bg-[#111C32] rounded-2xl border border-white/[0.06] p-8 min-h-[400px] flex items-center justify-center">
+            <div className="flex-1 bg-[#141416] rounded-lg border border-white/[0.06] p-5 min-h-[400px] flex items-center justify-center">
               <div className="max-w-md w-full">
                 <ImageUploadZone />
               </div>
@@ -303,7 +303,7 @@ export default function ViewerPage() {
           )}
 
           {/* Dental chart below */}
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-5">
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4">
             <DentalChart
               onToothClick={setSelectedTooth}
               selectedTooth={selectedTooth}
@@ -317,30 +317,30 @@ export default function ViewerPage() {
         <div className="lg:col-span-2 flex flex-col gap-4 overflow-y-auto">
           {/* Upload zone (when image exists, show compact upload) */}
           {!isDemo && (
-            <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6">
-              <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Upload Image</h3>
+            <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4">
+              <h3 className="text-[13px] font-semibold text-[#EDEDEF] mb-3">Upload Image</h3>
               <ImageUploadZone />
             </div>
           )}
 
           {/* Patient info */}
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-5">
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-[#3B82F6] flex items-center justify-center text-white text-sm font-bold">
+              <div className="w-10 h-10 rounded-full bg-[#5B5BD6] flex items-center justify-center text-white text-[13px] font-bold">
                 {patient.name.charAt(0)}
               </div>
               <div className="flex-1">
                 {isDemo ? (
                   <>
-                    <div className="font-semibold text-[#E2E8F0]">{patient.name}</div>
-                    <div className="text-xs text-[#64748B]">{patient.age}y &middot; {patient.gender} &middot; ID: {patient.id}</div>
+                    <div className="font-semibold text-[#EDEDEF]">{patient.name}</div>
+                    <div className="text-[11px] text-[#5C5C5F]">{patient.age}y &middot; {patient.gender} &middot; ID: {patient.id}</div>
                   </>
                 ) : (
                   <div className="space-y-1">
                     <input
                       value={currentPatient.name}
                       onChange={(e) => setCurrentPatient({ name: e.target.value })}
-                      className="text-sm font-semibold text-[#E2E8F0] bg-transparent border-b border-transparent focus:border-[#3B82F6] outline-none w-full"
+                      className="text-[13px] font-semibold text-[#EDEDEF] bg-transparent border-b border-transparent focus:border-[#5B5BD6] outline-none w-full"
                       placeholder="Patient name"
                     />
                     <div className="flex gap-2">
@@ -348,13 +348,13 @@ export default function ViewerPage() {
                         type="number"
                         value={currentPatient.age}
                         onChange={(e) => setCurrentPatient({ age: Number(e.target.value) })}
-                        className="text-xs text-[#64748B] bg-transparent border-b border-transparent focus:border-[#3B82F6] outline-none w-12"
+                        className="text-[11px] text-[#5C5C5F] bg-transparent border-b border-transparent focus:border-[#5B5BD6] outline-none w-12"
                       />
-                      <span className="text-xs text-[#64748B]">y</span>
+                      <span className="text-[11px] text-[#5C5C5F]">y</span>
                       <select
                         value={currentPatient.gender}
                         onChange={(e) => setCurrentPatient({ gender: e.target.value as 'M' | 'F' })}
-                        className="text-xs text-[#64748B] bg-transparent outline-none"
+                        className="text-[11px] text-[#5C5C5F] bg-transparent outline-none"
                       >
                         <option value="M">M</option>
                         <option value="F">F</option>
@@ -366,27 +366,27 @@ export default function ViewerPage() {
             </div>
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="bg-white/[0.04] rounded-lg p-2">
-                <div className="text-lg font-bold text-[#E2E8F0]">{isDemo ? '12' : (analysisResult ? 1 : 0)}</div>
-                <div className="text-xs text-[#64748B]">Scans</div>
+                <div className="text-[14px] font-bold text-[#EDEDEF]">{isDemo ? '12' : (analysisResult ? 1 : 0)}</div>
+                <div className="text-[11px] text-[#5C5C5F]">Scans</div>
               </div>
               <div className="bg-white/[0.04] rounded-lg p-2">
-                <div className="text-lg font-bold text-[#EF4444]">{pathologies.length}</div>
-                <div className="text-xs text-[#64748B]">Findings</div>
+                <div className="text-[14px] font-bold text-[#E5484D]">{pathologies.length}</div>
+                <div className="text-[11px] text-[#5C5C5F]">Findings</div>
               </div>
               <div className="bg-white/[0.04] rounded-lg p-2">
-                <div className="text-lg font-bold text-emerald-500">
+                <div className="text-[14px] font-bold text-[#30A46C]">
                   {pathologies.length > 0 ? Math.round(pathologies.reduce((s, p) => s + p.confidence, 0) / pathologies.length) : 0}%
                 </div>
-                <div className="text-xs text-[#64748B]">AI Conf.</div>
+                <div className="text-[11px] text-[#5C5C5F]">AI Conf.</div>
               </div>
             </div>
           </div>
 
           {/* Findings by tooth */}
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] flex-1 flex flex-col overflow-hidden">
-            <div className="p-5 border-b border-white/[0.06]">
-              <h3 className="font-semibold text-[#E2E8F0]">AI Findings</h3>
-              <p className="text-xs text-[#64748B] mt-0.5">
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] flex-1 flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-white/[0.06]">
+              <h3 className="font-semibold text-[#EDEDEF]">AI Findings</h3>
+              <p className="text-[11px] text-[#5C5C5F] mt-0.5">
                 {filteredPathologies.length} conditions detected
                 {!isDemo && analysisResult && (
                   <span className="ml-1">({new Date(analysisResult.analyzedAt).toLocaleString()})</span>
@@ -397,19 +397,19 @@ export default function ViewerPage() {
               {findingsByTooth.map(([toothNum, findings]) => (
                 <div
                   key={toothNum}
-                  className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                  className={`p-3 rounded-md border transition-all cursor-pointer ${
                     selectedTooth === toothNum
-                      ? 'border-[#3B82F6] bg-[#3B82F6]/10'
+                      ? 'border-[#5B5BD6] bg-[#5B5BD6]/10'
                       : 'border-white/[0.06] hover:border-white/[0.08]'
                   }`}
                   onClick={() => setSelectedTooth(toothNum)}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#1A1A2E] text-white text-xs font-bold">
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#333338] text-white text-[11px] font-bold">
                       {toothNum}
                     </span>
-                    <span className="text-sm font-medium text-[#E2E8F0]">Tooth {toothNum}</span>
-                    <span className="text-xs text-[#64748B]">{getToothName(toothNum)}</span>
+                    <span className="text-[13px] font-medium text-[#EDEDEF]">Tooth {toothNum}</span>
+                    <span className="text-[11px] text-[#5C5C5F]">{getToothName(toothNum)}</span>
                   </div>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {findings.map((f) => (
@@ -418,7 +418,7 @@ export default function ViewerPage() {
                   </div>
                   {findings.map((f) => (
                     <div key={f.id} className="mb-1.5 last:mb-0">
-                      <div className="text-xs text-[#64748B]">{f.name} — {f.confidence}%</div>
+                      <div className="text-[11px] text-[#5C5C5F]">{f.name} — {f.confidence}%</div>
                     </div>
                   ))}
                 </div>

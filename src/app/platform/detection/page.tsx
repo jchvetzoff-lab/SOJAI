@@ -28,9 +28,9 @@ export default function DetectionPage() {
   if (!isDemo && !analysisResult) {
     return (
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">CBCT AI Report</h1>
-          <p className="text-lg text-[#64748B] mt-3">No analysis available</p>
+        <div className="mb-4">
+          <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">CBCT AI Report</h1>
+          <p className="text-[14px] text-[#5C5C5F] mt-3">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis yet"
@@ -72,22 +72,22 @@ export default function DetectionPage() {
   const teethInReport = new Set(pathologies.flatMap((p) => p.affectedTeeth));
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-6">
+    <div className="max-w-[1600px] mx-auto space-y-3">
       {/* Header bar */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl tracking-tight font-bold text-[#E2E8F0]">CBCT AI Report</h1>
-          <p className="text-sm text-[#64748B] mt-1">
+          <h1 className="text-xl tracking-tight font-bold text-[#EDEDEF]">CBCT AI Report</h1>
+          <p className="text-[13px] text-[#5C5C5F] mt-1">
             {pathologies.length} findings across {teethInReport.size} teeth
-            {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+            {isDemo && <span className="ml-1 text-[#E5A836]">(demo data)</span>}
             {!isDemo && analysisResult && (
-              <span className="ml-1 text-emerald-500">
+              <span className="ml-1 text-[#30A46C]">
                 &mdash; Analyzed {new Date(analysisResult.analyzedAt).toLocaleDateString()}
               </span>
             )}
           </p>
         </div>
-        <button className="px-5 py-2.5 bg-emerald-500 text-white rounded-full text-sm font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+        <button className="px-5 py-2.5 bg-[#30A46C] text-white rounded-full text-[13px] font-semibold hover:bg-[#30A46C]/80 transition-colors flex items-center gap-2">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12" />
           </svg>
@@ -108,7 +108,7 @@ export default function DetectionPage() {
               setSelectedCategories([]);
               setSelectedTooth(null);
             }}
-            className="text-sm text-[#64748B] hover:text-[#94A3B8] transition-colors"
+            className="text-[13px] text-[#5C5C5F] hover:text-[#8B8B8E] transition-colors"
           >
             Clear filters
           </button>
@@ -116,11 +116,11 @@ export default function DetectionPage() {
       </div>
 
       {/* Two-panel layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6" style={{ minHeight: 'calc(100vh - 16rem)' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-3" style={{ minHeight: 'calc(100vh - 16rem)' }}>
         {/* LEFT: Panoramic + Dental Chart */}
-        <div className="lg:col-span-3 flex flex-col gap-6">
+        <div className="lg:col-span-3 flex flex-col gap-3">
           {/* Mock panoramic X-ray */}
-          <div className="relative bg-[#0a0a1a] rounded-2xl overflow-hidden border border-gray-800 min-h-[320px] flex-1">
+          <div className="relative bg-[#0a0a1a] rounded-lg overflow-hidden border border-gray-800 min-h-[320px] flex-1">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-[90%] h-[80%]">
                 <svg viewBox="0 0 400 200" className="w-full h-full opacity-30">
@@ -160,22 +160,22 @@ export default function DetectionPage() {
                       onClick={() => setSelectedTooth(marker.tooth)}
                     >
                       <div className="absolute inset-[-8px] rounded-full animate-ping opacity-30" style={{ backgroundColor: cat.solidBg }} />
-                      <div className="w-4 h-4 rounded-full border-2 border-white shadow-lg relative z-10" style={{ backgroundColor: cat.solidBg }} />
+                      <div className="w-4 h-4 rounded-full border-2 border-white relative z-10" style={{ backgroundColor: cat.solidBg }} />
                     </motion.div>
                   );
                 })}
               </div>
             </div>
-            <div className="absolute top-4 left-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
+            <div className="absolute top-4 left-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-md text-[11px] font-medium backdrop-blur-sm">
               Panoramic View
             </div>
           </div>
 
           {/* Dental chart */}
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6">
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] p-4">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-[#E2E8F0]">Teeth in the report</h3>
-              <span className="text-xs text-[#64748B]">{teethInReport.size} teeth affected</span>
+              <h3 className="text-[13px] font-semibold text-[#EDEDEF]">Teeth in the report</h3>
+              <span className="text-[11px] text-[#5C5C5F]">{teethInReport.size} teeth affected</span>
             </div>
             <DentalChart
               onToothClick={setSelectedTooth}
@@ -188,10 +188,10 @@ export default function DetectionPage() {
 
         {/* RIGHT: Findings by tooth (scrollable) */}
         <div className="lg:col-span-2 flex flex-col">
-          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] flex-1 flex flex-col overflow-hidden">
-            <div className="p-5 border-b border-white/[0.06]">
-              <h3 className="font-semibold text-[#E2E8F0]">Findings by Tooth</h3>
-              <p className="text-xs text-[#64748B] mt-0.5">{filtered.length} conditions found</p>
+          <div className="bg-[#141416] rounded-lg border border-white/[0.06] flex-1 flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-white/[0.06]">
+              <h3 className="font-semibold text-[#EDEDEF]">Findings by Tooth</h3>
+              <p className="text-[11px] text-[#5C5C5F] mt-0.5">{filtered.length} conditions found</p>
             </div>
             <div className="p-4 space-y-4 overflow-y-auto flex-1">
               {findingsByTooth.map(([toothNum, findings], idx) => (
@@ -200,23 +200,23 @@ export default function DetectionPage() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.04 }}
-                  className={`rounded-xl border p-4 transition-all cursor-pointer ${
+                  className={`rounded-md border p-4 transition-all cursor-pointer ${
                     selectedTooth === toothNum
-                      ? 'border-[#3B82F6] bg-[#3B82F6]/10'
+                      ? 'border-[#5B5BD6] bg-[#5B5BD6]/10'
                       : 'border-white/[0.06] hover:border-white/[0.1]'
                   }`}
                   onClick={() => setSelectedTooth(toothNum)}
                 >
                   {/* Tooth header */}
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#1A1A2E] text-white text-sm font-bold">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-[#333338] text-white text-[13px] font-bold">
                       {toothNum}
                     </span>
                     <div className="flex-1">
-                      <span className="text-sm font-semibold text-[#E2E8F0]">Tooth {toothNum}</span>
-                      <span className="text-xs text-[#64748B] ml-2">{getToothName(toothNum)}</span>
+                      <span className="text-[13px] font-semibold text-[#EDEDEF]">Tooth {toothNum}</span>
+                      <span className="text-[11px] text-[#5C5C5F] ml-2">{getToothName(toothNum)}</span>
                     </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-full">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#30A46C] bg-[#30A46C]/10 px-2 py-1 rounded-full">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
@@ -241,7 +241,7 @@ export default function DetectionPage() {
                         />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[#E2E8F0]">{f.name}</span>
+                            <span className="text-[13px] font-medium text-[#EDEDEF]">{f.name}</span>
                             <span
                               className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
                               style={{
@@ -252,7 +252,7 @@ export default function DetectionPage() {
                               {SEVERITY_LEVELS[f.severity].label}
                             </span>
                           </div>
-                          <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed">{f.description}</p>
+                          <p className="text-[11px] text-[#5C5C5F] mt-0.5 leading-relaxed">{f.description}</p>
                           <div className="mt-1.5 max-w-[160px]">
                             <ConfidenceBar value={f.confidence} label="Confidence" size="sm" />
                           </div>
@@ -264,7 +264,7 @@ export default function DetectionPage() {
               ))}
 
               {findingsByTooth.length === 0 && (
-                <div className="text-center py-12 text-[#64748B] text-sm">
+                <div className="text-center py-12 text-[#5C5C5F] text-[13px]">
                   No findings match the selected filters
                 </div>
               )}
