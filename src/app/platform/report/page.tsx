@@ -61,8 +61,8 @@ export default function ReportPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
-          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Report Generator</h1>
-          <p className="text-lg text-gray-400 mt-3">No analysis available</p>
+          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Report Generator</h1>
+          <p className="text-lg text-[#64748B] mt-3">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis to report"
@@ -246,8 +246,8 @@ export default function ReportPage() {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-10">
-        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Report Generator</h1>
-        <p className="text-lg text-gray-400 mt-3">
+        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Report Generator</h1>
+        <p className="text-lg text-[#64748B] mt-3">
           Create professional diagnostic reports
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
         </p>
@@ -256,43 +256,43 @@ export default function ReportPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Controls */}
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Settings</h3>
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Settings</h3>
             <div className="space-y-3">
               <label className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Clinic Branding</span>
+                <span className="text-sm text-[#94A3B8]">Clinic Branding</span>
                 <button
                   onClick={() => setBranding(!branding)}
-                  className={`w-11 h-6 rounded-full transition-colors ${branding ? 'bg-[#4A39C0]' : 'bg-gray-300'}`}
+                  className={`w-11 h-6 rounded-full transition-colors ${branding ? 'bg-[#3B82F6]' : 'bg-[#334155]'}`}
                 >
                   <span className={`block w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${branding ? 'translate-x-5' : 'translate-x-0'}`} />
                 </button>
               </label>
               <div>
-                <label className="text-sm text-gray-600 block mb-1">Language</label>
+                <label className="text-sm text-[#94A3B8] block mb-1">Language</label>
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="w-full bg-gray-50 rounded-lg px-3 py-2 text-sm border border-gray-200 outline-none focus:border-[#4A39C0]"
+                  className="w-full bg-[#0B1222] rounded-lg px-3 py-2 text-sm text-[#E2E8F0] border border-white/[0.08] outline-none focus:border-[#3B82F6]/40"
                 >
                   <option value="en">English</option>
-                  <option value="fr">Fran\u00E7ais</option>
+                  <option value="fr">Fran{'\u00E7'}ais</option>
                   <option value="de">Deutsch</option>
-                  <option value="es">Espa\u00F1ol</option>
+                  <option value="es">Espa{'\u00F1'}ol</option>
                 </select>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Report Sections</h3>
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Report Sections</h3>
             <div className="space-y-2">
               {sections.map((s) => (
                 <label key={s.id} className="flex items-center justify-between py-1 cursor-pointer">
-                  <span className={`text-sm ${s.enabled ? 'text-[#1A1A2E]' : 'text-gray-400'}`}>{s.title}</span>
+                  <span className={`text-sm ${s.enabled ? 'text-[#E2E8F0]' : 'text-[#64748B]'}`}>{s.title}</span>
                   <button
                     onClick={() => toggleSection(s.id)}
-                    className={`w-8 h-4 rounded-full transition-colors ${s.enabled ? 'bg-[#4A39C0]' : 'bg-gray-200'}`}
+                    className={`w-8 h-4 rounded-full transition-colors ${s.enabled ? 'bg-[#3B82F6]' : 'bg-white/[0.04]'}`}
                   >
                     <span className={`block w-3 h-3 bg-white rounded-full shadow transition-transform mx-0.5 ${s.enabled ? 'translate-x-4' : 'translate-x-0'}`} />
                   </button>
@@ -304,13 +304,13 @@ export default function ReportPage() {
           <div className="space-y-3">
             <button
               onClick={handleDownloadPdf}
-              className="w-full py-3.5 bg-[#4A39C0] text-white rounded-2xl text-base font-medium hover:bg-[#3a2da0] transition-colors"
+              className="w-full py-3.5 bg-[#3B82F6] text-white rounded-2xl text-base font-medium hover:bg-[#2563EB] transition-colors"
             >
               Download PDF
             </button>
             <button
               onClick={() => window.print()}
-              className="w-full py-3.5 bg-white text-[#4A39C0] border border-[#4A39C0] rounded-2xl text-base font-medium hover:bg-[#F9F8FF] transition-colors"
+              className="w-full py-3.5 bg-[#111C32] text-[#3B82F6] border border-white/[0.1] rounded-2xl text-base font-medium hover:bg-[#3B82F6]/10 transition-colors"
             >
               Print Preview
             </button>
@@ -322,7 +322,7 @@ export default function ReportPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-3xl shadow-xl border border-black/[0.08] p-10 min-h-[800px]"
+            className="bg-white rounded-2xl border border-black/[0.08] p-10 min-h-[800px]"
             style={{ aspectRatio: '210 / 297', maxWidth: '595px', margin: '0 auto' }}
           >
             {/* Report header */}

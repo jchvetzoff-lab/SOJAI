@@ -40,8 +40,8 @@ export default function OrthodonticPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Orthodontic Analysis</h1>
-        <p className="text-lg text-gray-400 mt-3">
+        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Orthodontic Analysis</h1>
+        <p className="text-lg text-[#64748B] mt-3">
           Cephalometric measurements and TMJ evaluation
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult?.measurements?.cephalometric?.length && (
@@ -52,9 +52,9 @@ export default function OrthodonticPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Cephalometric view */}
-        <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 overflow-hidden">
-          <div className="p-6 border-b border-black/[0.04]">
-            <h3 className="font-semibold text-[#1A1A2E]">Cephalometric Analysis</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300 overflow-hidden">
+          <div className="p-6 border-b border-white/[0.04]">
+            <h3 className="font-semibold text-[#E2E8F0]">Cephalometric Analysis</h3>
           </div>
           <div className="bg-[#0a0a1a] h-[400px] flex items-center justify-center relative">
             <svg viewBox="0 0 300 400" className="h-[360px]">
@@ -71,11 +71,11 @@ export default function OrthodonticPage() {
                 { x: 100, y: 140, label: 'Po' },
               ].map((pt, i) => (
                 <g key={i}>
-                  <circle cx={pt.x} cy={pt.y} r="3" fill="#4A39C0" />
+                  <circle cx={pt.x} cy={pt.y} r="3" fill="#3B82F6" />
                   <text x={pt.x + 8} y={pt.y + 4} fill="#8B5CF6" fontSize="10" fontFamily="Inter">{pt.label}</text>
                 </g>
               ))}
-              <line x1="145" y1="80" x2="155" y2="190" stroke="#4A39C0" strokeWidth="0.8" strokeDasharray="4,4" />
+              <line x1="145" y1="80" x2="155" y2="190" stroke="#3B82F6" strokeWidth="0.8" strokeDasharray="4,4" />
               <line x1="145" y1="80" x2="160" y2="260" stroke="#FF3254" strokeWidth="0.8" strokeDasharray="4,4" />
               <line x1="150" y1="40" x2="145" y2="80" stroke="#F59E0B" strokeWidth="0.8" strokeDasharray="4,4" />
               <line x1="175" y1="100" x2="165" y2="310" stroke="#10B981" strokeWidth="0.8" strokeDasharray="2,2" />
@@ -85,18 +85,18 @@ export default function OrthodonticPage() {
         </div>
 
         {/* Measurements table */}
-        <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <div className="p-6 border-b border-black/[0.04]">
-            <h3 className="font-semibold text-[#1A1A2E]">Measurements</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300">
+          <div className="p-6 border-b border-white/[0.04]">
+            <h3 className="font-semibold text-[#E2E8F0]">Measurements</h3>
           </div>
           <div className="p-6">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 text-xs font-medium text-gray-400 uppercase">Parameter</th>
-                  <th className="text-right py-2 text-xs font-medium text-gray-400 uppercase">Value</th>
-                  <th className="text-right py-2 text-xs font-medium text-gray-400 uppercase">Normal</th>
-                  <th className="text-right py-2 text-xs font-medium text-gray-400 uppercase">Status</th>
+                <tr className="border-b border-white/[0.06]">
+                  <th className="text-left py-2 text-xs font-medium text-[#475569] uppercase">Parameter</th>
+                  <th className="text-right py-2 text-xs font-medium text-[#475569] uppercase">Value</th>
+                  <th className="text-right py-2 text-xs font-medium text-[#475569] uppercase">Normal</th>
+                  <th className="text-right py-2 text-xs font-medium text-[#475569] uppercase">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,22 +106,22 @@ export default function OrthodonticPage() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.03 }}
-                    className="border-b border-gray-50"
+                    className="border-b border-white/[0.04]"
                   >
-                    <td className="py-2.5 text-[#1A1A2E]">{m.name}</td>
+                    <td className="py-2.5 text-[#E2E8F0]">{m.name}</td>
                     <td className="py-2.5 text-right">
                       <input
                         type="number"
                         step="0.1"
                         value={m.value}
                         onChange={(e) => setEditedValues({ ...editedValues, [m.name]: Number(e.target.value) })}
-                        className="w-16 text-right font-medium text-[#1A1A2E] bg-transparent outline-none border-b border-transparent focus:border-[#4A39C0]"
+                        className="w-16 text-right font-medium text-[#E2E8F0] bg-transparent outline-none border-b border-transparent focus:border-[#3B82F6]"
                       />
                     </td>
-                    <td className="py-2.5 text-right text-gray-400">{m.normalRange}</td>
+                    <td className="py-2.5 text-right text-[#64748B]">{m.normalRange}</td>
                     <td className="py-2.5 text-right">
                       <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
-                        m.status === 'normal' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                        m.status === 'normal' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
                       }`}>
                         {m.status}
                       </span>
@@ -137,29 +137,29 @@ export default function OrthodonticPage() {
       {/* TMJ Analysis */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {(['left', 'right'] as const).map((side) => (
-          <div key={side} className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-            <h3 className="font-semibold text-[#1A1A2E] mb-4 capitalize">TMJ — {side} Side</h3>
+          <div key={side} className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+            <h3 className="font-semibold text-[#E2E8F0] mb-4 capitalize">TMJ — {side} Side</h3>
             <div className="flex gap-6">
               <div className="w-24 h-24 bg-[#0a0a1a] rounded-xl flex items-center justify-center shrink-0">
                 <svg viewBox="0 0 60 60" className="w-16 h-16">
                   <circle cx="30" cy="25" r="12" fill="none" stroke="#3a3a5a" strokeWidth="1.5" />
-                  <ellipse cx="30" cy="25" rx="8" ry="6" fill="#4A39C0" opacity="0.3" />
+                  <ellipse cx="30" cy="25" rx="8" ry="6" fill="#3B82F6" opacity="0.3" />
                   <path d="M15 40 Q30 50 45 40" fill="none" stroke="#3a3a5a" strokeWidth="1.5" />
                 </svg>
               </div>
               <div className="space-y-2 text-sm flex-1">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Condyle Position</span>
+                  <span className="text-[#64748B]">Condyle Position</span>
                   <span className={`font-medium ${tmjData[side].condylePosition === 'Centered' ? 'text-emerald-500' : 'text-amber-500'}`}>
                     {tmjData[side].condylePosition}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Joint Space</span>
-                  <span className="font-medium text-[#1A1A2E]">{tmjData[side].jointSpace}</span>
+                  <span className="text-[#64748B]">Joint Space</span>
+                  <span className="font-medium text-[#E2E8F0]">{tmjData[side].jointSpace}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Mobility</span>
+                  <span className="text-[#64748B]">Mobility</span>
                   <span className={`font-medium ${tmjData[side].mobility === 'Normal' ? 'text-emerald-500' : 'text-amber-500'}`}>
                     {tmjData[side].mobility}
                   </span>
@@ -171,8 +171,8 @@ export default function OrthodonticPage() {
       </div>
 
       {/* Symmetry analysis */}
-      <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-        <h3 className="font-semibold text-[#1A1A2E] mb-4">Symmetry Analysis</h3>
+      <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+        <h3 className="font-semibold text-[#E2E8F0] mb-4">Symmetry Analysis</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { label: 'Facial Midline', value: '1.2mm left', status: 'mild' },
@@ -181,10 +181,10 @@ export default function OrthodonticPage() {
             { label: 'Gonial Angle L/R', value: '125°/128°', status: 'normal' },
           ].map((item) => (
             <div key={item.label} className="text-center">
-              <div className="text-xs text-gray-400 mb-1">{item.label}</div>
-              <div className="text-lg font-bold text-[#1A1A2E]">{item.value}</div>
+              <div className="text-xs text-[#64748B] mb-1">{item.label}</div>
+              <div className="text-lg font-bold text-[#E2E8F0]">{item.value}</div>
               <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium mt-1 ${
-                item.status === 'normal' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                item.status === 'normal' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
               }`}>
                 {item.status === 'normal' ? 'Symmetric' : 'Mild asymmetry'}
               </span>

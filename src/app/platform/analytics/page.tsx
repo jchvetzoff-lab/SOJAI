@@ -51,8 +51,8 @@ export default function AnalyticsPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Analytics</h1>
-          <p className="text-lg text-gray-400 mt-3">No data available</p>
+          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Analytics</h1>
+          <p className="text-lg text-[#64748B] mt-3">No data available</p>
         </div>
         <EmptyState
           title="No analytics data yet"
@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
       label: 'Accuracy',
       sortable: true,
       render: (row: PractitionerPerformance) => (
-        <span className={`font-medium ${row.accuracy >= 98 ? 'text-emerald-500' : row.accuracy >= 97 ? 'text-[#4A39C0]' : 'text-amber-500'}`}>
+        <span className={`font-medium ${row.accuracy >= 98 ? 'text-emerald-500' : row.accuracy >= 97 ? 'text-[#3B82F6]' : 'text-amber-500'}`}>
           {row.accuracy}%
         </span>
       ),
@@ -82,19 +82,19 @@ export default function AnalyticsPage() {
     <div className="max-w-7xl mx-auto space-y-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Analytics</h1>
-          <p className="text-lg text-gray-400 mt-3">
+          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Analytics</h1>
+          <p className="text-lg text-[#64748B] mt-3">
             Practice performance and insights
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           </p>
         </div>
-        <div className="flex items-center bg-white rounded-2xl border border-black/[0.06] p-1 shadow-sm">
+        <div className="flex items-center bg-[#111C32] rounded-xl border border-white/[0.06] p-1">
           {(['7d', '30d', '90d', '1y'] as Period[]).map((p) => (
             <button
               key={p}
               onClick={() => setPeriod(p)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                period === p ? 'bg-[#4A39C0] text-white' : 'text-gray-500 hover:text-[#1A1A2E]'
+                period === p ? 'bg-[#3B82F6] text-white' : 'text-[#64748B] hover:text-[#E2E8F0]'
               }`}
             >
               {p}
@@ -140,15 +140,15 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Monthly scans bar chart */}
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <h3 className="text-lg font-bold text-[#1A1A2E] mb-6">Scans by Type</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#E2E8F0] mb-6">Scans by Type</h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={monthlyScans}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-              <YAxis tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #E5E7EB', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }} />
-              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#111C32', boxShadow: 'none' }} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#94A3B8' }} />
               <Bar dataKey="panoramic" fill="#4A39C0" radius={[4, 4, 0, 0]} />
               <Bar dataKey="cbct" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
               <Bar dataKey="periapical" fill="#FF3254" radius={[4, 4, 0, 0]} />
@@ -158,8 +158,8 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Pathology distribution pie chart */}
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <h3 className="text-lg font-bold text-[#1A1A2E] mb-6">Pathology Distribution</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#E2E8F0] mb-6">Pathology Distribution</h3>
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
               <Pie
@@ -175,8 +175,8 @@ export default function AnalyticsPage() {
                   <Cell key={i} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #E5E7EB', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }} />
-              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#111C32', boxShadow: 'none' }} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#94A3B8' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -184,15 +184,15 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Weekly trend */}
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <h3 className="text-lg font-bold text-[#1A1A2E] mb-6">Weekly Activity</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#E2E8F0] mb-6">Weekly Activity</h3>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={weeklyTrend}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-              <YAxis tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #E5E7EB', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }} />
-              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#64748B' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#111C32', boxShadow: 'none' }} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#94A3B8' }} />
               <Line type="monotone" dataKey="scans" stroke="#4A39C0" strokeWidth={2} dot={{ r: 4 }} />
               <Line type="monotone" dataKey="findings" stroke="#FF3254" strokeWidth={2} dot={{ r: 4 }} />
             </LineChart>
@@ -200,9 +200,9 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Practitioner performance */}
-        <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <div className="p-6 border-b border-black/[0.04]">
-            <h3 className="text-lg font-bold text-[#1A1A2E]">Practitioner Performance</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300">
+          <div className="p-6 border-b border-white/[0.04]">
+            <h3 className="text-lg font-bold text-[#E2E8F0]">Practitioner Performance</h3>
           </div>
           <div className="p-4">
             <DataTable

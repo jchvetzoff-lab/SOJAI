@@ -14,7 +14,7 @@ interface ViewerToolbarProps {
 
 export default function ViewerToolbar({ tools, className = '' }: ViewerToolbarProps) {
   return (
-    <div className={`flex items-center gap-1 bg-white rounded-xl border border-gray-100 p-1 shadow-sm ${className}`}>
+    <div className={`flex items-center gap-1 bg-[#111C32] rounded-xl border border-white/[0.06] p-1 ${className}`}>
       {tools.map((tool, i) => (
         <button
           key={i}
@@ -22,8 +22,8 @@ export default function ViewerToolbar({ tools, className = '' }: ViewerToolbarPr
           title={tool.label}
           className={`p-2 rounded-lg transition-colors ${
             tool.active
-              ? 'bg-[#4A39C0] text-white'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-[#1A1A2E]'
+              ? 'bg-[#3B82F6] text-white'
+              : 'text-[#64748B] hover:bg-white/[0.06] hover:text-[#E2E8F0]'
           }`}
         >
           {tool.icon}

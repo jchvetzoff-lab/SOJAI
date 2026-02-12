@@ -90,7 +90,7 @@ export default function ImageUploadZone() {
     <div className="space-y-4">
       {/* Image type selector */}
       <div>
-        <label className="text-sm font-medium text-[#1A1A2E] block mb-2">Image Type</label>
+        <label className="text-sm font-medium text-[#E2E8F0] block mb-2">Image Type</label>
         <div className="flex flex-wrap gap-2">
           {IMAGE_TYPES.map((t) => (
             <button
@@ -98,8 +98,8 @@ export default function ImageUploadZone() {
               onClick={() => setImageType(t.value)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                 imageType === t.value
-                  ? 'bg-[#4A39C0] text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-[#3B82F6] text-white'
+                  : 'bg-white/[0.06] text-[#94A3B8] hover:bg-white/[0.1]'
               }`}
             >
               {t.label}
@@ -116,10 +116,10 @@ export default function ImageUploadZone() {
         onClick={() => fileRef.current?.click()}
         className={`relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
           dragActive
-            ? 'border-[#4A39C0] bg-[#F9F8FF]'
+            ? 'border-[#3B82F6] bg-[#3B82F6]/10'
             : preview
-            ? 'border-emerald-300 bg-emerald-50/50'
-            : 'border-gray-200 hover:border-gray-300 bg-gray-50/50'
+            ? 'border-emerald-500/30 bg-emerald-500/5'
+            : 'border-white/[0.1] hover:border-white/[0.2] bg-white/[0.02]'
         }`}
       >
         <input
@@ -146,18 +146,18 @@ export default function ImageUploadZone() {
                 alt="Preview"
                 className="max-h-48 mx-auto rounded-lg object-contain"
               />
-              <p className="text-sm text-gray-600 truncate">{fileName}</p>
-              <p className="text-xs text-emerald-600 font-medium">Ready for analysis</p>
+              <p className="text-sm text-[#94A3B8] truncate">{fileName}</p>
+              <p className="text-xs text-emerald-400 font-medium">Ready for analysis</p>
             </motion.div>
           ) : (
             <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-2">
-              <svg className="w-12 h-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-12 h-12 mx-auto text-[#475569]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
               </svg>
-              <p className="text-sm text-gray-600 font-medium">
+              <p className="text-sm text-[#94A3B8] font-medium">
                 Drop your dental X-ray here or click to browse
               </p>
-              <p className="text-xs text-gray-400">PNG, JPEG, WebP — Max 20MB</p>
+              <p className="text-xs text-[#475569]">PNG, JPEG, WebP — Max 20MB</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -165,7 +165,7 @@ export default function ImageUploadZone() {
 
       {/* Error */}
       {analysisError && (
-        <div className="bg-red-50 border border-red-100 rounded-xl p-3 text-sm text-red-700">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-sm text-red-400">
           {analysisError}
         </div>
       )}
@@ -176,8 +176,8 @@ export default function ImageUploadZone() {
         disabled={!preview || analysisLoading}
         className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
           !preview || analysisLoading
-            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            : 'bg-[#4A39C0] text-white hover:bg-[#3a2da0] shadow-lg shadow-[#4A39C0]/20'
+            ? 'bg-white/[0.06] text-[#475569] cursor-not-allowed'
+            : 'bg-[#3B82F6] text-white hover:bg-[#2563EB]'
         }`}
       >
         {analysisLoading ? (

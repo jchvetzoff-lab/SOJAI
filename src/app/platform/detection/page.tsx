@@ -29,8 +29,8 @@ export default function DetectionPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">CBCT AI Report</h1>
-          <p className="text-lg text-gray-400 mt-3">No analysis available</p>
+          <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">CBCT AI Report</h1>
+          <p className="text-lg text-[#64748B] mt-3">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis yet"
@@ -76,8 +76,8 @@ export default function DetectionPage() {
       {/* Header bar */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl tracking-tight font-bold text-[#1A1A2E]">CBCT AI Report</h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <h1 className="text-3xl tracking-tight font-bold text-[#E2E8F0]">CBCT AI Report</h1>
+          <p className="text-sm text-[#64748B] mt-1">
             {pathologies.length} findings across {teethInReport.size} teeth
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
             {!isDemo && analysisResult && (
@@ -108,7 +108,7 @@ export default function DetectionPage() {
               setSelectedCategories([]);
               setSelectedTooth(null);
             }}
-            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-sm text-[#64748B] hover:text-[#94A3B8] transition-colors"
           >
             Clear filters
           </button>
@@ -172,10 +172,10 @@ export default function DetectionPage() {
           </div>
 
           {/* Dental chart */}
-          <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-[#1A1A2E]">Teeth in the report</h3>
-              <span className="text-xs text-gray-400">{teethInReport.size} teeth affected</span>
+              <h3 className="text-sm font-semibold text-[#E2E8F0]">Teeth in the report</h3>
+              <span className="text-xs text-[#64748B]">{teethInReport.size} teeth affected</span>
             </div>
             <DentalChart
               onToothClick={setSelectedTooth}
@@ -188,10 +188,10 @@ export default function DetectionPage() {
 
         {/* RIGHT: Findings by tooth (scrollable) */}
         <div className="lg:col-span-2 flex flex-col">
-          <div className="bg-white rounded-2xl border border-black/[0.06] shadow-sm flex-1 flex flex-col overflow-hidden">
-            <div className="p-5 border-b border-gray-100">
-              <h3 className="font-semibold text-[#1A1A2E]">Findings by Tooth</h3>
-              <p className="text-xs text-gray-400 mt-0.5">{filtered.length} conditions found</p>
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] flex-1 flex flex-col overflow-hidden">
+            <div className="p-5 border-b border-white/[0.06]">
+              <h3 className="font-semibold text-[#E2E8F0]">Findings by Tooth</h3>
+              <p className="text-xs text-[#64748B] mt-0.5">{filtered.length} conditions found</p>
             </div>
             <div className="p-4 space-y-4 overflow-y-auto flex-1">
               {findingsByTooth.map(([toothNum, findings], idx) => (
@@ -202,8 +202,8 @@ export default function DetectionPage() {
                   transition={{ delay: idx * 0.04 }}
                   className={`rounded-xl border p-4 transition-all cursor-pointer ${
                     selectedTooth === toothNum
-                      ? 'border-[#4A39C0] bg-[#F9F8FF] shadow-md'
-                      : 'border-gray-100 hover:border-gray-200 hover:shadow-sm'
+                      ? 'border-[#3B82F6] bg-[#3B82F6]/10'
+                      : 'border-white/[0.06] hover:border-white/[0.1]'
                   }`}
                   onClick={() => setSelectedTooth(toothNum)}
                 >
@@ -213,10 +213,10 @@ export default function DetectionPage() {
                       {toothNum}
                     </span>
                     <div className="flex-1">
-                      <span className="text-sm font-semibold text-[#1A1A2E]">Tooth {toothNum}</span>
-                      <span className="text-xs text-gray-400 ml-2">{getToothName(toothNum)}</span>
+                      <span className="text-sm font-semibold text-[#E2E8F0]">Tooth {toothNum}</span>
+                      <span className="text-xs text-[#64748B] ml-2">{getToothName(toothNum)}</span>
                     </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-full">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
@@ -241,7 +241,7 @@ export default function DetectionPage() {
                         />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[#1A1A2E]">{f.name}</span>
+                            <span className="text-sm font-medium text-[#E2E8F0]">{f.name}</span>
                             <span
                               className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
                               style={{
@@ -252,7 +252,7 @@ export default function DetectionPage() {
                               {SEVERITY_LEVELS[f.severity].label}
                             </span>
                           </div>
-                          <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{f.description}</p>
+                          <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed">{f.description}</p>
                           <div className="mt-1.5 max-w-[160px]">
                             <ConfidenceBar value={f.confidence} label="Confidence" size="sm" />
                           </div>
@@ -264,7 +264,7 @@ export default function DetectionPage() {
               ))}
 
               {findingsByTooth.length === 0 && (
-                <div className="text-center py-12 text-gray-400 text-sm">
+                <div className="text-center py-12 text-[#64748B] text-sm">
                   No findings match the selected filters
                 </div>
               )}

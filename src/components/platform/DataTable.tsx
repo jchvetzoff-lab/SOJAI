@@ -50,19 +50,19 @@ export default function DataTable({
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-100">
+          <tr className="border-b border-white/[0.06]">
             {columns.map((col) => (
               <th
                 key={col.key}
                 onClick={col.sortable ? () => handleSort(col.key) : undefined}
-                className={`text-left py-3 px-4 text-xs font-medium text-gray-400 uppercase tracking-wider ${
-                  col.sortable ? 'cursor-pointer hover:text-gray-600 select-none' : ''
+                className={`text-left py-3 px-4 text-xs font-medium text-[#64748B] uppercase tracking-wider ${
+                  col.sortable ? 'cursor-pointer hover:text-[#94A3B8] select-none' : ''
                 }`}
               >
                 <span className="flex items-center gap-1">
                   {col.label}
                   {col.sortable && sortKey === col.key && (
-                    <span className="text-[#4A39C0]">{sortDir === 'asc' ? '↑' : '↓'}</span>
+                    <span className="text-[#3B82F6]">{sortDir === 'asc' ? '\u2191' : '\u2193'}</span>
                   )}
                 </span>
               </th>
@@ -74,10 +74,10 @@ export default function DataTable({
             <tr
               key={String(row[keyField])}
               onClick={() => onRowClick?.(row)}
-              className={`border-b border-gray-50 ${onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
+              className={`border-b border-white/[0.04] ${onRowClick ? 'cursor-pointer hover:bg-white/[0.03]' : ''}`}
             >
               {columns.map((col) => (
-                <td key={col.key} className="py-3 px-4 text-[#1A1A2E]">
+                <td key={col.key} className="py-3 px-4 text-[#CBD5E1]">
                   {col.render ? col.render(row) : String(row[col.key] ?? '')}
                 </td>
               ))}

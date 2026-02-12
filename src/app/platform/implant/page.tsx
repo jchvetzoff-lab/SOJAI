@@ -18,13 +18,13 @@ export default function ImplantPage() {
   const [safetyStatus, setSafetyStatus] = useState<'safe' | 'warning' | 'danger'>('safe');
 
   const safetyColor = safetyStatus === 'safe' ? 'text-emerald-500' : safetyStatus === 'warning' ? 'text-amber-500' : 'text-red-500';
-  const safetyBg = safetyStatus === 'safe' ? 'bg-emerald-50' : safetyStatus === 'warning' ? 'bg-amber-50' : 'bg-red-50';
+  const safetyBg = safetyStatus === 'safe' ? 'bg-emerald-500/10' : safetyStatus === 'warning' ? 'bg-amber-500/10' : 'bg-red-500/10';
 
   return (
     <div className="max-w-7xl mx-auto h-[calc(100vh-7rem)]">
       <div className="mb-6">
-        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Implant Planning</h1>
-        <p className="text-lg text-gray-400 mt-3">Position and validate implant placement</p>
+        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Implant Planning</h1>
+        <p className="text-lg text-[#64748B] mt-3">Position and validate implant placement</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-7 h-[calc(100%-80px)]">
@@ -44,7 +44,7 @@ export default function ImplantPage() {
           </Canvas>
 
           {/* Safety status indicator */}
-          <div className={`absolute top-4 left-4 ${safetyBg} px-4 py-2 rounded-xl shadow-sm`}>
+          <div className={`absolute top-4 left-4 ${safetyBg} px-4 py-2 rounded-xl`}>
             <div className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${safetyStatus === 'safe' ? 'bg-emerald-500' : safetyStatus === 'warning' ? 'bg-amber-500' : 'bg-red-500'}`} />
               <span className={`text-sm font-medium ${safetyColor}`}>
@@ -53,7 +53,7 @@ export default function ImplantPage() {
             </div>
           </div>
 
-          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-4 py-2 text-xs text-gray-500">
+          <div className="absolute top-4 right-4 bg-[#0F1A2E]/90 backdrop-blur-sm rounded-xl px-4 py-2 text-xs text-[#64748B]">
             Drag to rotate &middot; Scroll to zoom
           </div>
         </div>
@@ -61,8 +61,8 @@ export default function ImplantPage() {
         {/* Side panel */}
         <div className="space-y-6 overflow-y-auto">
           {/* Implant selector */}
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Implant Size</h3>
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Implant Size</h3>
             <div className="space-y-2">
               {implantSizes.map((imp, i) => (
                 <button
@@ -70,8 +70,8 @@ export default function ImplantPage() {
                   onClick={() => setSelectedImplant(i)}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                     selectedImplant === i
-                      ? 'bg-[#E4E1FF] text-[#4A39C0] font-medium'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'bg-[#3B82F6]/15 text-[#3B82F6] font-medium'
+                      : 'text-[#94A3B8] hover:bg-white/[0.04]'
                   }`}
                 >
                   {imp.label}
@@ -81,15 +81,15 @@ export default function ImplantPage() {
           </div>
 
           {/* Safety simulation */}
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Safety Check</h3>
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Safety Check</h3>
             <div className="space-y-2">
               {(['safe', 'warning', 'danger'] as const).map((s) => (
                 <button
                   key={s}
                   onClick={() => setSafetyStatus(s)}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                    safetyStatus === s ? 'bg-gray-100 font-medium' : 'hover:bg-gray-50'
+                    safetyStatus === s ? 'bg-white/[0.06] font-medium' : 'hover:bg-white/[0.04]'
                   }`}
                 >
                   <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
@@ -102,30 +102,30 @@ export default function ImplantPage() {
           </div>
 
           {/* Measurements */}
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-            <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Measurements</h3>
+          <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+            <h3 className="text-sm font-semibold text-[#E2E8F0] mb-3">Measurements</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500">Bone Height</span>
-                <span className="font-medium text-[#1A1A2E]">14.2 mm</span>
+                <span className="text-[#64748B]">Bone Height</span>
+                <span className="font-medium text-[#E2E8F0]">14.2 mm</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Bone Width</span>
-                <span className="font-medium text-[#1A1A2E]">8.5 mm</span>
+                <span className="text-[#64748B]">Bone Width</span>
+                <span className="font-medium text-[#E2E8F0]">8.5 mm</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">To IAN Canal</span>
+                <span className="text-[#64748B]">To IAN Canal</span>
                 <span className="font-medium text-emerald-500">3.8 mm</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">To Adjacent Tooth</span>
-                <span className="font-medium text-[#1A1A2E]">2.1 mm</span>
+                <span className="text-[#64748B]">To Adjacent Tooth</span>
+                <span className="font-medium text-[#E2E8F0]">2.1 mm</span>
               </div>
             </div>
           </div>
 
           {/* Action */}
-          <button className="w-full py-3 bg-[#4A39C0] text-white rounded-xl text-sm font-medium hover:bg-[#3a2da0] transition-colors">
+          <button className="w-full py-3 bg-[#3B82F6] text-white rounded-xl text-sm font-medium hover:bg-[#2563EB] transition-colors">
             Generate Surgical Guide
           </button>
         </div>

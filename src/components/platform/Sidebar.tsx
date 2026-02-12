@@ -100,7 +100,7 @@ export default function Sidebar() {
       className={`h-screen sticky top-0 flex flex-col transition-all duration-300 ${
         collapsed ? 'w-[72px]' : 'w-[270px]'
       }`}
-      style={{ background: 'linear-gradient(180deg, #1A1A2E 0%, #16162A 100%)' }}
+      style={{ background: 'linear-gradient(180deg, #0F1A2E 0%, #0B1222 100%)' }}
     >
       {/* Logo */}
       <div className="h-20 flex items-center px-5 border-b border-white/[0.08]">

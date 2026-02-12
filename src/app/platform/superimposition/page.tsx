@@ -11,19 +11,19 @@ export default function SuperimpositionPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Superimposition</h1>
-        <p className="text-lg text-gray-400 mt-3">Compare scans from different dates</p>
+        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Superimposition</h1>
+        <p className="text-lg text-[#64748B] mt-3">Compare scans from different dates</p>
       </div>
 
       {/* Controls */}
       <div className="flex items-center gap-6">
-        <div className="bg-white rounded-xl border border-gray-100 p-1 shadow-sm flex">
+        <div className="bg-[#111C32] rounded-xl border border-white/[0.06] p-1 flex">
           {(['slider', '3d', 'sidebyside'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setActiveMode(mode)}
               className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                activeMode === mode ? 'bg-[#4A39C0] text-white' : 'text-gray-500 hover:text-[#1A1A2E]'
+                activeMode === mode ? 'bg-[#3B82F6] text-white' : 'text-[#64748B] hover:text-[#E2E8F0]'
               }`}
             >
               {mode === 'slider' ? 'Before / After' : mode === '3d' ? '3D Fusion' : 'Side by Side'}
@@ -31,17 +31,17 @@ export default function SuperimpositionPage() {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 bg-white rounded-xl border border-gray-100 px-4 py-2 shadow-sm">
-          <span className="text-xs text-gray-500">Date 1:</span>
-          <span className="text-sm font-medium text-[#1A1A2E]">Jan 15, 2026</span>
-          <span className="text-gray-300 mx-1">vs</span>
-          <span className="text-xs text-gray-500">Date 2:</span>
-          <span className="text-sm font-medium text-[#1A1A2E]">Feb 09, 2026</span>
+        <div className="flex items-center gap-2 bg-[#111C32] rounded-xl border border-white/[0.06] px-4 py-2">
+          <span className="text-xs text-[#64748B]">Date 1:</span>
+          <span className="text-sm font-medium text-[#E2E8F0]">Jan 15, 2026</span>
+          <span className="text-[#475569] mx-1">vs</span>
+          <span className="text-xs text-[#64748B]">Date 2:</span>
+          <span className="text-sm font-medium text-[#E2E8F0]">Feb 09, 2026</span>
         </div>
       </div>
 
       {/* Main viewer */}
-      <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 overflow-hidden">
+      <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] transition-all duration-300 overflow-hidden">
         {activeMode === 'slider' && (
           <div className="relative h-[500px] bg-[#0a0a1a]">
             {/* Before image (left side) */}
@@ -87,7 +87,7 @@ export default function SuperimpositionPage() {
               style={{ left: `${sliderPos}%` }}
             >
               <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A39C0" strokeWidth="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2">
                   <path d="M8 6l-6 6 6 6" /><path d="M16 6l6 6-6 6" />
                 </svg>
               </div>
@@ -139,7 +139,7 @@ export default function SuperimpositionPage() {
                 max={100}
                 value={opacity}
                 onChange={(e) => setOpacity(Number(e.target.value))}
-                className="flex-1 accent-[#4A39C0]"
+                className="flex-1 accent-[#3B82F6]"
               />
               <span className="text-xs text-white/60 w-8 text-right">{opacity}%</span>
             </div>
@@ -149,20 +149,20 @@ export default function SuperimpositionPage() {
 
       {/* Analysis summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <div className="text-xs text-gray-400 mb-1">Alignment Score</div>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+          <div className="text-xs text-[#64748B] mb-1">Alignment Score</div>
           <div className="text-2xl font-bold text-emerald-500">97.3%</div>
-          <div className="text-xs text-gray-400 mt-1">Automatic registration</div>
+          <div className="text-xs text-[#64748B] mt-1">Automatic registration</div>
         </div>
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <div className="text-xs text-gray-400 mb-1">Changes Detected</div>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+          <div className="text-xs text-[#64748B] mb-1">Changes Detected</div>
           <div className="text-2xl font-bold text-[#FF3254]">3</div>
-          <div className="text-xs text-gray-400 mt-1">Regions with significant change</div>
+          <div className="text-xs text-[#64748B] mt-1">Regions with significant change</div>
         </div>
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <div className="text-xs text-gray-400 mb-1">Time Between Scans</div>
-          <div className="text-2xl font-bold text-[#4A39C0]">25 days</div>
-          <div className="text-xs text-gray-400 mt-1">Jan 15 — Feb 09, 2026</div>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-6 transition-all duration-300">
+          <div className="text-xs text-[#64748B] mb-1">Time Between Scans</div>
+          <div className="text-2xl font-bold text-[#3B82F6]">25 days</div>
+          <div className="text-xs text-[#64748B] mt-1">Jan 15 — Feb 09, 2026</div>
         </div>
       </div>
     </div>

@@ -303,8 +303,7 @@ export default function DashboardPage() {
     : [{ id: 1, text: 'No activity yet — upload a scan to get started', time: 'now', type: 'upload' as const }];
 
   return (
-    <div className="-m-8 lg:-m-10 xl:-m-12 p-8 lg:p-10 xl:p-12 bg-[#0B1222] min-h-full">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-6">
 
         {/* Header */}
         <div>
@@ -501,7 +500,6 @@ export default function DashboardPage() {
         </div>
 
       </div>
-    </div>
   );
 }
 

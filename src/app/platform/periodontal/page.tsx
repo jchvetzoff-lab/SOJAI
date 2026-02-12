@@ -32,7 +32,7 @@ const defaultBoneLoss: Record<number, number> = {
 function PocketChart({ teeth, label, perioData }: { teeth: number[]; label: string; perioData: Record<number, number[]> }) {
   return (
     <div>
-      <div className="text-xs text-gray-400 mb-2">{label}</div>
+      <div className="text-xs text-[#64748B] mb-2">{label}</div>
       <div className="flex gap-[2px]">
         {teeth.map((tooth) => {
           const depths = perioData[tooth] || [0, 0, 0, 0, 0, 0];
@@ -145,8 +145,8 @@ export default function PeriodontalPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Periodontal Analysis</h1>
-        <p className="text-lg text-gray-400 mt-3">
+        <h1 className="text-4xl tracking-tight font-bold text-[#E2E8F0]">Periodontal Analysis</h1>
+        <p className="text-lg text-[#64748B] mt-3">
           Pocket depth charting and bone loss assessment
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(from AI analysis — click tooth to edit)</span>}
@@ -180,14 +180,14 @@ export default function PeriodontalPage() {
       </div>
 
       {/* Pocket depth chart */}
-      <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 overflow-x-auto">
-        <h3 className="font-semibold text-[#1A1A2E] mb-4">Pocket Depth Chart (6 sites per tooth)</h3>
+      <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300 overflow-x-auto">
+        <h3 className="font-semibold text-[#E2E8F0] mb-4">Pocket Depth Chart (6 sites per tooth)</h3>
         <div className="space-y-6 min-w-[600px]">
           <div className="flex gap-10 justify-center">
             <PocketChart teeth={FDI_UPPER_RIGHT} label="Q1 (Upper Right)" perioData={perioData} />
             <PocketChart teeth={FDI_UPPER_LEFT} label="Q2 (Upper Left)" perioData={perioData} />
           </div>
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-white/[0.06]" />
           <div className="flex gap-10 justify-center">
             <PocketChart teeth={[...FDI_LOWER_RIGHT].reverse()} label="Q4 (Lower Right)" perioData={perioData} />
             <PocketChart teeth={[...FDI_LOWER_LEFT].reverse()} label="Q3 (Lower Left)" perioData={perioData} />
@@ -202,7 +202,7 @@ export default function PeriodontalPage() {
           ].map((l) => (
             <div key={l.label} className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: l.color }} />
-              <span className="text-xs text-gray-500">{l.label}</span>
+              <span className="text-xs text-[#64748B]">{l.label}</span>
             </div>
           ))}
         </div>
@@ -210,16 +210,16 @@ export default function PeriodontalPage() {
 
       {/* Bone loss + Dental chart */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <h3 className="font-semibold text-[#1A1A2E] mb-4">Bone Loss Assessment</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+          <h3 className="font-semibold text-[#E2E8F0] mb-4">Bone Loss Assessment</h3>
           <div className="space-y-2">
             {Object.entries(boneLossData)
               .filter(([, v]) => v >= 3)
               .sort(([, a], [, b]) => b - a)
               .map(([tooth, loss]) => (
                 <div key={tooth} className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-[#1A1A2E] w-12">#{tooth}</span>
-                  <div className="flex-1 bg-gray-100 rounded-full h-2">
+                  <span className="text-sm font-medium text-[#E2E8F0] w-12">#{tooth}</span>
+                  <div className="flex-1 bg-white/[0.06] rounded-full h-2">
                     <div
                       className="h-2 rounded-full"
                       style={{
@@ -238,32 +238,32 @@ export default function PeriodontalPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
-          <h3 className="font-semibold text-[#1A1A2E] mb-4">Dental Chart</h3>
+        <div className="bg-[#111C32] rounded-2xl border border-white/[0.06] p-7 transition-all duration-300">
+          <h3 className="font-semibold text-[#E2E8F0] mb-4">Dental Chart</h3>
           <DentalChart
             onToothClick={setSelectedTooth}
             selectedTooth={selectedTooth}
             highlightTeeth={Object.entries(boneLossData).filter(([, v]) => v >= 4).map(([t]) => Number(t))}
           />
           {selectedTooth && perioData[selectedTooth] && (
-            <div className="mt-4 p-3 bg-gray-50 rounded-xl">
-              <div className="text-sm font-medium text-[#1A1A2E] mb-2">
+            <div className="mt-4 p-3 bg-white/[0.04] rounded-xl">
+              <div className="text-sm font-medium text-[#E2E8F0] mb-2">
                 Tooth #{selectedTooth}
-                <span className="text-xs text-gray-400 ml-2">(click values to edit)</span>
+                <span className="text-xs text-[#64748B] ml-2">(click values to edit)</span>
               </div>
               <div className="grid grid-cols-6 gap-1 text-center text-xs">
                 {['MB', 'B', 'DB', 'ML', 'L', 'DL'].map((site, i) => {
                   const depth = perioData[selectedTooth][i];
                   return (
                     <div key={site}>
-                      <div className="text-gray-400">{site}</div>
+                      <div className="text-[#64748B]">{site}</div>
                       <input
                         type="number"
                         min={0}
                         max={15}
                         value={depth}
                         onChange={(e) => handleEditDepth(selectedTooth, i, Number(e.target.value))}
-                        className={`w-full text-center font-bold bg-transparent outline-none border-b border-transparent focus:border-[#4A39C0] ${
+                        className={`w-full text-center font-bold bg-transparent outline-none border-b border-transparent focus:border-[#3B82F6] ${
                           depth >= 5 ? 'text-red-500' : depth >= 4 ? 'text-amber-500' : 'text-emerald-500'
                         }`}
                       />
@@ -271,7 +271,7 @@ export default function PeriodontalPage() {
                   );
                 })}
               </div>
-              <div className="text-xs text-gray-400 mt-2 flex items-center gap-2">
+              <div className="text-xs text-[#64748B] mt-2 flex items-center gap-2">
                 Bone loss:
                 <input
                   type="number"
@@ -279,7 +279,7 @@ export default function PeriodontalPage() {
                   max={15}
                   value={boneLossData[selectedTooth] || 0}
                   onChange={(e) => handleEditBoneLoss(selectedTooth, Number(e.target.value))}
-                  className="w-12 text-center font-medium bg-transparent outline-none border-b border-transparent focus:border-[#4A39C0] text-[#1A1A2E]"
+                  className="w-12 text-center font-medium bg-transparent outline-none border-b border-transparent focus:border-[#3B82F6] text-[#E2E8F0]"
                 />
                 mm
               </div>

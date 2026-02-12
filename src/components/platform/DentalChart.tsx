@@ -38,9 +38,9 @@ function ToothShape({
 
   // Diagnocat-style colors
   const fill = isMissing
-    ? '#E5E7EB'
+    ? '#1E293B'
     : selected
-    ? '#4A39C0'
+    ? '#3B82F6'
     : highlighted
     ? '#EF4444'
     : status.color;
@@ -88,7 +88,7 @@ function ToothShape({
         y={numberY}
         textAnchor="middle"
         dominantBaseline="middle"
-        fill={selected ? '#4A39C0' : highlighted ? '#EF4444' : '#6B7280'}
+        fill={selected ? '#3B82F6' : highlighted ? '#EF4444' : '#64748B'}
         fontSize={size * 0.36}
         fontWeight={selected || highlighted ? 700 : 500}
         fontFamily="Inter, sans-serif"
@@ -148,7 +148,7 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
           y1={8}
           x2={svgWidth / 2}
           y2={svgHeight - 8}
-          stroke="#E5E7EB"
+          stroke="rgba(255,255,255,0.1)"
           strokeWidth={1}
           strokeDasharray="4,4"
         />
@@ -157,7 +157,7 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
           y1={svgHeight / 2}
           x2={svgWidth - 20}
           y2={svgHeight / 2}
-          stroke="#E5E7EB"
+          stroke="rgba(255,255,255,0.1)"
           strokeWidth={1}
           strokeDasharray="4,4"
         />
@@ -165,10 +165,10 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
         {/* Quadrant labels */}
         {!compact && (
           <>
-            <text x={svgWidth / 4} y={10} textAnchor="middle" fill="#9CA3AF" fontSize={9} fontFamily="Inter, sans-serif">Upper Right</text>
-            <text x={svgWidth * 3 / 4} y={10} textAnchor="middle" fill="#9CA3AF" fontSize={9} fontFamily="Inter, sans-serif">Upper Left</text>
-            <text x={svgWidth / 4} y={svgHeight - 4} textAnchor="middle" fill="#9CA3AF" fontSize={9} fontFamily="Inter, sans-serif">Lower Right</text>
-            <text x={svgWidth * 3 / 4} y={svgHeight - 4} textAnchor="middle" fill="#9CA3AF" fontSize={9} fontFamily="Inter, sans-serif">Lower Left</text>
+            <text x={svgWidth / 4} y={10} textAnchor="middle" fill="#475569" fontSize={9} fontFamily="Inter, sans-serif">Upper Right</text>
+            <text x={svgWidth * 3 / 4} y={10} textAnchor="middle" fill="#475569" fontSize={9} fontFamily="Inter, sans-serif">Upper Left</text>
+            <text x={svgWidth / 4} y={svgHeight - 4} textAnchor="middle" fill="#475569" fontSize={9} fontFamily="Inter, sans-serif">Lower Right</text>
+            <text x={svgWidth * 3 / 4} y={svgHeight - 4} textAnchor="middle" fill="#475569" fontSize={9} fontFamily="Inter, sans-serif">Lower Left</text>
           </>
         )}
 
@@ -201,7 +201,7 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
                     </>
                   )}
                 </svg>
-                <span className="text-xs text-gray-500">{label}</span>
+                <span className="text-xs text-[#64748B]">{label}</span>
               </div>
             );
           })}
