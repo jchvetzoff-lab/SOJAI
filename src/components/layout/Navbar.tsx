@@ -76,7 +76,7 @@ export default function Navbar() {
         {/* CTA */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="#"
+            href="/platform"
             className="text-[15px] text-[#1A1A2E]/70 hover:text-[#4A39C0] transition-colors"
           >
             Login

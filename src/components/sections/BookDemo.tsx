@@ -54,8 +54,8 @@ export default function BookDemo() {
             <a href="#" className="btn bg-white text-[#4A39C0] hover:bg-white/90 w-full sm:w-auto">
               Book a Demo
             </a>
-            <a href="#" className="btn border-2 border-white/30 text-white hover:bg-white/10 w-full sm:w-auto">
-              Contact Sales
+            <a href="/platform" className="btn border-2 border-white/30 text-white hover:bg-white/10 w-full sm:w-auto">
+              Try Platform Demo
             </a>
           </div>
           <p className="text-xs sm:text-sm text-white/50">
