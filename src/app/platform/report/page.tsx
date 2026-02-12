@@ -1,16 +1,18 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import DentalChart from '@/components/platform/DentalChart';
 import ReportSection from '@/components/platform/ReportSection';
+import PathologyBadge from '@/components/platform/PathologyBadge';
 import EmptyState from '@/components/platform/EmptyState';
 import { usePlatformStore } from '@/hooks/usePlatformStore';
 import { selectedPatient } from '@/lib/mock-data/patients';
 import { pathologies as mockPathologies } from '@/lib/mock-data/pathologies';
 import { dentalChartData as mockChartData } from '@/lib/mock-data/dental-chart';
 import { reportSections as defaultSections } from '@/lib/mock-data/reports';
-import { SEVERITY_LEVELS } from '@/lib/platform-constants';
+import { PATHOLOGY_CATEGORIES, SEVERITY_LEVELS } from '@/lib/platform-constants';
+import { getToothName } from '@/lib/dental-utils';
 
 export default function ReportPage() {
   const [sections, setSections] = useState(defaultSections);
@@ -33,6 +35,18 @@ export default function ReportPage() {
         'Periodontal assessment for generalized bone loss in mandibular anterior region',
         'Evaluate furcation involvement on tooth #46 — possible surgical intervention',
       ];
+
+  // Group pathologies by tooth
+  const findingsByTooth = useMemo(() => {
+    const map = new Map<number, typeof pathologies>();
+    pathologies.forEach((p) => {
+      p.affectedTeeth.forEach((t) => {
+        if (!map.has(t)) map.set(t, []);
+        map.get(t)!.push(p);
+      });
+    });
+    return Array.from(map.entries()).sort(([a], [b]) => a - b);
+  }, [pathologies]);
 
   const toggleSection = (id: string) => {
     setSections((prev) =>
@@ -127,52 +141,75 @@ export default function ReportPage() {
       y += summaryLines.length * 4.5 + 6;
     }
 
-    // Pathology table
+    // Findings by tooth (new Diagnocat-style)
     if (enabledSections.some((s) => s.id === 'findings')) {
       checkPageBreak(20);
       doc.setFontSize(12);
       doc.setTextColor(26, 26, 46);
-      doc.text('AI Findings', margin, y);
+      doc.text('AI Findings by Tooth', margin, y);
       y += 8;
 
-      // Table header
-      doc.setFillColor(249, 250, 251);
-      doc.rect(margin, y - 3, contentW, 7, 'F');
-      doc.setFontSize(8);
-      doc.setTextColor(107, 114, 128);
-      doc.text('Pathology', margin + 2, y + 1);
-      doc.text('Category', margin + 60, y + 1);
-      doc.text('Severity', margin + 95, y + 1);
-      doc.text('Conf.', margin + 125, y + 1);
-      doc.text('Teeth', margin + 145, y + 1);
-      y += 7;
+      findingsByTooth.forEach(([toothNum, findings]) => {
+        checkPageBreak(25);
 
-      pathologies.forEach((p) => {
-        checkPageBreak(8);
+        // Tooth header
+        doc.setFillColor(26, 26, 46);
+        doc.roundedRect(margin, y - 3, 12, 7, 1.5, 1.5, 'F');
         doc.setFontSize(8);
+        doc.setTextColor(255, 255, 255);
+        doc.text(String(toothNum), margin + 6, y + 1, { align: 'center' });
+
+        doc.setFontSize(9);
         doc.setTextColor(26, 26, 46);
-        doc.text(p.name.substring(0, 30), margin + 2, y);
-        doc.setTextColor(107, 114, 128);
-        doc.text(p.category, margin + 60, y);
+        doc.text(`Tooth ${toothNum} — ${getToothName(toothNum)}`, margin + 15, y + 1);
 
-        // Severity colored
-        const sevColor = SEVERITY_LEVELS[p.severity].color;
-        const r = parseInt(sevColor.slice(1, 3), 16);
-        const g = parseInt(sevColor.slice(3, 5), 16);
-        const b = parseInt(sevColor.slice(5, 7), 16);
-        doc.setTextColor(r, g, b);
-        doc.text(p.severity, margin + 95, y);
+        // Category tags
+        let tagX = margin + 15;
+        const tagY = y + 5;
+        findings.forEach((f) => {
+          const cat = PATHOLOGY_CATEGORIES[f.category];
+          const r = parseInt(cat.solidBg.slice(1, 3), 16);
+          const g = parseInt(cat.solidBg.slice(3, 5), 16);
+          const b = parseInt(cat.solidBg.slice(5, 7), 16);
+          const tagWidth = doc.getTextWidth(cat.label) + 4;
+          doc.setFillColor(r, g, b);
+          doc.roundedRect(tagX, tagY - 2.5, tagWidth, 4, 1, 1, 'F');
+          doc.setFontSize(6);
+          doc.setTextColor(255, 255, 255);
+          doc.text(cat.label, tagX + 2, tagY + 0.5);
+          tagX += tagWidth + 2;
+        });
+        y = tagY + 4;
 
-        doc.setTextColor(26, 26, 46);
-        doc.text(`${p.confidence}%`, margin + 125, y);
-        doc.text(p.affectedTeeth.join(', '), margin + 145, y);
-        y += 5;
+        // Finding details
+        findings.forEach((f) => {
+          checkPageBreak(10);
+          doc.setFontSize(8);
+          doc.setTextColor(26, 26, 46);
+          doc.text(`${f.name}`, margin + 15, y);
 
+          const sevColor = SEVERITY_LEVELS[f.severity].color;
+          const sr = parseInt(sevColor.slice(1, 3), 16);
+          const sg = parseInt(sevColor.slice(3, 5), 16);
+          const sb = parseInt(sevColor.slice(5, 7), 16);
+          doc.setTextColor(sr, sg, sb);
+          doc.text(`${f.severity} — ${f.confidence}%`, margin + 80, y);
+          y += 4;
+
+          doc.setFontSize(7);
+          doc.setTextColor(107, 114, 128);
+          const descLines = doc.splitTextToSize(f.description, contentW - 15);
+          doc.text(descLines, margin + 15, y);
+          y += descLines.length * 3.5 + 2;
+        });
+
+        y += 3;
         doc.setDrawColor(243, 244, 246);
-        doc.line(margin, y - 1, pageW - margin, y - 1);
+        doc.line(margin, y, pageW - margin, y);
+        y += 4;
       });
 
-      y += 6;
+      y += 4;
     }
 
     // Recommendations
@@ -201,10 +238,10 @@ export default function ReportPage() {
     doc.setFontSize(7);
     doc.setTextColor(156, 163, 175);
     doc.text('This report was generated by SOJAI AI and should be reviewed by a qualified dental professional.', pageW / 2, footY, { align: 'center' });
-    doc.text(`SOJAI Diagnostics © ${new Date().getFullYear()} — Confidential`, pageW / 2, footY + 4, { align: 'center' });
+    doc.text(`SOJAI Diagnostics \u00A9 ${new Date().getFullYear()} \u2014 Confidential`, pageW / 2, footY + 4, { align: 'center' });
 
     doc.save(`SOJAI-Report-${patient.id}-${new Date().toISOString().split('T')[0]}.pdf`);
-  }, [enabledSections, pathologies, patient, recommendations, analysisResult]);
+  }, [enabledSections, pathologies, patient, recommendations, analysisResult, findingsByTooth]);
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -239,9 +276,9 @@ export default function ReportPage() {
                   className="w-full bg-gray-50 rounded-lg px-3 py-2 text-sm border border-gray-200 outline-none focus:border-[#4A39C0]"
                 >
                   <option value="en">English</option>
-                  <option value="fr">Français</option>
+                  <option value="fr">Fran\u00E7ais</option>
                   <option value="de">Deutsch</option>
-                  <option value="es">Español</option>
+                  <option value="es">Espa\u00F1ol</option>
                 </select>
               </div>
             </div>
@@ -351,25 +388,40 @@ export default function ReportPage() {
               </ReportSection>
             )}
 
-            {/* Findings */}
+            {/* Findings by tooth — Diagnocat style */}
             {enabledSections.some((s) => s.id === 'findings') && (
               <ReportSection title="AI Findings">
-                <div className="space-y-2">
-                  {pathologies.slice(0, 8).map((p) => (
-                    <div key={p.id} className="flex items-start gap-2 text-xs">
-                      <span
-                        className="w-2 h-2 rounded-full mt-1 shrink-0"
-                        style={{ backgroundColor: SEVERITY_LEVELS[p.severity].color }}
-                      />
-                      <div className="flex-1">
-                        <span className="font-medium text-[#1A1A2E]">{p.name}</span>
-                        <span className="text-gray-400 ml-1">(Teeth: {p.affectedTeeth.join(', ')})</span>
-                        <span className="text-gray-400 ml-1">— {p.confidence}% confidence</span>
+                <div className="space-y-3">
+                  {findingsByTooth.slice(0, 6).map(([toothNum, findings]) => (
+                    <div key={toothNum} className="border border-gray-100 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#1A1A2E] text-white text-[10px] font-bold">
+                          {toothNum}
+                        </span>
+                        <span className="text-xs font-semibold text-[#1A1A2E]">Tooth {toothNum}</span>
+                        <span className="text-[10px] text-gray-400">{getToothName(toothNum)}</span>
                       </div>
+                      <div className="flex flex-wrap gap-1 mb-1.5">
+                        {findings.map((f) => (
+                          <PathologyBadge key={f.id} category={f.category} variant="solid" size="sm" />
+                        ))}
+                      </div>
+                      {findings.map((f) => (
+                        <div key={f.id} className="flex items-start gap-1.5 text-[10px] mb-0.5">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full mt-1 shrink-0"
+                            style={{ backgroundColor: PATHOLOGY_CATEGORIES[f.category].solidBg }}
+                          />
+                          <span className="text-gray-600">
+                            <span className="font-medium text-[#1A1A2E]">{f.name}</span>
+                            {' '}&mdash; {f.confidence}% confidence
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   ))}
-                  {pathologies.length > 8 && (
-                    <p className="text-[10px] text-gray-400 italic">+ {pathologies.length - 8} more findings</p>
+                  {findingsByTooth.length > 6 && (
+                    <p className="text-[10px] text-gray-400 italic">+ {findingsByTooth.length - 6} more teeth with findings</p>
                   )}
                 </div>
               </ReportSection>
@@ -389,7 +441,7 @@ export default function ReportPage() {
             {/* Footer */}
             <div className="mt-auto pt-4 border-t border-gray-200 text-[10px] text-gray-400 text-center">
               <p>This report was generated by SOJAI AI and should be reviewed by a qualified dental professional.</p>
-              <p className="mt-0.5">SOJAI Diagnostics &copy; {new Date().getFullYear()} — Confidential</p>
+              <p className="mt-0.5">SOJAI Diagnostics &copy; {new Date().getFullYear()} &mdash; Confidential</p>
             </div>
           </motion.div>
         </div>

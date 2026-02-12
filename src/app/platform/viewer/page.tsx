@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DentalChart from '@/components/platform/DentalChart';
 import ConfidenceBar from '@/components/platform/ConfidenceBar';
 import PathologyBadge from '@/components/platform/PathologyBadge';
+import CategoryFilter from '@/components/platform/CategoryFilter';
 import ViewerToolbar from '@/components/platform/ViewerToolbar';
 import ImageUploadZone from '@/components/platform/ImageUploadZone';
 import CanvasViewer from '@/components/platform/CanvasViewer';
@@ -13,12 +14,15 @@ import { usePlatformStore } from '@/hooks/usePlatformStore';
 import { pathologies as mockPathologies } from '@/lib/mock-data/pathologies';
 import { dentalChartData as mockChartData } from '@/lib/mock-data/dental-chart';
 import { selectedPatient } from '@/lib/mock-data/patients';
+import { PATHOLOGY_CATEGORIES, SEVERITY_LEVELS } from '@/lib/platform-constants';
+import { getToothName } from '@/lib/dental-utils';
 
 type ViewTab = 'original' | 'overlay';
 
 export default function ViewerPage() {
   const [activeTab, setActiveTab] = useState<ViewTab>('overlay');
   const [selectedTooth, setSelectedTooth] = useState<number | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const {
     uploadedImage,
@@ -42,9 +46,32 @@ export default function ViewerPage() {
     : mockChartData;
   const patient = isDemo ? selectedPatient : currentPatient;
 
-  const selectedPathology = selectedTooth
-    ? pathologies.find((p) => p.affectedTeeth.includes(selectedTooth))
-    : null;
+  // Filter pathologies
+  const filteredPathologies = pathologies.filter((p) => {
+    if (selectedCategories.length > 0 && !selectedCategories.includes(p.category)) return false;
+    return true;
+  });
+
+  // Group findings by tooth
+  const findingsByTooth = useMemo(() => {
+    const map = new Map<number, typeof filteredPathologies>();
+    filteredPathologies.forEach((p) => {
+      p.affectedTeeth.forEach((t) => {
+        if (!map.has(t)) map.set(t, []);
+        map.get(t)!.push(p);
+      });
+    });
+    return Array.from(map.entries()).sort(([a], [b]) => a - b);
+  }, [filteredPathologies]);
+
+  const categoryOptions = Object.entries(PATHOLOGY_CATEGORIES).map(([key, val]) => ({
+    key,
+    label: val.label,
+    color: val.color,
+    solidBg: val.solidBg,
+    bg: val.bg,
+    count: pathologies.filter((p) => p.category === key).length,
+  }));
 
   const toothData = selectedTooth ? chartData[selectedTooth] : null;
 
@@ -104,10 +131,10 @@ export default function ViewerPage() {
   return (
     <div className="max-w-[1600px] mx-auto h-[calc(100vh-7rem)]">
       {/* Page title */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">2D Viewer</h1>
-          <p className="text-lg text-gray-400 mt-3">
+          <h1 className="text-3xl tracking-tight font-bold text-[#1A1A2E]">2D Viewer</h1>
+          <p className="text-sm text-gray-400 mt-1">
             View, annotate and analyze dental scans with AI
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
             {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(analysis loaded)</span>}
@@ -122,7 +149,7 @@ export default function ViewerPage() {
           >
             {isDemo ? 'Demo Mode' : 'Live Mode'}
           </button>
-          <div className="flex items-center bg-white rounded-2xl border border-black/[0.06] p-1 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="flex items-center bg-white rounded-2xl border border-black/[0.06] p-1 shadow-sm">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
@@ -140,12 +167,29 @@ export default function ViewerPage() {
         </div>
       </div>
 
+      {/* Category filter bar */}
+      <div className="flex items-center gap-3 mb-4 flex-wrap">
+        <CategoryFilter
+          options={categoryOptions}
+          selected={selectedCategories}
+          onChange={setSelectedCategories}
+        />
+        {selectedCategories.length > 0 && (
+          <button
+            onClick={() => setSelectedCategories([])}
+            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
       {/* Toolbar */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <ViewerToolbar tools={toolbarItems} />
           {/* Brightness/Contrast sliders */}
-          <div className="hidden xl:flex items-center gap-3 bg-white rounded-2xl border border-black/[0.06] p-2 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="hidden xl:flex items-center gap-3 bg-white rounded-2xl border border-black/[0.06] p-2 shadow-sm">
             <label className="flex items-center gap-2 text-xs text-gray-500">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" /></svg>
               <input
@@ -172,9 +216,9 @@ export default function ViewerPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-[calc(100%-120px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-[calc(100%-180px)]">
         {/* Main viewer area */}
-        <div className="lg:col-span-3 flex flex-col gap-6">
+        <div className="lg:col-span-3 flex flex-col gap-4">
           {hasImage ? (
             <>
               {/* Canvas viewer */}
@@ -184,7 +228,6 @@ export default function ViewerPage() {
                   onMarkerClick={(p) => setSelectedTooth(p.affectedTeeth[0])}
                 />
                 <LoadingOverlay visible={analysisLoading} />
-                {/* Analysis badge */}
                 {analysisResult && (
                   <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
                     Analysed in {(analysisResult.analysisTimeMs / 1000).toFixed(1)}s
@@ -212,7 +255,7 @@ export default function ViewerPage() {
                       return <rect key={`l${i}`} x={x - 8} y={120} width={16} height={40} rx={4} fill="#1a1a3a" stroke="#2a2a4a" strokeWidth={1} />;
                     })}
                   </svg>
-                  {/* Mock markers */}
+                  {/* Mock markers — filtered by category */}
                   {activeTab !== 'original' && [
                     { id: 'PAT001', x: 35, y: 65, tooth: 36 },
                     { id: 'PAT002', x: 58, y: 32, tooth: 16 },
@@ -225,8 +268,8 @@ export default function ViewerPage() {
                   ].map((marker) => {
                     const pathology = mockPathologies.find((p) => p.id === marker.id);
                     if (!pathology) return null;
-                    const cat = pathology.category;
-                    const color = cat === 'endodontic' ? '#FF3254' : cat === 'restorative' ? '#4A39C0' : cat === 'periodontal' ? '#F59E0B' : '#10B981';
+                    if (selectedCategories.length > 0 && !selectedCategories.includes(pathology.category)) return null;
+                    const cat = PATHOLOGY_CATEGORIES[pathology.category];
                     return (
                       <motion.div
                         key={marker.id}
@@ -236,8 +279,8 @@ export default function ViewerPage() {
                         style={{ left: `${marker.x}%`, top: `${marker.y}%`, transform: 'translate(-50%, -50%)' }}
                         onClick={() => setSelectedTooth(marker.tooth)}
                       >
-                        <div className="absolute inset-[-8px] rounded-full animate-ping opacity-30" style={{ backgroundColor: color }} />
-                        <div className="w-4 h-4 rounded-full border-2 border-white shadow-lg relative z-10" style={{ backgroundColor: color }} />
+                        <div className="absolute inset-[-8px] rounded-full animate-ping opacity-30" style={{ backgroundColor: cat.solidBg }} />
+                        <div className="w-4 h-4 rounded-full border-2 border-white shadow-lg relative z-10" style={{ backgroundColor: cat.solidBg }} />
                       </motion.div>
                     );
                   })}
@@ -252,7 +295,7 @@ export default function ViewerPage() {
             </div>
           ) : (
             /* No image, no demo: upload zone */
-            <div className="flex-1 bg-white rounded-3xl border border-black/[0.06] p-8 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 min-h-[400px] flex items-center justify-center">
+            <div className="flex-1 bg-white rounded-3xl border border-black/[0.06] p-8 shadow-sm min-h-[400px] flex items-center justify-center">
               <div className="max-w-md w-full">
                 <ImageUploadZone />
               </div>
@@ -260,28 +303,28 @@ export default function ViewerPage() {
           )}
 
           {/* Dental chart below */}
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="bg-white rounded-2xl border border-black/[0.06] p-5 shadow-sm">
             <DentalChart
               onToothClick={setSelectedTooth}
               selectedTooth={selectedTooth}
-              highlightTeeth={pathologies.flatMap((p) => p.affectedTeeth)}
+              highlightTeeth={filteredPathologies.flatMap((p) => p.affectedTeeth)}
               chartData={chartData}
             />
           </div>
         </div>
 
-        {/* Side panel */}
-        <div className="lg:col-span-2 flex flex-col gap-6 overflow-y-auto">
+        {/* Side panel — findings grouped by tooth */}
+        <div className="lg:col-span-2 flex flex-col gap-4 overflow-y-auto">
           {/* Upload zone (when image exists, show compact upload) */}
           {!isDemo && (
-            <div className="bg-white rounded-3xl border border-black/[0.06] p-8 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+            <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
               <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Upload Image</h3>
               <ImageUploadZone />
             </div>
           )}
 
           {/* Patient info */}
-          <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="bg-white rounded-2xl border border-black/[0.06] p-5 shadow-sm">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-[#4A39C0] flex items-center justify-center text-white text-sm font-bold">
                 {patient.name.charAt(0)}
@@ -327,7 +370,7 @@ export default function ViewerPage() {
                 <div className="text-xs text-gray-400">Scans</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
-                <div className="text-lg font-bold text-[#FF3254]">{pathologies.length}</div>
+                <div className="text-lg font-bold text-[#EF4444]">{pathologies.length}</div>
                 <div className="text-xs text-gray-400">Findings</div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
@@ -339,69 +382,46 @@ export default function ViewerPage() {
             </div>
           </div>
 
-          {/* Selected tooth detail */}
-          <AnimatePresence mode="wait">
-            {selectedTooth && toothData && (
-              <motion.div
-                key={selectedTooth}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-[#1A1A2E]">Tooth #{selectedTooth}</h3>
-                  <button onClick={() => setSelectedTooth(null)} className="text-gray-400 hover:text-gray-600 text-sm">
-                    Clear
-                  </button>
-                </div>
-                {toothData.findings.length > 0 ? (
-                  <ul className="space-y-2">
-                    {toothData.findings.map((f, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3254] mt-1.5 shrink-0" />
-                        <span className="text-gray-600">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-gray-400">No findings for this tooth</p>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Conditions list */}
-          <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 flex-1">
-            <div className="p-6 border-b border-black/[0.04]">
+          {/* Findings by tooth */}
+          <div className="bg-white rounded-2xl border border-black/[0.06] shadow-sm flex-1 flex flex-col overflow-hidden">
+            <div className="p-5 border-b border-gray-100">
               <h3 className="font-semibold text-[#1A1A2E]">AI Findings</h3>
               <p className="text-xs text-gray-400 mt-0.5">
-                {pathologies.length} conditions detected
+                {filteredPathologies.length} conditions detected
                 {!isDemo && analysisResult && (
                   <span className="ml-1">({new Date(analysisResult.analyzedAt).toLocaleString()})</span>
                 )}
               </p>
             </div>
             <div className="p-3 space-y-3 max-h-[400px] overflow-y-auto">
-              {pathologies.map((p) => (
-                <motion.div
-                  key={p.id}
+              {findingsByTooth.map(([toothNum, findings]) => (
+                <div
+                  key={toothNum}
                   className={`p-3 rounded-xl border transition-all cursor-pointer ${
-                    selectedTooth && p.affectedTeeth.includes(selectedTooth)
+                    selectedTooth === toothNum
                       ? 'border-[#4A39C0] bg-[#F9F8FF]'
                       : 'border-gray-100 hover:border-gray-200'
                   }`}
-                  onClick={() => setSelectedTooth(p.affectedTeeth[0])}
+                  onClick={() => setSelectedTooth(toothNum)}
                 >
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-sm font-medium text-[#1A1A2E]">{p.name}</span>
-                    <PathologyBadge category={p.category} />
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#1A1A2E] text-white text-xs font-bold">
+                      {toothNum}
+                    </span>
+                    <span className="text-sm font-medium text-[#1A1A2E]">Tooth {toothNum}</span>
+                    <span className="text-xs text-gray-400">{getToothName(toothNum)}</span>
                   </div>
-                  <div className="text-xs text-gray-400 mb-2">
-                    Teeth: {p.affectedTeeth.map((t) => `#${t}`).join(', ')}
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {findings.map((f) => (
+                      <PathologyBadge key={f.id} category={f.category} variant="solid" size="sm" />
+                    ))}
                   </div>
-                  <ConfidenceBar value={p.confidence} label="Confidence" size="sm" />
-                </motion.div>
+                  {findings.map((f) => (
+                    <div key={f.id} className="mb-1.5 last:mb-0">
+                      <div className="text-xs text-gray-500">{f.name} — {f.confidence}%</div>
+                    </div>
+                  ))}
+                </div>
               ))}
             </div>
           </div>

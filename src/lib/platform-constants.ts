@@ -12,14 +12,14 @@ export const PLATFORM_NAV = [
   { label: 'Analytics', href: '/platform/analytics', icon: 'analytics' },
 ] as const;
 
-// Pathology categories with colors
+// Pathology categories with colors (Diagnocat style)
 export const PATHOLOGY_CATEGORIES = {
-  endodontic: { label: 'Endodontic', color: '#FF3254', bg: '#FFF0F2' },
-  restorative: { label: 'Restorative', color: '#4A39C0', bg: '#E4E1FF' },
-  periodontal: { label: 'Periodontal', color: '#F59E0B', bg: '#FEF3C7' },
-  anatomical: { label: 'Anatomical', color: '#10B981', bg: '#D1FAE5' },
-  prosthetic: { label: 'Prosthetic', color: '#6366F1', bg: '#E0E7FF' },
-  surgical: { label: 'Surgical', color: '#EC4899', bg: '#FCE7F3' },
+  endodontic: { label: 'Endo', color: '#F97316', bg: '#FFF7ED', solidBg: '#F97316', textOnSolid: '#FFFFFF' },
+  restorative: { label: 'Restorative', color: '#9333EA', bg: '#FAF5FF', solidBg: '#9333EA', textOnSolid: '#FFFFFF' },
+  periodontal: { label: 'Perio', color: '#EF4444', bg: '#FEF2F2', solidBg: '#EF4444', textOnSolid: '#FFFFFF' },
+  anatomical: { label: 'Anatomy', color: '#6B7280', bg: '#F3F4F6', solidBg: '#6B7280', textOnSolid: '#FFFFFF' },
+  prosthetic: { label: 'Prosthetic', color: '#3B82F6', bg: '#EFF6FF', solidBg: '#3B82F6', textOnSolid: '#FFFFFF' },
+  surgical: { label: 'Surgical', color: '#EC4899', bg: '#FDF2F8', solidBg: '#EC4899', textOnSolid: '#FFFFFF' },
 } as const;
 
 export type PathologyCategory = keyof typeof PATHOLOGY_CATEGORIES;
