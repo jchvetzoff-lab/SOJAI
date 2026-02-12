@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from 'react';
 import StatCard from '@/components/platform/StatCard';
 import DentalChart from '@/components/platform/DentalChart';
+import { usePlatformStore } from '@/hooks/usePlatformStore';
 import { FDI_UPPER_RIGHT, FDI_UPPER_LEFT, FDI_LOWER_LEFT, FDI_LOWER_RIGHT } from '@/lib/dental-utils';
 
-// Pocket depths per tooth (6 sites: MB, B, DB, ML, L, DL)
-const perioData: Record<number, number[]> = {
+// Default mock data
+const defaultPerioData: Record<number, number[]> = {
   18: [3, 2, 3, 2, 2, 3], 17: [3, 3, 3, 3, 2, 3], 16: [4, 3, 4, 3, 3, 4],
   15: [3, 2, 3, 2, 2, 3], 14: [3, 3, 3, 3, 3, 4], 13: [2, 2, 2, 2, 2, 2],
   12: [2, 2, 2, 2, 2, 2], 11: [3, 2, 3, 2, 2, 3],
@@ -22,14 +22,14 @@ const perioData: Record<number, number[]> = {
   47: [3, 3, 3, 3, 3, 3], 48: [4, 3, 4, 3, 3, 3],
 };
 
-const boneLossData: Record<number, number> = {
+const defaultBoneLoss: Record<number, number> = {
   18: 1, 17: 2, 16: 3, 15: 1, 14: 2, 13: 1, 12: 1, 11: 2,
   21: 3, 22: 1, 23: 1, 24: 2, 25: 1, 26: 4, 27: 2, 28: 0,
   38: 2, 37: 3, 36: 5, 35: 1, 34: 1, 33: 3, 32: 3, 31: 4,
   41: 4, 42: 3, 43: 3, 44: 1, 45: 2, 46: 5, 47: 2, 48: 2,
 };
 
-function PocketChart({ teeth, label }: { teeth: number[]; label: string }) {
+function PocketChart({ teeth, label, perioData }: { teeth: number[]; label: string; perioData: Record<number, number[]> }) {
   return (
     <div>
       <div className="text-xs text-gray-400 mb-2">{label}</div>
@@ -82,19 +82,75 @@ function PocketChart({ teeth, label }: { teeth: number[]; label: string }) {
 
 export default function PeriodontalPage() {
   const [selectedTooth, setSelectedTooth] = useState<number | null>(null);
+  const [manualEdits, setManualEdits] = useState<Record<number, { depths: number[]; boneLoss: number }>>({});
+
+  const { analysisResult, isDemo } = usePlatformStore();
+
+  // Merge analysis data with manual edits
+  const perioData = useMemo(() => {
+    let base: Record<number, number[]> = { ...defaultPerioData };
+    if (!isDemo && analysisResult?.periodontalData) {
+      base = {};
+      for (const [key, val] of Object.entries(analysisResult.periodontalData)) {
+        base[Number(key)] = val.pocketDepths;
+      }
+    }
+    // Apply manual edits
+    for (const [key, val] of Object.entries(manualEdits)) {
+      base[Number(key)] = val.depths;
+    }
+    return base;
+  }, [isDemo, analysisResult, manualEdits]);
+
+  const boneLossData = useMemo(() => {
+    let base: Record<number, number> = { ...defaultBoneLoss };
+    if (!isDemo && analysisResult?.periodontalData) {
+      base = {};
+      for (const [key, val] of Object.entries(analysisResult.periodontalData)) {
+        base[Number(key)] = val.boneLoss;
+      }
+    }
+    for (const [key, val] of Object.entries(manualEdits)) {
+      base[Number(key)] = val.boneLoss;
+    }
+    return base;
+  }, [isDemo, analysisResult, manualEdits]);
 
   // Stats
   const allDepths = Object.values(perioData).flat().filter((d) => d > 0);
-  const avgDepth = (allDepths.reduce((a, b) => a + b, 0) / allDepths.length).toFixed(1);
+  const avgDepth = allDepths.length > 0 ? (allDepths.reduce((a, b) => a + b, 0) / allDepths.length).toFixed(1) : '0';
   const sitesOver5 = allDepths.filter((d) => d >= 5).length;
   const teethAtRisk = Object.entries(perioData).filter(([, depths]) => depths.some((d) => d >= 5)).length;
-  const avgBoneLoss = (Object.values(boneLossData).filter((v) => v > 0).reduce((a, b) => a + b, 0) / Object.values(boneLossData).filter((v) => v > 0).length).toFixed(1);
+  const boneLossValues = Object.values(boneLossData).filter((v) => v > 0);
+  const avgBoneLoss = boneLossValues.length > 0 ? (boneLossValues.reduce((a, b) => a + b, 0) / boneLossValues.length).toFixed(1) : '0';
+
+  const handleEditDepth = (tooth: number, index: number, value: number) => {
+    const current = manualEdits[tooth] || {
+      depths: perioData[tooth] || [0, 0, 0, 0, 0, 0],
+      boneLoss: boneLossData[tooth] || 0,
+    };
+    const newDepths = [...current.depths];
+    newDepths[index] = value;
+    setManualEdits({ ...manualEdits, [tooth]: { ...current, depths: newDepths } });
+  };
+
+  const handleEditBoneLoss = (tooth: number, value: number) => {
+    const current = manualEdits[tooth] || {
+      depths: perioData[tooth] || [0, 0, 0, 0, 0, 0],
+      boneLoss: boneLossData[tooth] || 0,
+    };
+    setManualEdits({ ...manualEdits, [tooth]: { ...current, boneLoss: value } });
+  };
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-[#1A1A2E]">Periodontal Analysis</h1>
-        <p className="text-sm text-gray-500 mt-1">Pocket depth charting and bone loss assessment</p>
+        <p className="text-sm text-gray-500 mt-1">
+          Pocket depth charting and bone loss assessment
+          {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+          {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(from AI analysis — click tooth to edit)</span>}
+        </p>
       </div>
 
       {/* Stat cards */}
@@ -128,16 +184,15 @@ export default function PeriodontalPage() {
         <h3 className="font-semibold text-[#1A1A2E] mb-4">Pocket Depth Chart (6 sites per tooth)</h3>
         <div className="space-y-6 min-w-[600px]">
           <div className="flex gap-8 justify-center">
-            <PocketChart teeth={FDI_UPPER_RIGHT} label="Q1 (Upper Right)" />
-            <PocketChart teeth={FDI_UPPER_LEFT} label="Q2 (Upper Left)" />
+            <PocketChart teeth={FDI_UPPER_RIGHT} label="Q1 (Upper Right)" perioData={perioData} />
+            <PocketChart teeth={FDI_UPPER_LEFT} label="Q2 (Upper Left)" perioData={perioData} />
           </div>
           <div className="border-t border-gray-100" />
           <div className="flex gap-8 justify-center">
-            <PocketChart teeth={[...FDI_LOWER_RIGHT].reverse()} label="Q4 (Lower Right)" />
-            <PocketChart teeth={[...FDI_LOWER_LEFT].reverse()} label="Q3 (Lower Left)" />
+            <PocketChart teeth={[...FDI_LOWER_RIGHT].reverse()} label="Q4 (Lower Right)" perioData={perioData} />
+            <PocketChart teeth={[...FDI_LOWER_LEFT].reverse()} label="Q3 (Lower Left)" perioData={perioData} />
           </div>
         </div>
-        {/* Legend */}
         <div className="flex items-center gap-4 mt-4 justify-center">
           {[
             { color: '#10B981', label: '1-3mm (Healthy)' },
@@ -192,19 +247,41 @@ export default function PeriodontalPage() {
           />
           {selectedTooth && perioData[selectedTooth] && (
             <div className="mt-4 p-3 bg-gray-50 rounded-xl">
-              <div className="text-sm font-medium text-[#1A1A2E] mb-2">Tooth #{selectedTooth}</div>
-              <div className="grid grid-cols-6 gap-1 text-center text-xs">
-                {['MB', 'B', 'DB', 'ML', 'L', 'DL'].map((site, i) => (
-                  <div key={site}>
-                    <div className="text-gray-400">{site}</div>
-                    <div className={`font-bold ${perioData[selectedTooth][i] >= 5 ? 'text-red-500' : perioData[selectedTooth][i] >= 4 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                      {perioData[selectedTooth][i]}
-                    </div>
-                  </div>
-                ))}
+              <div className="text-sm font-medium text-[#1A1A2E] mb-2">
+                Tooth #{selectedTooth}
+                <span className="text-xs text-gray-400 ml-2">(click values to edit)</span>
               </div>
-              <div className="text-xs text-gray-400 mt-2">
-                Bone loss: {boneLossData[selectedTooth]}mm
+              <div className="grid grid-cols-6 gap-1 text-center text-xs">
+                {['MB', 'B', 'DB', 'ML', 'L', 'DL'].map((site, i) => {
+                  const depth = perioData[selectedTooth][i];
+                  return (
+                    <div key={site}>
+                      <div className="text-gray-400">{site}</div>
+                      <input
+                        type="number"
+                        min={0}
+                        max={15}
+                        value={depth}
+                        onChange={(e) => handleEditDepth(selectedTooth, i, Number(e.target.value))}
+                        className={`w-full text-center font-bold bg-transparent outline-none border-b border-transparent focus:border-[#4A39C0] ${
+                          depth >= 5 ? 'text-red-500' : depth >= 4 ? 'text-amber-500' : 'text-emerald-500'
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="text-xs text-gray-400 mt-2 flex items-center gap-2">
+                Bone loss:
+                <input
+                  type="number"
+                  min={0}
+                  max={15}
+                  value={boneLossData[selectedTooth] || 0}
+                  onChange={(e) => handleEditBoneLoss(selectedTooth, Number(e.target.value))}
+                  className="w-12 text-center font-medium bg-transparent outline-none border-b border-transparent focus:border-[#4A39C0] text-[#1A1A2E]"
+                />
+                mm
               </div>
             </div>
           )}

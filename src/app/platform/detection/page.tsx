@@ -6,13 +6,39 @@ import DentalChart from '@/components/platform/DentalChart';
 import PathologyBadge from '@/components/platform/PathologyBadge';
 import ConfidenceBar from '@/components/platform/ConfidenceBar';
 import CategoryFilter from '@/components/platform/CategoryFilter';
-import { pathologies } from '@/lib/mock-data/pathologies';
-import { PATHOLOGY_CATEGORIES, SEVERITY_LEVELS, PathologyCategory, SeverityLevel } from '@/lib/platform-constants';
+import EmptyState from '@/components/platform/EmptyState';
+import { usePlatformStore } from '@/hooks/usePlatformStore';
+import { pathologies as mockPathologies } from '@/lib/mock-data/pathologies';
+import { dentalChartData as mockChartData } from '@/lib/mock-data/dental-chart';
+import { PATHOLOGY_CATEGORIES, SEVERITY_LEVELS } from '@/lib/platform-constants';
 
 export default function DetectionPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSeverities, setSelectedSeverities] = useState<string[]>([]);
   const [selectedTooth, setSelectedTooth] = useState<number | null>(null);
+
+  const { analysisResult, isDemo } = usePlatformStore();
+
+  const pathologies = !isDemo && analysisResult ? analysisResult.pathologies : mockPathologies;
+  const chartData = !isDemo && analysisResult?.dentalChart
+    ? (analysisResult.dentalChart as Record<number, import('@/lib/mock-data/dental-chart').ToothData>)
+    : mockChartData;
+
+  // If not demo and no analysis, show empty state
+  if (!isDemo && !analysisResult) {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
+          <p className="text-sm text-gray-500 mt-1">No analysis available</p>
+        </div>
+        <EmptyState
+          title="No analysis yet"
+          description="Upload a dental scan in the Viewer to get AI-powered pathology detection."
+        />
+      </div>
+    );
+  }
 
   const filtered = pathologies.filter((p) => {
     if (selectedCategories.length > 0 && !selectedCategories.includes(p.category)) return false;
@@ -41,7 +67,15 @@ export default function DetectionPage() {
     <div className="max-w-7xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
-        <p className="text-sm text-gray-500 mt-1">{pathologies.length} pathologies detected across {new Set(pathologies.flatMap((p) => p.affectedTeeth)).size} teeth</p>
+        <p className="text-sm text-gray-500 mt-1">
+          {pathologies.length} pathologies detected across {new Set(pathologies.flatMap((p) => p.affectedTeeth)).size} teeth
+          {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
+          {!isDemo && analysisResult && (
+            <span className="ml-1 text-emerald-500">
+              &mdash; Analyzed {new Date(analysisResult.analyzedAt).toLocaleDateString()}
+            </span>
+          )}
+        </p>
       </div>
 
       {/* Critical alerts */}
@@ -164,6 +198,7 @@ export default function DetectionPage() {
               onToothClick={setSelectedTooth}
               selectedTooth={selectedTooth}
               highlightTeeth={filtered.flatMap((p) => p.affectedTeeth)}
+              chartData={chartData}
             />
           </div>
         </div>

@@ -5,9 +5,10 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import StatCard from '@/components/platform/StatCard';
 import PatientListItem from '@/components/platform/PatientListItem';
+import { usePlatformStore } from '@/hooks/usePlatformStore';
 import { patients } from '@/lib/mock-data/patients';
 
-const activityItems = [
+const mockActivityItems = [
   { id: 1, text: 'AI analysis completed for Jean-Pierre Martin', time: '2 min ago', type: 'analysis' },
   { id: 2, text: 'New scan uploaded for Marie Dupont', time: '15 min ago', type: 'upload' },
   { id: 3, text: 'Report sent to François Leroy', time: '1 hour ago', type: 'report' },
@@ -27,13 +28,33 @@ const quickActions = [
 
 export default function DashboardPage() {
   const [search, setSearch] = useState('');
+  const { analysisHistory, isDemo } = usePlatformStore();
   const filtered = patients.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase()) || p.id.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Dynamic stats from history
+  const totalScans = isDemo ? 2847 : analysisHistory.length;
+  const totalPathologies = isDemo ? 12394 : analysisHistory.reduce((s, h) => s + h.pathologyCount, 0);
+
+  // Build activity items from history or use mock
+  const activityItems = isDemo
+    ? mockActivityItems
+    : analysisHistory.length > 0
+    ? analysisHistory.slice(0, 8).map((h, i) => {
+        const date = new Date(h.analyzedAt);
+        const ago = getTimeAgo(date);
+        return {
+          id: i + 1,
+          text: `AI analysis: ${h.summary.substring(0, 60)}${h.summary.length > 60 ? '...' : ''}`,
+          time: ago,
+          type: 'analysis' as const,
+        };
+      })
+    : [{ id: 1, text: 'No activity yet — upload a scan to get started', time: 'now', type: 'upload' as const }];
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Page title */}
       <div>
         <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboard</h1>
         <p className="text-sm text-gray-500 mt-1">Overview of your practice activity</p>
@@ -43,29 +64,29 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Scans"
-          value="2,847"
-          change="+12.5%"
+          value={isDemo ? '2,847' : String(totalScans)}
+          change={isDemo ? '+12.5%' : `${totalScans} total`}
           changeType="positive"
           icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>}
         />
         <StatCard
           title="Pathologies Found"
-          value="12,394"
-          change="+8.2%"
+          value={isDemo ? '12,394' : String(totalPathologies)}
+          change={isDemo ? '+8.2%' : `${totalPathologies} total`}
           changeType="positive"
           icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>}
         />
         <StatCard
           title="Reports Generated"
-          value="1,923"
-          change="+15.3%"
+          value={isDemo ? '1,923' : '-'}
+          change={isDemo ? '+15.3%' : ''}
           changeType="positive"
           icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>}
         />
         <StatCard
           title="Active Patients"
-          value="156"
-          change="+3"
+          value={isDemo ? '156' : '1'}
+          change={isDemo ? '+3' : ''}
           changeType="positive"
           icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>}
         />
@@ -143,4 +164,15 @@ export default function DashboardPage() {
       </div>
     </div>
   );
+}
+
+function getTimeAgo(date: Date): string {
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (seconds < 60) return 'just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? 's' : ''} ago`;
 }

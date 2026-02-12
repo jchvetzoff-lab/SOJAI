@@ -10,6 +10,7 @@ interface DentalChartProps {
   selectedTooth?: number | null;
   highlightTeeth?: number[];
   compact?: boolean;
+  chartData?: Record<number, ToothData>;
 }
 
 function ToothShape({
@@ -72,7 +73,8 @@ function ToothShape({
   );
 }
 
-export default function DentalChart({ onToothClick, selectedTooth, highlightTeeth = [], compact = false }: DentalChartProps) {
+export default function DentalChart({ onToothClick, selectedTooth, highlightTeeth = [], compact = false, chartData }: DentalChartProps) {
+  const data = chartData || dentalChartData;
   const [hovered, setHovered] = useState<number | null>(null);
 
   const svgWidth = compact ? 400 : 560;
@@ -88,8 +90,8 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
       : svgWidth / 2 - gap - totalWidth; // left side
 
     return teeth.map((num, i) => {
-      const data = dentalChartData[num];
-      if (!data) return null;
+      const toothInfo = data[num];
+      if (!toothInfo) return null;
       const x = reverse
         ? svgWidth / 2 + gap + i * (toothSize + gap) + toothSize / 2
         : svgWidth / 2 - gap - (teeth.length - 1 - i) * (toothSize + gap) - toothSize / 2;
@@ -97,7 +99,7 @@ export default function DentalChart({ onToothClick, selectedTooth, highlightTeet
       return (
         <ToothShape
           key={num}
-          tooth={data}
+          tooth={toothInfo}
           x={x}
           y={y}
           size={toothSize}
