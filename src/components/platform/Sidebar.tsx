@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PLATFORM_NAV } from '@/lib/platform-constants';
 
 const icons: Record<string, React.ReactNode> = {
   dashboard: (
@@ -59,6 +58,39 @@ const icons: Record<string, React.ReactNode> = {
   ),
 };
 
+const navSections = [
+  {
+    label: 'Overview',
+    items: [
+      { label: 'Dashboard', href: '/platform', icon: 'dashboard' },
+    ],
+  },
+  {
+    label: 'Diagnostics',
+    items: [
+      { label: '2D Viewer', href: '/platform/viewer', icon: 'viewer' },
+      { label: 'AI Detection', href: '/platform/detection', icon: 'detection' },
+      { label: '3D Viewer', href: '/platform/3d', icon: '3d' },
+      { label: 'Reports', href: '/platform/report', icon: 'report' },
+    ],
+  },
+  {
+    label: 'Specialties',
+    items: [
+      { label: 'Superimposition', href: '/platform/superimposition', icon: 'superimposition' },
+      { label: 'Implant Planning', href: '/platform/implant', icon: 'implant' },
+      { label: 'Orthodontic', href: '/platform/orthodontic', icon: 'orthodontic' },
+      { label: 'Periodontal', href: '/platform/periodontal', icon: 'periodontal' },
+    ],
+  },
+  {
+    label: 'Insights',
+    items: [
+      { label: 'Analytics', href: '/platform/analytics', icon: 'analytics' },
+    ],
+  },
+];
+
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
@@ -66,18 +98,18 @@ export default function Sidebar() {
   return (
     <aside
       className={`h-screen sticky top-0 flex flex-col transition-all duration-300 ${
-        collapsed ? 'w-[68px]' : 'w-[240px]'
+        collapsed ? 'w-[68px]' : 'w-[260px]'
       }`}
       style={{ backgroundColor: '#1A1A2E' }}
     >
       {/* Logo */}
-      <div className="h-20 flex items-center px-4 border-b border-white/10">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#4A39C0] flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-sm font-[family-name:var(--font-playfair)]">S</span>
+      <div className="h-20 flex items-center px-5 border-b border-white/10">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#4A39C0] flex items-center justify-center shrink-0">
+            <span className="text-white font-bold text-base font-[family-name:var(--font-playfair)]">S</span>
           </div>
           {!collapsed && (
-            <span className="text-white text-lg font-bold tracking-tight">
+            <span className="text-white text-xl font-bold tracking-tight">
               SOJ<span className="text-[#8B5CF6]">AI</span>
             </span>
           )}
@@ -85,33 +117,46 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-4 px-2 overflow-y-auto">
-        <div className="space-y-1.5">
-          {PLATFORM_NAV.map((item) => {
-            const active = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all ${
-                  active
-                    ? 'bg-[#4A39C0] text-white'
-                    : 'text-white/50 hover:text-white hover:bg-white/5'
-                }`}
-                title={collapsed ? item.label : undefined}
-              >
-                <span className="shrink-0">{icons[item.icon]}</span>
-                {!collapsed && <span>{item.label}</span>}
-              </Link>
-            );
-          })}
+      <nav className="flex-1 py-5 px-3 overflow-y-auto">
+        <div className="space-y-6">
+          {navSections.map((section) => (
+            <div key={section.label}>
+              {!collapsed && (
+                <div className="px-3 mb-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-white/30">
+                    {section.label}
+                  </span>
+                </div>
+              )}
+              <div className="space-y-1">
+                {section.items.map((item) => {
+                  const active = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                        active
+                          ? 'bg-[#4A39C0] text-white shadow-lg shadow-[#4A39C0]/25'
+                          : 'text-white/50 hover:text-white hover:bg-white/5'
+                      }`}
+                      title={collapsed ? item.label : undefined}
+                    >
+                      <span className="shrink-0">{icons[item.icon]}</span>
+                      {!collapsed && <span>{item.label}</span>}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </nav>
 
       {/* Collapse toggle */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="h-12 flex items-center justify-center border-t border-white/10 text-white/40 hover:text-white/70 transition-colors"
+        className="h-14 flex items-center justify-center border-t border-white/10 text-white/40 hover:text-white/70 transition-colors"
       >
         <svg
           width="18"

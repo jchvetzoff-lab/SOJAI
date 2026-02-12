@@ -29,8 +29,8 @@ export default function DetectionPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
-          <p className="text-sm text-gray-500 mt-1">No analysis available</p>
+          <h1 className="text-3xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
+          <p className="text-base text-gray-500 mt-2">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis yet"
@@ -64,10 +64,10 @@ export default function DetectionPage() {
   }));
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
+        <p className="text-base text-gray-500 mt-2">
           {pathologies.length} pathologies detected across {new Set(pathologies.flatMap((p) => p.affectedTeeth)).size} teeth
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult && (

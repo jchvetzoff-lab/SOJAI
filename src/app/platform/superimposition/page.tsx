@@ -9,10 +9,10 @@ export default function SuperimpositionPage() {
   const [opacity, setOpacity] = useState(50);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Superimposition</h1>
-        <p className="text-sm text-gray-500 mt-1">Compare scans from different dates</p>
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">Superimposition</h1>
+        <p className="text-base text-gray-500 mt-2">Compare scans from different dates</p>
       </div>
 
       {/* Controls */}

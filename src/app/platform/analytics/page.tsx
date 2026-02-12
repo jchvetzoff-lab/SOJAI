@@ -51,8 +51,8 @@ export default function AnalyticsPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">Analytics</h1>
-          <p className="text-sm text-gray-500 mt-1">No data available</p>
+          <h1 className="text-3xl font-bold text-[#1A1A2E]">Analytics</h1>
+          <p className="text-base text-gray-500 mt-2">No data available</p>
         </div>
         <EmptyState
           title="No analytics data yet"
@@ -79,11 +79,11 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">Analytics</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-3xl font-bold text-[#1A1A2E]">Analytics</h1>
+          <p className="text-base text-gray-500 mt-2">
             Practice performance and insights
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           </p>
@@ -138,7 +138,7 @@ export default function AnalyticsPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Monthly scans bar chart */}
         <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
           <h3 className="font-semibold text-[#1A1A2E] mb-4">Scans by Type</h3>
@@ -182,7 +182,7 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Weekly trend */}
         <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
           <h3 className="font-semibold text-[#1A1A2E] mb-4">Weekly Activity</h3>

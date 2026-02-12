@@ -106,8 +106,8 @@ export default function ViewerPage() {
       {/* Page title */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">2D Viewer</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-3xl font-bold text-[#1A1A2E]">2D Viewer</h1>
+          <p className="text-base text-gray-500 mt-2">
             View, annotate and analyze dental scans with AI
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
             {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(analysis loaded)</span>}

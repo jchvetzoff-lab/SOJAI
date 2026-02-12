@@ -143,10 +143,10 @@ export default function PeriodontalPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Periodontal Analysis</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">Periodontal Analysis</h1>
+        <p className="text-base text-gray-500 mt-2">
           Pocket depth charting and bone loss assessment
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(from AI analysis — click tooth to edit)</span>}

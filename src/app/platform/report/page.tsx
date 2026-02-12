@@ -46,9 +46,9 @@ export default function ReportPage() {
   if (!isDemo && !analysisResult) {
     return (
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">Report Generator</h1>
-          <p className="text-sm text-gray-500 mt-1">No analysis available</p>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-[#1A1A2E]">Report Generator</h1>
+          <p className="text-base text-gray-500 mt-2">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis to report"
@@ -208,15 +208,15 @@ export default function ReportPage() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Report Generator</h1>
-        <p className="text-sm text-gray-500 mt-1">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">Report Generator</h1>
+        <p className="text-base text-gray-500 mt-2">
           Create professional diagnostic reports
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Controls */}
         <div className="space-y-4">
           <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">

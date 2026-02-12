@@ -86,10 +86,10 @@ export default function DashboardPage() {
     : [{ id: 1, text: 'No activity yet — upload a scan to get started', time: 'now', type: 'upload' as const }];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboard</h1>
-        <p className="text-sm text-gray-500 mt-1">Overview of your practice activity</p>
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">Dashboard</h1>
+        <p className="text-base text-gray-500 mt-2">Overview of your practice activity</p>
       </div>
 
       {/* Upload CTA */}
@@ -146,10 +146,10 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Patients list */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-[#1A1A2E]">Recent Patients</h2>
             <input
               type="text"
@@ -159,7 +159,7 @@ export default function DashboardPage() {
               className="text-sm bg-gray-50 rounded-lg px-4 py-2 border-none outline-none w-48 placeholder:text-gray-400"
             />
           </div>
-          <div className="p-2 max-h-[440px] overflow-y-auto">
+          <div className="p-3 max-h-[440px] overflow-y-auto">
             {filtered.slice(0, 10).map((patient) => (
               <PatientListItem key={patient.id} patient={patient} />
             ))}
@@ -172,8 +172,8 @@ export default function DashboardPage() {
         {/* Right column */}
         <div className="space-y-6">
           {/* Quick actions */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-3">Quick Actions</h2>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-3">
               {quickActions.map((action) => (
                 <Link
@@ -191,9 +191,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Activity timeline */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-3">Recent Activity</h2>
-            <div className="space-y-3 max-h-[300px] overflow-y-auto">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4">Recent Activity</h2>
+            <div className="space-y-4 max-h-[300px] overflow-y-auto">
               {activityItems.map((item) => (
                 <motion.div
                   key={item.id}

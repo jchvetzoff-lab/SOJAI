@@ -23,8 +23,8 @@ export default function ImplantPage() {
   return (
     <div className="max-w-7xl mx-auto h-[calc(100vh-7rem)]">
       <div className="mb-5">
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Implant Planning</h1>
-        <p className="text-sm text-gray-500 mt-1">Position and validate implant placement</p>
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">Implant Planning</h1>
+        <p className="text-base text-gray-500 mt-2">Position and validate implant placement</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 h-[calc(100%-80px)]">

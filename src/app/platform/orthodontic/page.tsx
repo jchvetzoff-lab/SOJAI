@@ -38,10 +38,10 @@ export default function OrthodonticPage() {
   }));
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Orthodontic Analysis</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-[#1A1A2E]">Orthodontic Analysis</h1>
+        <p className="text-base text-gray-500 mt-2">
           Cephalometric measurements and TMJ evaluation
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult?.measurements?.cephalometric?.length && (
@@ -50,7 +50,7 @@ export default function OrthodonticPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Cephalometric view */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="p-4 border-b border-gray-100">
@@ -135,7 +135,7 @@ export default function OrthodonticPage() {
       </div>
 
       {/* TMJ Analysis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {(['left', 'right'] as const).map((side) => (
           <div key={side} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <h3 className="font-semibold text-[#1A1A2E] mb-4 capitalize">TMJ — {side} Side</h3>
