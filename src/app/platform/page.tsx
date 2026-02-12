@@ -86,10 +86,10 @@ export default function DashboardPage() {
     : [{ id: 1, text: 'No activity yet — upload a scan to get started', time: 'now', type: 'upload' as const }];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-[#1A1A2E]">Dashboard</h1>
-        <p className="text-base text-gray-500 mt-2">Overview of your practice activity</p>
+        <h1 className="text-4xl font-bold text-[#1A1A2E] tracking-tight">Dashboard</h1>
+        <p className="text-lg text-gray-400 mt-3">Overview of your practice activity</p>
       </div>
 
       {/* Upload CTA */}
@@ -97,25 +97,26 @@ export default function DashboardPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-[#4A39C0] to-[#6D5DD3] rounded-2xl p-6 flex items-center gap-5 shadow-md hover:shadow-lg transition-all hover:scale-[1.005] cursor-pointer"
+          whileHover={{ y: -4, transition: { duration: 0.2 } }}
+          className="bg-gradient-to-r from-[#4A39C0] to-[#6D5DD3] rounded-3xl p-8 flex items-center gap-6 shadow-xl shadow-[#4A39C0]/20 hover:shadow-2xl hover:shadow-[#4A39C0]/30 transition-all duration-300 cursor-pointer"
         >
-          <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
             </svg>
           </div>
           <div className="flex-1">
-            <h2 className="text-lg font-semibold text-white">Upload &amp; Analyze a Scan</h2>
-            <p className="text-white/70 text-sm mt-0.5">Drop a dental X-ray or CBCT to get instant AI-powered diagnostics</p>
+            <h2 className="text-xl font-bold text-white">Upload &amp; Analyze a Scan</h2>
+            <p className="text-white/60 text-base mt-1">Drop a dental X-ray or CBCT to get instant AI-powered diagnostics</p>
           </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 opacity-60">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 opacity-50">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </motion.div>
       </Link>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Total Scans"
           value={isDemo ? '2,847' : String(totalScans)}
@@ -148,69 +149,69 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Patients list */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-[#1A1A2E]">Recent Patients</h2>
+        <div className="lg:col-span-2 bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="p-7 border-b border-black/[0.04] flex items-center justify-between">
+            <h2 className="text-xl font-bold text-[#1A1A2E]">Recent Patients</h2>
             <input
               type="text"
               placeholder="Search patients..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="text-sm bg-gray-50 rounded-lg px-4 py-2 border-none outline-none w-48 placeholder:text-gray-400"
+              className="text-sm bg-[#F5F4FA] rounded-xl px-4 py-2.5 border border-black/[0.04] outline-none w-52 placeholder:text-gray-400 focus:border-[#4A39C0]/30 transition-colors"
             />
           </div>
-          <div className="p-3 max-h-[440px] overflow-y-auto">
+          <div className="p-4 max-h-[480px] overflow-y-auto">
             {filtered.slice(0, 10).map((patient) => (
               <PatientListItem key={patient.id} patient={patient} />
             ))}
             {filtered.length === 0 && (
-              <p className="text-sm text-gray-400 text-center py-8">No patients found</p>
+              <p className="text-base text-gray-400 text-center py-10">No patients found</p>
             )}
           </div>
         </div>
 
         {/* Right column */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Quick actions */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 p-7">
+            <h2 className="text-xl font-bold text-[#1A1A2E] mb-5">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-4">
               {quickActions.map((action) => (
                 <Link
                   key={action.href}
                   href={action.href}
-                  className="flex flex-col items-center gap-2.5 p-4 rounded-xl bg-gray-50 hover:bg-[#E4E1FF] transition-colors text-center group"
+                  className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-[#F9F8FF] hover:bg-[#E4E1FF] transition-all duration-200 text-center group hover:-translate-y-1"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#E4E1FF] group-hover:bg-[#4A39C0] flex items-center justify-center text-[#4A39C0] group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-[#E4E1FF] group-hover:bg-[#4A39C0] flex items-center justify-center text-[#4A39C0] group-hover:text-white transition-all duration-200 shadow-sm">
                     {action.icon}
                   </div>
-                  <span className="text-sm font-medium text-[#1A1A2E]">{action.label}</span>
+                  <span className="text-sm font-semibold text-[#1A1A2E]">{action.label}</span>
                 </Link>
               ))}
             </div>
           </div>
 
           {/* Activity timeline */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4">Recent Activity</h2>
-            <div className="space-y-4 max-h-[300px] overflow-y-auto">
+          <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 p-7">
+            <h2 className="text-xl font-bold text-[#1A1A2E] mb-5">Recent Activity</h2>
+            <div className="space-y-5 max-h-[320px] overflow-y-auto">
               {activityItems.map((item) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: item.id * 0.05 }}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-3.5"
                 >
-                  <div className={`w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 ${
+                  <div className={`w-3 h-3 rounded-full mt-1.5 shrink-0 ${
                     item.type === 'alert' ? 'bg-[#FF3254]' :
                     item.type === 'analysis' ? 'bg-[#4A39C0]' :
                     item.type === 'report' ? 'bg-emerald-500' :
                     'bg-gray-300'
                   }`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-base text-[#1A1A2E] leading-snug">{item.text}</p>
-                    <p className="text-sm text-gray-400 mt-0.5">{item.time}</p>
+                    <p className="text-[15px] text-[#1A1A2E] leading-relaxed">{item.text}</p>
+                    <p className="text-sm text-gray-400 mt-1">{item.time}</p>
                   </div>
                 </motion.div>
               ))}

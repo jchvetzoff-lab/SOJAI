@@ -143,10 +143,10 @@ export default function PeriodontalPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-[#1A1A2E]">Periodontal Analysis</h1>
-        <p className="text-base text-gray-500 mt-2">
+        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Periodontal Analysis</h1>
+        <p className="text-lg text-gray-400 mt-3">
           Pocket depth charting and bone loss assessment
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(from AI analysis — click tooth to edit)</span>}
@@ -154,7 +154,7 @@ export default function PeriodontalPage() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
         <StatCard
           title="Avg. Pocket Depth"
           value={`${avgDepth}mm`}
@@ -180,15 +180,15 @@ export default function PeriodontalPage() {
       </div>
 
       {/* Pocket depth chart */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm overflow-x-auto">
+      <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 overflow-x-auto">
         <h3 className="font-semibold text-[#1A1A2E] mb-4">Pocket Depth Chart (6 sites per tooth)</h3>
         <div className="space-y-6 min-w-[600px]">
-          <div className="flex gap-8 justify-center">
+          <div className="flex gap-10 justify-center">
             <PocketChart teeth={FDI_UPPER_RIGHT} label="Q1 (Upper Right)" perioData={perioData} />
             <PocketChart teeth={FDI_UPPER_LEFT} label="Q2 (Upper Left)" perioData={perioData} />
           </div>
           <div className="border-t border-gray-100" />
-          <div className="flex gap-8 justify-center">
+          <div className="flex gap-10 justify-center">
             <PocketChart teeth={[...FDI_LOWER_RIGHT].reverse()} label="Q4 (Lower Right)" perioData={perioData} />
             <PocketChart teeth={[...FDI_LOWER_LEFT].reverse()} label="Q3 (Lower Left)" perioData={perioData} />
           </div>
@@ -209,8 +209,8 @@ export default function PeriodontalPage() {
       </div>
 
       {/* Bone loss + Dental chart */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
           <h3 className="font-semibold text-[#1A1A2E] mb-4">Bone Loss Assessment</h3>
           <div className="space-y-2">
             {Object.entries(boneLossData)
@@ -238,7 +238,7 @@ export default function PeriodontalPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
           <h3 className="font-semibold text-[#1A1A2E] mb-4">Dental Chart</h3>
           <DentalChart
             onToothClick={setSelectedTooth}

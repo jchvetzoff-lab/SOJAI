@@ -104,10 +104,10 @@ export default function ViewerPage() {
   return (
     <div className="max-w-[1600px] mx-auto h-[calc(100vh-7rem)]">
       {/* Page title */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-[#1A1A2E]">2D Viewer</h1>
-          <p className="text-base text-gray-500 mt-2">
+          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">2D Viewer</h1>
+          <p className="text-lg text-gray-400 mt-3">
             View, annotate and analyze dental scans with AI
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
             {!isDemo && analysisResult && <span className="ml-1 text-emerald-500">(analysis loaded)</span>}
@@ -116,13 +116,13 @@ export default function ViewerPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleToggleDemo}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-2xl text-sm font-medium transition-colors ${
               isDemo ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'
             }`}
           >
             {isDemo ? 'Demo Mode' : 'Live Mode'}
           </button>
-          <div className="flex items-center bg-white rounded-xl border border-gray-100 p-1 shadow-sm">
+          <div className="flex items-center bg-white rounded-2xl border border-black/[0.06] p-1 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
@@ -141,11 +141,11 @@ export default function ViewerPage() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <ViewerToolbar tools={toolbarItems} />
           {/* Brightness/Contrast sliders */}
-          <div className="hidden xl:flex items-center gap-3 bg-white rounded-xl border border-gray-100 p-2 shadow-sm">
+          <div className="hidden xl:flex items-center gap-3 bg-white rounded-2xl border border-black/[0.06] p-2 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <label className="flex items-center gap-2 text-xs text-gray-500">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" /></svg>
               <input
@@ -172,9 +172,9 @@ export default function ViewerPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-[calc(100%-120px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-[calc(100%-120px)]">
         {/* Main viewer area */}
-        <div className="lg:col-span-3 flex flex-col gap-5">
+        <div className="lg:col-span-3 flex flex-col gap-6">
           {hasImage ? (
             <>
               {/* Canvas viewer */}
@@ -186,11 +186,11 @@ export default function ViewerPage() {
                 <LoadingOverlay visible={analysisLoading} />
                 {/* Analysis badge */}
                 {analysisResult && (
-                  <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+                  <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
                     Analysed in {(analysisResult.analysisTimeMs / 1000).toFixed(1)}s
                   </div>
                 )}
-                <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+                <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
                   {activeTab === 'original' ? 'Original View' : 'AI Analysis Active'}
                 </div>
               </div>
@@ -243,16 +243,16 @@ export default function ViewerPage() {
                   })}
                 </div>
               </div>
-              <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+              <div className="absolute top-4 left-4 bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
                 Demo data
               </div>
-              <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+              <div className="absolute top-4 right-4 bg-white/10 text-white/70 px-3 py-1.5 rounded-2xl text-xs font-medium backdrop-blur-sm">
                 {activeTab === 'original' ? 'Original View' : 'AI Analysis Active'}
               </div>
             </div>
           ) : (
             /* No image, no demo: upload zone */
-            <div className="flex-1 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm min-h-[400px] flex items-center justify-center">
+            <div className="flex-1 bg-white rounded-3xl border border-black/[0.06] p-8 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 min-h-[400px] flex items-center justify-center">
               <div className="max-w-md w-full">
                 <ImageUploadZone />
               </div>
@@ -260,7 +260,7 @@ export default function ViewerPage() {
           )}
 
           {/* Dental chart below */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <DentalChart
               onToothClick={setSelectedTooth}
               selectedTooth={selectedTooth}
@@ -271,17 +271,17 @@ export default function ViewerPage() {
         </div>
 
         {/* Side panel */}
-        <div className="lg:col-span-2 flex flex-col gap-5 overflow-y-auto">
+        <div className="lg:col-span-2 flex flex-col gap-6 overflow-y-auto">
           {/* Upload zone (when image exists, show compact upload) */}
           {!isDemo && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+            <div className="bg-white rounded-3xl border border-black/[0.06] p-8 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
               <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Upload Image</h3>
               <ImageUploadZone />
             </div>
           )}
 
           {/* Patient info */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-[#4A39C0] flex items-center justify-center text-white text-sm font-bold">
                 {patient.name.charAt(0)}
@@ -347,7 +347,7 @@ export default function ViewerPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm"
+                className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-[#1A1A2E]">Tooth #{selectedTooth}</h3>
@@ -372,8 +372,8 @@ export default function ViewerPage() {
           </AnimatePresence>
 
           {/* Conditions list */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex-1">
-            <div className="p-4 border-b border-gray-100">
+          <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 flex-1">
+            <div className="p-6 border-b border-black/[0.04]">
               <h3 className="font-semibold text-[#1A1A2E]">AI Findings</h3>
               <p className="text-xs text-gray-400 mt-0.5">
                 {pathologies.length} conditions detected

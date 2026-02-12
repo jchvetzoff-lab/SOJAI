@@ -22,12 +22,12 @@ export default function ImplantPage() {
 
   return (
     <div className="max-w-7xl mx-auto h-[calc(100vh-7rem)]">
-      <div className="mb-5">
-        <h1 className="text-3xl font-bold text-[#1A1A2E]">Implant Planning</h1>
-        <p className="text-base text-gray-500 mt-2">Position and validate implant placement</p>
+      <div className="mb-6">
+        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Implant Planning</h1>
+        <p className="text-lg text-gray-400 mt-3">Position and validate implant placement</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 h-[calc(100%-80px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-7 h-[calc(100%-80px)]">
         {/* 3D Viewer */}
         <div className="lg:col-span-3 bg-[#0a0a1a] rounded-2xl overflow-hidden relative">
           <Canvas camera={{ position: [0, 3, 6], fov: 40 }}>
@@ -59,9 +59,9 @@ export default function ImplantPage() {
         </div>
 
         {/* Side panel */}
-        <div className="space-y-4 overflow-y-auto">
+        <div className="space-y-6 overflow-y-auto">
           {/* Implant selector */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Implant Size</h3>
             <div className="space-y-2">
               {implantSizes.map((imp, i) => (
@@ -81,7 +81,7 @@ export default function ImplantPage() {
           </div>
 
           {/* Safety simulation */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Safety Check</h3>
             <div className="space-y-2">
               {(['safe', 'warning', 'danger'] as const).map((s) => (
@@ -102,7 +102,7 @@ export default function ImplantPage() {
           </div>
 
           {/* Measurements */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Measurements</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">

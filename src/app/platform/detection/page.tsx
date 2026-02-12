@@ -29,8 +29,8 @@ export default function DetectionPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
-          <p className="text-base text-gray-500 mt-2">No analysis available</p>
+          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">AI Detection Results</h1>
+          <p className="text-lg text-gray-400 mt-3">No analysis available</p>
         </div>
         <EmptyState
           title="No analysis yet"
@@ -64,10 +64,10 @@ export default function DetectionPage() {
   }));
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-[#1A1A2E]">AI Detection Results</h1>
-        <p className="text-base text-gray-500 mt-2">
+        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">AI Detection Results</h1>
+        <p className="text-lg text-gray-400 mt-3">
           {pathologies.length} pathologies detected across {new Set(pathologies.flatMap((p) => p.affectedTeeth)).size} teeth
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult && (
@@ -80,7 +80,7 @@ export default function DetectionPage() {
 
       {/* Critical alerts */}
       {criticalFindings.length > 0 && (
-        <div className="bg-red-50 border border-red-100 rounded-2xl p-4">
+        <div className="bg-red-50 border border-red-200/60 rounded-3xl p-6">
           <div className="flex items-center gap-2 mb-2">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
@@ -92,7 +92,7 @@ export default function DetectionPage() {
               <button
                 key={f.id}
                 onClick={() => setSelectedTooth(f.affectedTeeth[0])}
-                className="bg-white border border-red-200 rounded-full px-4 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 transition-colors"
+                className="bg-white border border-red-200 rounded-2xl px-5 py-2 text-sm font-medium text-red-700 hover:bg-red-100 transition-colors"
               >
                 {f.name} — Tooth {f.affectedTeeth.map((t) => `#${t}`).join(', ')}
               </button>
@@ -101,10 +101,10 @@ export default function DetectionPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Filters sidebar */}
         <div className="space-y-5">
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Category</h3>
             <CategoryFilter
               options={categoryOptions}
@@ -112,7 +112,7 @@ export default function DetectionPage() {
               onChange={setSelectedCategories}
             />
           </div>
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Severity</h3>
             <CategoryFilter
               options={severityOptions}
@@ -140,17 +140,17 @@ export default function DetectionPage() {
             <span className="text-sm text-gray-500">{filtered.length} results</span>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {filtered.map((p, i) => (
               <motion.div
                 key={p.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.03 }}
-                className={`bg-white rounded-2xl border p-6 shadow-sm transition-all cursor-pointer ${
+                className={`bg-white rounded-3xl border p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 cursor-pointer ${
                   selectedTooth && p.affectedTeeth.includes(selectedTooth)
                     ? 'border-[#4A39C0] ring-1 ring-[#4A39C0]/20'
-                    : 'border-gray-100 hover:border-gray-200'
+                    : 'border-black/[0.06] hover:border-gray-200'
                 }`}
                 onClick={() => setSelectedTooth(p.affectedTeeth[0])}
               >
@@ -192,7 +192,7 @@ export default function DetectionPage() {
           </div>
 
           {/* Dental chart at bottom */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+          <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Affected Teeth Overview</h3>
             <DentalChart
               onToothClick={setSelectedTooth}

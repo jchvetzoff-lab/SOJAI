@@ -51,8 +51,8 @@ export default function AnalyticsPage() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-[#1A1A2E]">Analytics</h1>
-          <p className="text-base text-gray-500 mt-2">No data available</p>
+          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Analytics</h1>
+          <p className="text-lg text-gray-400 mt-3">No data available</p>
         </div>
         <EmptyState
           title="No analytics data yet"
@@ -79,16 +79,16 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[#1A1A2E]">Analytics</h1>
-          <p className="text-base text-gray-500 mt-2">
+          <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Analytics</h1>
+          <p className="text-lg text-gray-400 mt-3">
             Practice performance and insights
             {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           </p>
         </div>
-        <div className="flex items-center bg-white rounded-xl border border-gray-100 p-1 shadow-sm">
+        <div className="flex items-center bg-white rounded-2xl border border-black/[0.06] p-1 shadow-sm">
           {(['7d', '30d', '90d', '1y'] as Period[]).map((p) => (
             <button
               key={p}
@@ -104,7 +104,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Metric cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
           title="Total Scans"
           value={isDemo ? '2,847' : String(totalScans)}
@@ -138,10 +138,10 @@ export default function AnalyticsPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Monthly scans bar chart */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-          <h3 className="font-semibold text-[#1A1A2E] mb-4">Scans by Type</h3>
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#1A1A2E] mb-6">Scans by Type</h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={monthlyScans}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -158,8 +158,8 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Pathology distribution pie chart */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-          <h3 className="font-semibold text-[#1A1A2E] mb-4">Pathology Distribution</h3>
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#1A1A2E] mb-6">Pathology Distribution</h3>
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
               <Pie
@@ -182,10 +182,10 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Weekly trend */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-          <h3 className="font-semibold text-[#1A1A2E] mb-4">Weekly Activity</h3>
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#1A1A2E] mb-6">Weekly Activity</h3>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={weeklyTrend}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -200,9 +200,9 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Practitioner performance */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-4 border-b border-gray-100">
-            <h3 className="font-semibold text-[#1A1A2E]">Practitioner Performance</h3>
+        <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="p-6 border-b border-black/[0.04]">
+            <h3 className="text-lg font-bold text-[#1A1A2E]">Practitioner Performance</h3>
           </div>
           <div className="p-4">
             <DataTable

@@ -38,10 +38,10 @@ export default function OrthodonticPage() {
   }));
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-[#1A1A2E]">Orthodontic Analysis</h1>
-        <p className="text-base text-gray-500 mt-2">
+        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Orthodontic Analysis</h1>
+        <p className="text-lg text-gray-400 mt-3">
           Cephalometric measurements and TMJ evaluation
           {isDemo && <span className="ml-1 text-amber-500">(demo data)</span>}
           {!isDemo && analysisResult?.measurements?.cephalometric?.length && (
@@ -50,10 +50,10 @@ export default function OrthodonticPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Cephalometric view */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="p-4 border-b border-gray-100">
+        <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 overflow-hidden">
+          <div className="p-6 border-b border-black/[0.04]">
             <h3 className="font-semibold text-[#1A1A2E]">Cephalometric Analysis</h3>
           </div>
           <div className="bg-[#0a0a1a] h-[400px] flex items-center justify-center relative">
@@ -85,11 +85,11 @@ export default function OrthodonticPage() {
         </div>
 
         {/* Measurements table */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-4 border-b border-gray-100">
+        <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
+          <div className="p-6 border-b border-black/[0.04]">
             <h3 className="font-semibold text-[#1A1A2E]">Measurements</h3>
           </div>
-          <div className="p-4">
+          <div className="p-6">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">
@@ -135,11 +135,11 @@ export default function OrthodonticPage() {
       </div>
 
       {/* TMJ Analysis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {(['left', 'right'] as const).map((side) => (
-          <div key={side} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div key={side} className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
             <h3 className="font-semibold text-[#1A1A2E] mb-4 capitalize">TMJ — {side} Side</h3>
-            <div className="flex gap-4">
+            <div className="flex gap-6">
               <div className="w-24 h-24 bg-[#0a0a1a] rounded-xl flex items-center justify-center shrink-0">
                 <svg viewBox="0 0 60 60" className="w-16 h-16">
                   <circle cx="30" cy="25" r="12" fill="none" stroke="#3a3a5a" strokeWidth="1.5" />
@@ -171,9 +171,9 @@ export default function OrthodonticPage() {
       </div>
 
       {/* Symmetry analysis */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+      <div className="bg-white rounded-3xl border border-black/[0.06] p-7 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
         <h3 className="font-semibold text-[#1A1A2E] mb-4">Symmetry Analysis</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { label: 'Facial Midline', value: '1.2mm left', status: 'mild' },
             { label: 'Mandibular Deviation', value: '0.8mm right', status: 'normal' },

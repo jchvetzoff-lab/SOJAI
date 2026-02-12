@@ -22,9 +22,9 @@ export default function Viewer3DPage() {
   return (
     <div className="h-[calc(100vh-7rem)] flex flex-col">
       {/* Page title */}
-      <div className="mb-5">
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">3D Viewer</h1>
-        <p className="text-sm text-gray-500 mt-1">Interactive 3D jaw model — rotate, zoom and toggle layers</p>
+      <div className="mb-6">
+        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">3D Viewer</h1>
+        <p className="text-lg text-gray-400 mt-3">Interactive 3D jaw model — rotate, zoom and toggle layers</p>
       </div>
 
       {/* 3D Canvas */}

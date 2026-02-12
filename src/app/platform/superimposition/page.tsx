@@ -9,14 +9,14 @@ export default function SuperimpositionPage() {
   const [opacity, setOpacity] = useState(50);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-[#1A1A2E]">Superimposition</h1>
-        <p className="text-base text-gray-500 mt-2">Compare scans from different dates</p>
+        <h1 className="text-4xl tracking-tight font-bold text-[#1A1A2E]">Superimposition</h1>
+        <p className="text-lg text-gray-400 mt-3">Compare scans from different dates</p>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <div className="bg-white rounded-xl border border-gray-100 p-1 shadow-sm flex">
           {(['slider', '3d', 'sidebyside'] as const).map((mode) => (
             <button
@@ -41,7 +41,7 @@ export default function SuperimpositionPage() {
       </div>
 
       {/* Main viewer */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300 overflow-hidden">
         {activeMode === 'slider' && (
           <div className="relative h-[500px] bg-[#0a0a1a]">
             {/* Before image (left side) */}
@@ -148,18 +148,18 @@ export default function SuperimpositionPage() {
       </div>
 
       {/* Analysis summary */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
           <div className="text-xs text-gray-400 mb-1">Alignment Score</div>
           <div className="text-2xl font-bold text-emerald-500">97.3%</div>
           <div className="text-xs text-gray-400 mt-1">Automatic registration</div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
           <div className="text-xs text-gray-400 mb-1">Changes Detected</div>
           <div className="text-2xl font-bold text-[#FF3254]">3</div>
           <div className="text-xs text-gray-400 mt-1">Regions with significant change</div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+        <div className="bg-white rounded-3xl border border-black/[0.06] p-6 shadow-sm hover:shadow-xl hover:shadow-[#4A39C0]/[0.06] transition-all duration-300">
           <div className="text-xs text-gray-400 mb-1">Time Between Scans</div>
           <div className="text-2xl font-bold text-[#4A39C0]">25 days</div>
           <div className="text-xs text-gray-400 mt-1">Jan 15 — Feb 09, 2026</div>

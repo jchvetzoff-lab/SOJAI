@@ -98,15 +98,15 @@ export default function Sidebar() {
   return (
     <aside
       className={`h-screen sticky top-0 flex flex-col transition-all duration-300 ${
-        collapsed ? 'w-[68px]' : 'w-[260px]'
+        collapsed ? 'w-[72px]' : 'w-[270px]'
       }`}
-      style={{ backgroundColor: '#1A1A2E' }}
+      style={{ background: 'linear-gradient(180deg, #1A1A2E 0%, #16162A 100%)' }}
     >
       {/* Logo */}
-      <div className="h-20 flex items-center px-5 border-b border-white/10">
+      <div className="h-20 flex items-center px-5 border-b border-white/[0.08]">
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#4A39C0] flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-base font-[family-name:var(--font-playfair)]">S</span>
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4A39C0] to-[#6D5DD3] flex items-center justify-center shrink-0 shadow-lg shadow-[#4A39C0]/30">
+            <span className="text-white font-bold text-lg font-[family-name:var(--font-playfair)]">S</span>
           </div>
           {!collapsed && (
             <span className="text-white text-xl font-bold tracking-tight">
@@ -117,13 +117,13 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-5 px-3 overflow-y-auto">
-        <div className="space-y-6">
+      <nav className="flex-1 py-6 px-3 overflow-y-auto">
+        <div className="space-y-7">
           {navSections.map((section) => (
             <div key={section.label}>
               {!collapsed && (
-                <div className="px-3 mb-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-white/30">
+                <div className="px-3 mb-3">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
                     {section.label}
                   </span>
                 </div>
@@ -135,10 +135,10 @@ export default function Sidebar() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                      className={`flex items-center gap-3 px-3 py-3 rounded-xl text-[15px] font-medium transition-all duration-200 ${
                         active
-                          ? 'bg-[#4A39C0] text-white shadow-lg shadow-[#4A39C0]/25'
-                          : 'text-white/50 hover:text-white hover:bg-white/5'
+                          ? 'bg-gradient-to-r from-[#4A39C0] to-[#5B4AD0] text-white shadow-lg shadow-[#4A39C0]/30'
+                          : 'text-white/45 hover:text-white/90 hover:bg-white/[0.06]'
                       }`}
                       title={collapsed ? item.label : undefined}
                     >
@@ -156,7 +156,7 @@ export default function Sidebar() {
       {/* Collapse toggle */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="h-14 flex items-center justify-center border-t border-white/10 text-white/40 hover:text-white/70 transition-colors"
+        className="h-16 flex items-center justify-center border-t border-white/[0.08] text-white/30 hover:text-white/60 transition-colors"
       >
         <svg
           width="18"
