@@ -31,7 +31,7 @@ const NAV_ITEMS: NavItem[] = [
   },
   {
     label: 'Dossier Patient',
-    href: '/platform/patient',
+    href: '/platform/patients',
     icon: <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />,
   },
   {
@@ -89,7 +89,7 @@ export default function AppShell({ children }: AppShellProps) {
   }, []);
 
   useEffect(() => {
-    if (pathname.startsWith('/platform/patient') && !selectedPatientId) {
+    if ((pathname === '/platform/patient' || pathname === '/platform/patient/') && !selectedPatientId) {
       router.replace('/platform/patients');
     }
   }, [pathname, selectedPatientId, router]);
@@ -107,8 +107,10 @@ export default function AppShell({ children }: AppShellProps) {
     setCurrentPatient({ id: patient.id, name: patient.name, age: patient.age, gender: patient.gender });
     setSearchOpen(false);
     setQuery('');
-    router.push('/platform/patient');
+    router.push(`/platform/patients/${patient.id}`);
   };
+
+  const dossierHref = selectedPatientId ? `/platform/patients/${selectedPatientId}` : '/platform/patients';
 
   return (
     <div className="flex min-h-screen bg-[#0A0A0B] text-[#EDEDEF]">
@@ -121,11 +123,14 @@ export default function AppShell({ children }: AppShellProps) {
         </div>
         <nav className="p-2 space-y-1">
           {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href;
+            const href = item.label === 'Dossier Patient' ? dossierHref : item.href;
+            const active =
+              pathname === href ||
+              (item.label === 'Patients' && pathname === '/platform/patients');
             return (
               <Link
-                key={item.href}
-                href={item.href}
+                key={item.label}
+                href={href}
                 className={`flex items-center gap-2.5 px-3 py-2 rounded-md text-[13px] transition-colors ${
                   active
                     ? 'bg-[#5B5BD6]/20 text-[#C7C6FF] border border-[#5B5BD6]/40'
