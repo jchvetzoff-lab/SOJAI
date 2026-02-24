@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { PathologyCategory, SeverityLevel, ToothStatus } from '@/lib/platform-constants';
+import { flags } from '@/config/flags';
 
 // ---- Types ----
 
@@ -87,7 +88,9 @@ export interface ViewerSettings {
 interface PlatformState {
   // Patient
   currentPatient: PatientInfo;
+  selectedPatientId: string | null;
   setCurrentPatient: (patient: Partial<PatientInfo>) => void;
+  setSelectedPatientId: (patientId: string | null) => void;
 
   // Image (not persisted)
   uploadedImage: UploadedImage | null;
@@ -140,8 +143,10 @@ export const usePlatformStore = create<PlatformState>()(
     (set) => ({
       // Patient
       currentPatient: defaultPatient,
+      selectedPatientId: null,
       setCurrentPatient: (patient) =>
         set((state) => ({ currentPatient: { ...state.currentPatient, ...patient } })),
+      setSelectedPatientId: (patientId) => set({ selectedPatientId: patientId }),
 
       // Image
       uploadedImage: null,
@@ -164,7 +169,7 @@ export const usePlatformStore = create<PlatformState>()(
       clearHistory: () => set({ analysisHistory: [] }),
 
       // Demo
-      isDemo: true,
+      isDemo: flags.isDemo,
       setIsDemo: (demo) => set({ isDemo: demo }),
 
       // Viewer
@@ -182,7 +187,8 @@ export const usePlatformStore = create<PlatformState>()(
           analysisResult: null,
           analysisLoading: false,
           analysisError: null,
-          isDemo: true,
+          selectedPatientId: null,
+          isDemo: flags.isDemo,
           viewerSettings: defaultViewerSettings,
         }),
     }),
@@ -191,6 +197,7 @@ export const usePlatformStore = create<PlatformState>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         currentPatient: state.currentPatient,
+        selectedPatientId: state.selectedPatientId,
         analysisHistory: state.analysisHistory,
         isDemo: state.isDemo,
       }),
