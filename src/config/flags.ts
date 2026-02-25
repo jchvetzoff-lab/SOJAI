@@ -5,6 +5,7 @@ export interface AppFlags {
   aiProvider: AIProvider;
   demoLatencyMs: number;
   enableJarvis: boolean;
+  randomFailRate: number;
 }
 
 function parseBoolean(value: string | undefined, fallback: boolean): boolean {
@@ -26,11 +27,19 @@ function parseAIProvider(value: string | undefined, fallback: AIProvider): AIPro
   return fallback;
 }
 
+function parseRate(value: string | undefined, fallback: number): number {
+  const parsed = parseNumber(value, fallback);
+  if (parsed < 0) return 0;
+  if (parsed > 1) return 1;
+  return parsed;
+}
+
 export const flags: AppFlags = {
   isDemo: parseBoolean(process.env.NEXT_PUBLIC_IS_DEMO, true),
   aiProvider: parseAIProvider(process.env.NEXT_PUBLIC_AI_PROVIDER, 'mock'),
-  demoLatencyMs: parseNumber(process.env.NEXT_PUBLIC_DEMO_LATENCY_MS, 900),
+  demoLatencyMs: parseNumber(process.env.NEXT_PUBLIC_DEMO_LATENCY_MS, 600),
   enableJarvis: parseBoolean(process.env.NEXT_PUBLIC_ENABLE_JARVIS, true),
+  randomFailRate: parseRate(process.env.NEXT_PUBLIC_RANDOM_FAIL_RATE, 0),
 };
 
 export function getFlags(): AppFlags {

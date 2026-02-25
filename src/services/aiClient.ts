@@ -1,4 +1,6 @@
 import { flags } from '@/config/flags';
+import { runMockChatCommand } from '@/features/ai/chat/mockEngine';
+import type { ChatCommandInput, ChatCommandResult } from '@/features/ai/chat/types';
 import { buildMockAnalysisResult, MOCK_CHAT_RESPONSES } from '@/lib/fixtures';
 import type { AIAnalysisResult, ChatInput, ChatResponse } from '@/features/ai';
 
@@ -10,6 +12,7 @@ async function delay(ms: number): Promise<void> {
 export interface AIClient {
   analyzeImage(imageBase64: string, imageType: string, patientName: string): Promise<AIAnalysisResult>;
   chat(input: ChatInput): Promise<ChatResponse>;
+  chatCommand(input: ChatCommandInput): Promise<ChatCommandResult>;
 }
 
 async function analyzeWithAnthropic(
@@ -73,6 +76,27 @@ export const aiClient: AIClient = {
       provider: flags.aiProvider,
     };
   },
+
+  async chatCommand(input) {
+    if (flags.isDemo || flags.aiProvider === 'mock') {
+      await delay(flags.demoLatencyMs);
+      return runMockChatCommand(input);
+    }
+
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    });
+
+    if (!response.ok) {
+      const payload: unknown = await response.json().catch(() => ({ error: 'Chat failed' }));
+      const errorMessage = getApiErrorMessage(payload, response.status);
+      throw new Error(errorMessage);
+    }
+
+    return (await response.json()) as ChatCommandResult;
+  },
 };
 
 export async function analyzeImage(
@@ -85,4 +109,8 @@ export async function analyzeImage(
 
 export async function chat(input: ChatInput): Promise<ChatResponse> {
   return aiClient.chat(input);
+}
+
+export async function chatCommand(input: ChatCommandInput): Promise<ChatCommandResult> {
+  return aiClient.chatCommand(input);
 }

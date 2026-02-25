@@ -1,8 +1,29 @@
-import type { ActivityItem, Appointment, AppointmentStatus, ClinicProfile } from '@/features/clinic';
-import { ACTIVITY_FIXTURES, APPOINTMENT_FIXTURES } from '@/lib/fixtures';
+import type {
+  ActivityItem,
+  Appointment,
+  AppointmentStatus,
+  BillingPlaceholder,
+  ClinicProfile,
+  ClinicSettings,
+  TeamMember,
+} from '@/features/clinic';
+import {
+  ACTIVITY_FIXTURES,
+  APPOINTMENT_FIXTURES,
+  BILLING_PLACEHOLDER_FIXTURE,
+  CLINIC_SETTINGS_FIXTURES,
+  TEAM_FIXTURES,
+} from '@/lib/fixtures';
 
 let appointments: Appointment[] = APPOINTMENT_FIXTURES.map((entry) => ({ ...entry }));
 let activityFeed: ActivityItem[] = ACTIVITY_FIXTURES.map((entry) => ({ ...entry }));
+let teamMembers: TeamMember[] = TEAM_FIXTURES.map((entry) => ({ ...entry }));
+let clinicSettings: ClinicSettings = {
+  openingHours: CLINIC_SETTINGS_FIXTURES.openingHours.map((entry) => ({ ...entry })),
+  templates: [...CLINIC_SETTINGS_FIXTURES.templates],
+  aiPreferences: { ...CLINIC_SETTINGS_FIXTURES.aiPreferences },
+};
+const billingPlaceholder: BillingPlaceholder = { ...BILLING_PLACEHOLDER_FIXTURE };
 
 const clinicProfile: ClinicProfile = {
   id: 'CLINIC-001',
@@ -17,6 +38,18 @@ function cloneAppointments(items: Appointment[]): Appointment[] {
 
 function cloneActivity(items: ActivityItem[]): ActivityItem[] {
   return items.map((item) => ({ ...item }));
+}
+
+function cloneTeam(items: TeamMember[]): TeamMember[] {
+  return items.map((item) => ({ ...item }));
+}
+
+function cloneSettings(settings: ClinicSettings): ClinicSettings {
+  return {
+    openingHours: settings.openingHours.map((entry) => ({ ...entry })),
+    templates: [...settings.templates],
+    aiPreferences: { ...settings.aiPreferences },
+  };
 }
 
 function nextAppointmentId(): string {
@@ -42,6 +75,9 @@ export interface ClinicRepo {
   updateAppointmentStatus(id: string, status: AppointmentStatus): Promise<Appointment | null>;
   listActivity(): Promise<ActivityItem[]>;
   addActivity(item: Omit<ActivityItem, 'id'>): Promise<ActivityItem>;
+  listTeam(): Promise<TeamMember[]>;
+  getSettings(): Promise<ClinicSettings>;
+  getBillingPlaceholder(): Promise<BillingPlaceholder>;
 }
 
 export const clinicRepo: ClinicRepo = {
@@ -80,5 +116,17 @@ export const clinicRepo: ClinicRepo = {
     const created: ActivityItem = { id: nextActivityId(), ...item };
     activityFeed = [created, ...activityFeed];
     return { ...created };
+  },
+
+  async listTeam() {
+    return cloneTeam(teamMembers);
+  },
+
+  async getSettings() {
+    return cloneSettings(clinicSettings);
+  },
+
+  async getBillingPlaceholder() {
+    return { ...billingPlaceholder };
   },
 };

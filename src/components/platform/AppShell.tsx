@@ -41,8 +41,13 @@ const NAV_ITEMS: NavItem[] = [
   },
   {
     label: 'AI Center',
-    href: '/platform/ai-center',
+    href: '/platform/ai',
     icon: <path d="M12 2a3 3 0 0 0-3 3v1H8a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1v1a3 3 0 0 0 6 0v-1h1a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-1V5a3 3 0 0 0-3-3z" />,
+  },
+  {
+    label: 'Chat',
+    href: '/platform/chat',
+    icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
   },
   {
     label: 'Viewer',
@@ -126,7 +131,8 @@ export default function AppShell({ children }: AppShellProps) {
             const href = item.label === 'Dossier Patient' ? dossierHref : item.href;
             const active =
               pathname === href ||
-              (item.label === 'Patients' && pathname === '/platform/patients');
+              (item.label === 'Patients' && pathname === '/platform/patients') ||
+              (item.label === 'AI Center' && (pathname === '/platform/ai' || pathname === '/platform/ai-center'));
             return (
               <Link
                 key={item.label}
